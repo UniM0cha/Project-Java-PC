@@ -10,7 +10,7 @@ public class Test extends JFrame{
 		setVisible(true);
 		
 		//정윤 영역
-		
+		System.out.println("가");
 		
 		
 		
@@ -22,7 +22,12 @@ public class Test extends JFrame{
 		
 		
 		// 정우영역
-		System.out.println("가");
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
+
 		
 		
 		
