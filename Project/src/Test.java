@@ -22,7 +22,11 @@ public class Test extends JFrame{
 		
 		
 		// 정우영역
-		
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
+		System.out.println("가나다라마바사");
 		
 		
 		
