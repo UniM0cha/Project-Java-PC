@@ -22,7 +22,7 @@ public class Test extends JFrame{
 		
 		
 		// 정우영역
-		
+		System.out.println("가");
 		
 		
 		
