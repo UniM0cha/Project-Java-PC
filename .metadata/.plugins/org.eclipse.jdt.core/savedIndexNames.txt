@@ -1,3 +1,0 @@
-INDEX VERSION 1.131+/Users/uni_mocha/Desktop/JAVA/JavaProject/.metadata/.plugins/org.eclipse.jdt.core
-941005215.index
-2888586291.index
