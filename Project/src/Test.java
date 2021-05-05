@@ -8,6 +8,37 @@ public class Test extends JFrame{
 		setLocationRelativeTo(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		
+		//정윤 영역
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// 정우영역
+		
+		
+		
+		
+		
+		
+		
+		
+		// 준기영역
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	public static void main(String[] args) {
