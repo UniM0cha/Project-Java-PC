@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ public class MainCustomer extends JFrame implements ActionListener{
 	public MainCustomer() {
 		this.setSize(300, 200);
 		this.setLocationRelativeTo(this);
+		this.setTitle("사용자 화면");
 		
 		JPanel main = new JPanel(new GridLayout(3, 2, 5, 5));
 		main.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
