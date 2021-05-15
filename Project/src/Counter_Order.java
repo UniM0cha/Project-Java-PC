@@ -32,6 +32,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 		// 왼쪽
 		JPanel west = new JPanel();
 		west.setBackground(Color.orange);
+		west.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 5, Color.black));
 		
 		JLabel lblPcNum = new JLabel(Integer.toString(pcNum));
 		lblPcNum.setFont(new Font(FONT, Font.BOLD, 40));
