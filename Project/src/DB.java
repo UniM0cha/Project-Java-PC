@@ -4,11 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.swing.JFrame;
-
 public class DB {
 
-	// 데이터베이스 연결 테스트
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	static final String DB_URL = "jdbc:mysql://localhost:3306/PCbangDB"; //MySQL 포트 : 3306
 	
@@ -50,19 +47,24 @@ public class DB {
 		}
 	}
 	
-	public void Update(String sql) {
+	public int Update(String sql) {
 		try {
-			stmt.executeUpdate(sql);
-
-			ResultSet rs = stmt.executeQuery("SELECT * FROM ORDERS");
-			while(rs.next()) {
-				int id = rs.getInt("pcNum");
-				String productName = rs.getString("productName");
-				System.out.println(id + "\t" + productName);
-			}
+			return stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			System.out.println("SQL 입력 실패");
+			System.out.println("SQL Update 실패");
 			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	public ResultSet Query(String sql) {
+		try {
+			return stmt.executeQuery("SELECT * FROM ORDERS");
+			
+		} catch (SQLException e) {
+			System.out.println("SQL Update 실패");
+			e.printStackTrace();
+			return null;
 		}
 	}
 
