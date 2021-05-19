@@ -7,7 +7,9 @@ import java.sql.Statement;
 public class DB {
 
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/PCbangDB"; //MySQL 포트 : 3306
+	//MySQL 포트 : 3306
+	//DB 이름 : PCbangDB
+	static final String DB_URL = "jdbc:mysql://localhost:3306/PCbangDB";
 	
 	static final String USERNAME = "root";
 	static final String PASSWORD = "1111";
@@ -31,19 +33,6 @@ public class DB {
 			System.out.println("SQL 서버 접속 실패");
 			e.printStackTrace();
 			System.exit(1);
-		}
-		
-		try {
-
-			ResultSet rs = stmt.executeQuery("SELECT * FROM ORDERS");
-			while(rs.next()) {
-				int id = rs.getInt("pcNum");
-				String productName = rs.getString("productName");
-				System.out.println(id + "\t" + productName);
-			}
-		} catch (SQLException e) {
-			System.out.println("SQL 입력 실패");
-			e.printStackTrace();
 		}
 	}
 	
