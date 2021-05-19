@@ -51,7 +51,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 		subCenter.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		subCenter.setBackground(Color.white);
 
-		// 정우가 만약 메뉴들을 스트링 배열로 준다면
+		// 준기가 만약 메뉴들을 스트링 배열로 준다면
 		for(String menu : menus) {
 			JLabel lblMenu = new JLabel(menu);
 			lblMenu.setFont(new Font(FONT, Font.BOLD, 15));

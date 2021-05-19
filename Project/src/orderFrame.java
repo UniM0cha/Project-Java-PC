@@ -36,7 +36,6 @@ public class orderFrame extends JFrame implements MouseListener {
 		setTitle(title);
 		setSize(width, height);
 		setLocationRelativeTo(this);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		
 		setLayout(new BorderLayout());	
@@ -75,7 +74,7 @@ public class orderFrame extends JFrame implements MouseListener {
 			jl[i] = new JLabel(noodleStr[i]);
 			jp[i].add(jl[i], BorderLayout.SOUTH);
 			centerP.add(jp[i]);
-			}
+		}
 		menuSp = new JScrollPane(centerP, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				
 		//centerP 끝
