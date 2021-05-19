@@ -69,7 +69,7 @@ public class MainCustomer extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == btnOrder) {
-			new SubCustomer();
+			new orderFrame("음식주문", 1200, 900);
 		}
 		else if (obj == btnExit) {
 			System.exit(0);

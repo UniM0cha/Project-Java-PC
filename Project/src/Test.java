@@ -24,7 +24,6 @@ public class Test extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
-		//정윤 영역
 		Statement stmt = Database_Initialize();
 		
 		String sql = "INSERT INTO ORDERS VALUES(1,'치킨')";
@@ -43,22 +42,6 @@ public class Test extends JFrame{
 			System.out.println("SQL 입력 실패");
 			e.printStackTrace();
 		}
-		
-		// 정우영역
-
-
-		
-		
-		
-		
-		
-		// 준기영역
-		
-		
-		
-		
-		
-		
 	}
 
 	public static void main(String[] args) {
