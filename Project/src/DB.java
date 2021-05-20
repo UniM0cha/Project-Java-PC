@@ -14,17 +14,16 @@ public class DB {
 	static final String USERNAME = "root";
 	static final String PASSWORD = "1111";
 	
-	Statement stmt;
+	Connection conn;
 	
 	public DB() {
 		try {
 			Class.forName(JDBC_DRIVER);
 			System.out.println("드라이버 지정 성공");
 			
-			Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 			System.out.println("SQL 서버 연결 성공");
-			
-			stmt = conn.createStatement();	
+
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 지정 실패");
 			e.printStackTrace();
@@ -38,6 +37,7 @@ public class DB {
 	
 	public int Update(String sql) {
 		try {
+			Statement stmt = conn.createStatement();
 			return stmt.executeUpdate(sql);
 		} catch (SQLException e) {
 			System.out.println("SQL Update 실패");
@@ -48,8 +48,9 @@ public class DB {
 	
 	public ResultSet Query(String sql) {
 		try {
-			return stmt.executeQuery("SELECT * FROM ORDERS");
-			
+			Statement stmt = conn.createStatement();
+			stmt = conn.createStatement();
+			return stmt.executeQuery(sql);
 		} catch (SQLException e) {
 			System.out.println("SQL Update 실패");
 			e.printStackTrace();
