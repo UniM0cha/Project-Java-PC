@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 public class Counter_Order extends JFrame implements ActionListener {
 	
-	final String FONT = "맑은 고딕";
+	final String FONT = "나눔고딕";
 	JButton btnConfirm;
 
 	public Counter_Order(int pcNum, Component com, String[] menus, int price, String pay) {
