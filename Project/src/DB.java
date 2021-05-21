@@ -9,10 +9,10 @@ public class DB {
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 	//MySQL 포트 : 3306
 	//DB 이름 : PCbangDB
-	static final String DB_URL = "jdbc:mysql://localhost:3306/PCbangDB";
+	static final String DB_URL = "jdbc:mysql://114.71.137.174:61083/optl";
 	
-	static final String USERNAME = "root";
-	static final String PASSWORD = "1111";
+	static final String USERNAME = "optl";
+	static final String PASSWORD = "oneparktwolee";
 	
 	Connection conn;
 	
