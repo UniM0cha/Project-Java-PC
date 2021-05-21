@@ -55,9 +55,8 @@ public class CounterMainFrameDB extends JFrame {
 
 		setLayout(new BorderLayout());
 
-		/*
+		// 임시 선언
 		orderedPC.addElement("안녕");
-		*/
 		
 		// 주문목록
 
@@ -185,28 +184,20 @@ public class CounterMainFrameDB extends JFrame {
 	boolean[] isOnline = new boolean[30];
 	
 	private void stateUpdate(int i, boolean state) {
-		// 온라인인 경우
+		// DB에서 자리가 온라인인 경우
 		if(state) {
 			if(isOnline[i] == false) {
 				isOnline[i] = true;
-				//DB의 state도 온라인으로 만들기
-				DBSetState(i+1, true);
 				Online(i);
 			}
 		}
-		// 오프라인인 경우
+		// DB에서 자리가 오프라인인 경우
 		else {
 			if(isOnline[i] == true) {
 				isOnline[i] = false;
-				DBSetState(i+1, false);
 				Offline(i);
 			}
 		}
-	}
-	
-	private void DBSetState(int i, boolean state) {
-		String sql = "UPDATE state SET statement=" + state +" WHERE pcNum=" + i;
-		db.Update(sql);
 	}
 
 	private void Online(int i) {
@@ -231,7 +222,7 @@ public class CounterMainFrameDB extends JFrame {
 					isOrder[i] = true;
 					
 					if(e.getClickCount() == 2) {	//더블클릭
-						new Counter_Order(14, bt[i], menus, 4000, "카드");
+						new Counter_Order(i+1, bt[i]);
 					}
 				}
 			}
