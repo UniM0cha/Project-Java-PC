@@ -178,19 +178,15 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		switch(lstmenu.getSelectedIndex()) {
 		case 0:
 			Menu(noodleImgs.length, noodleImgs, noodleStr, noodleprice);
-			System.out.println("라면");
 			break;
 		case 1:
 			Menu(babImgs.length, babImgs, babStr, babprice);
-			System.out.println("밥");
 			break;
 		case 2:
 			Menu(drinkImgs.length, drinkImgs, drinkStr, drinkprice);
-			System.out.println("음료수");
 			break;
 		case 3:
 			Menu(snackImgs.length, snackImgs, snackStr, snackprice);
-			System.out.println("스낵");
 			break;
 		}
 
@@ -249,8 +245,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 			centerP.add(jp[i]);
 			centerP.revalidate();
 			centerP.repaint();
-			menuSp.revalidate();
-			menuSp.repaint();
 		}
 	}
 }
