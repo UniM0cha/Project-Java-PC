@@ -48,6 +48,9 @@ public class Counter_Order extends JFrame implements ActionListener {
 		Color centersouthcolor = new Color(0x303745);
 		Color centernorthcolor = new Color(0xFFF7F1);
 		
+		
+		
+		
 		// 임시로 선언
 //		modelProductName.addElement("치킨");
 //		modelProductCount.addElement(1);

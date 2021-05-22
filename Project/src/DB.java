@@ -52,7 +52,7 @@ public class DB {
 			stmt = conn.createStatement();
 			return stmt.executeQuery(sql);
 		} catch (SQLException e) {
-			System.out.println("SQL Update 실패");
+			System.out.println("SQL Query 실패");
 			e.printStackTrace();
 			return null;
 		}

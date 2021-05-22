@@ -50,9 +50,9 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private String[] babprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원"};
 	private String[] drinkprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원", "5000원", "5000원"};
 	private String[] snackprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원"};
-	private int q = 0;
 	private DefaultListModel<String> model = new DefaultListModel<>();
-	
+	private int len = 0;
+
 	public orderFrame(String title, int width, int height) {
 		setTitle(title);
 		setSize(width, height);
@@ -60,7 +60,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		setResizable(false);
 		
 		setLayout(new BorderLayout());	
-		
 		
 		//westP 시작
 		
@@ -84,11 +83,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		centerP = new JPanel();
 		centerP.setBackground(Color.orange);
 		centerP.setLayout(new WrapLayout(FlowLayout.LEFT, 1, 1));
-		
-		
-		
-		
-		
 		
 		menuSp = new JScrollPane(centerP, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				
@@ -183,27 +177,25 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		for(int i = 0; i < menulst.length; i++) {
-			if(e.getSource() == lstmenu) {
-				if(lstmenu.getSelectedIndex() == i) {
-					System.out.println(menulst[i]);
-					switch(i) {
-					case 0: 
-						Menu(noodleImgs.length, noodleImgs, noodleStr, noodleprice);
-						break;
-					case 1: 
-						Menu(babImgs.length, babImgs, babStr, babprice);
-						break;
-					case 2: 
-						Menu(drinkImgs.length, drinkImgs, drinkStr, drinkprice);
-						break;
-					case 3: 
-						Menu(snackImgs.length, snackImgs, snackStr, snackprice);
-						break;
-					}
-				}
-			}
+		switch(lstmenu.getSelectedIndex()) {
+		case 0:
+			Menu(noodleImgs.length, noodleImgs, noodleStr, noodleprice);
+			System.out.println("라면");
+			break;
+		case 1:
+			Menu(babImgs.length, babImgs, babStr, babprice);
+			System.out.println("밥");
+			break;
+		case 2:
+			Menu(drinkImgs.length, drinkImgs, drinkStr, drinkprice);
+			System.out.println("음료수");
+			break;
+		case 3:
+			Menu(snackImgs.length, snackImgs, snackStr, snackprice);
+			System.out.println("스낵");
+			break;
 		}
+
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -219,34 +211,15 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch(q) {		
-		case 0:
-			for(int i = 0; i < noodleImgs.length; i++) {
-				if(e.getSource() == jb[i]) {
-					model.addElement(noodleStr[i]);
-				}
-			}
-		case 1:
-			for(int i = 0; i < babImgs.length; i++) {
-				if(e.getSource() == jb[i]) {
-					model.addElement(babStr[i]);
-				}
-			}
-		case 2:
-			for(int i = 0; i < drinkImgs.length; i++) {
-				if(e.getSource() == jb[i]) {
-					model.addElement(drinkStr[i]);
-				}
-			}
-		case 3:
-			for(int i = 0; i < snackImgs.length; i++) {
-				if(e.getSource() == jb[i]) {
-					model.addElement(snackStr[i]);
-				}
+		for(int i = 0; i < len; i++) {
+			if(e.getSource() == jb[i]) {
+				model.addElement(jl[i].getText());
 			}
 		}
 	}
 	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
+		centerP.removeAll();
+		this.len = len;
 		jp = new JPanel[len];
 		jp1 = new JPanel[len];
 		jl = new JLabel[len];
@@ -272,10 +245,14 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 			
 			jb[i] = new JButton("담기");
 			jb[i].addActionListener(this);
-			jp1[i].add(jb[i], BorderLayout.EAST);			
+			jp1[i].add(jb[i], BorderLayout.EAST);
 			jp[i].add(jp1[i], BorderLayout.SOUTH);
 			
 			centerP.add(jp[i]);
+			centerP.revalidate();
+			centerP.repaint();
+			menuSp.revalidate();
+			menuSp.repaint();
 		}
 	}
 }

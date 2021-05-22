@@ -128,7 +128,8 @@ public class CounterMainFrameDB extends JFrame {
 			bt[i] = new JButton();
 			bt[i].setLayout(new BorderLayout());
 			bt[i].setBorder(borderThickness2);
-			bt[i].addMouseListener(new MyListener());
+			bt[i].addActionListener(new MyListener());
+//			bt[i].addMouseListener(new MyListener());
 			
 			lb[i] = new JLabel((i + 1) + "번 PC");
 			lb[i].setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -225,21 +226,21 @@ public class CounterMainFrameDB extends JFrame {
 		timerset[i].setText("오프라인");
 	}
 
-	private class MyListener implements MouseListener {
+	private class MyListener implements MouseListener, ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			Object obj = e.getSource();
-			for (int i = 0; i < 30; i++) {
-				if (obj == bt[i]) {
-					bt[i].setBackground(clickcolor);
-					isOrder[i] = true;
-					
-					if(e.getClickCount() == 2) {	//더블클릭
-						new Counter_Order(i+1, bt[i]);
-					}
-				}
-			}
+//			Object obj = e.getSource();
+//			for (int i = 0; i < 30; i++) {
+//				if (obj == bt[i]) {
+//					bt[i].setBackground(clickcolor);
+//					isOrder[i] = true;
+//					
+//					if(e.getClickCount() == 2) {	//더블클릭
+//						new Counter_Order(i+1, bt[i]);
+//					}
+//				}
+//			}
 		}
 
 		@Override
@@ -250,6 +251,16 @@ public class CounterMainFrameDB extends JFrame {
 		public void mouseEntered(MouseEvent e) {}
 		@Override
 		public void mouseExited(MouseEvent e) {}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Object obj = e.getSource();
+			for (int i = 0; i < 30; i++) {
+				if (obj == bt[i]) {
+					new Counter_Order(i+1, bt[i]);
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {
