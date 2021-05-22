@@ -48,6 +48,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private String[] babprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원"};
 	private String[] drinkprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원", "5000원", "5000원"};
 	private String[] snackprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원"};
+	private int q = 0;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	
 	public orderFrame(String title, int width, int height) {
@@ -186,9 +187,13 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 					System.out.println(menulst[i]);
 					switch(i) {
 					case 0:
-						
+						q = 0;
 					case 1:
-						
+						q = 1;
+					case 2:
+						q = 2;
+					case 3:
+						q = 3;
 					}
 				}
 			}
@@ -208,12 +213,32 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for(int i = 0; i < noodleImgs.length; i++) {
-			if(e.getSource() == jb[i]) {
-				model.addElement(noodleStr[i]);
+		switch(q) {		
+		case 0:
+			for(int i = 0; i < noodleImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(noodleStr[i]);
+				}
+			}
+		case 1:
+			for(int i = 0; i < babImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(babStr[i]);
+				}
+			}
+		case 2:
+			for(int i = 0; i < drinkImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(drinkStr[i]);
+				}
+			}
+		case 3:
+			for(int i = 0; i < snackImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(snackStr[i]);
+				}
 			}
 		}
-		
 	}
 	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
 		jp = new JPanel[len];
