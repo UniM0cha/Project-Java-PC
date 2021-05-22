@@ -3,11 +3,15 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -16,13 +20,16 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class orderFrame extends JFrame implements MouseListener {
+public class orderFrame extends JFrame implements MouseListener, ActionListener {
 	
 	private JPanel westP, centerP, southP, southwestP, southeastP, payP, priceP, requestP, orderP;
 	private JPanel[] jp = null;
+	private JPanel[] jp1 = null;
 	private JLabel[] jl = null;
+	private JLabel[] jl1 = null;
 	private JLabel[] lbl = null;
-	private String[] menulst = {"음료수", "밥", "라면", "스낵"}, price = {"너구리", "참이슬"};
+	private JButton[] jb = null;
+	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
 	private JList<String> lstmenu, lstprice;
 	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, orderlbl, categorylbl;
 	private ButtonGroup bg;
@@ -31,6 +38,8 @@ public class orderFrame extends JFrame implements MouseListener {
 	private JScrollPane categorySp, requestSp, menuSp;
 	private ImageIcon[] noodleImgs = {new ImageIcon("images/신라면.jpg"), new ImageIcon("images/삼양라면.png"), new ImageIcon("images/사리곰탕.jpg"), new ImageIcon("images/안성탕면.jpg"), new ImageIcon("images/진라면.jpg"), new ImageIcon("images/육개장.jpg"), new ImageIcon("images/짜파게티.jpg")};
 	private String[] noodleStr = {"신라면", "삼양라면", "사리곰탕", "안성탕면", "진라면", "육개장", "짜파게티"};
+	private String[] lblprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000"};
+	private DefaultListModel<String> model = new DefaultListModel<>();
 	
 	public orderFrame(String title, int width, int height) {
 		setTitle(title);
@@ -39,6 +48,7 @@ public class orderFrame extends JFrame implements MouseListener {
 		setResizable(false);
 		
 		setLayout(new BorderLayout());	
+		
 		
 		//westP 시작
 		
@@ -62,17 +72,37 @@ public class orderFrame extends JFrame implements MouseListener {
 		centerP = new JPanel();
 		centerP.setBackground(Color.orange);
 		centerP.setLayout(new WrapLayout(FlowLayout.LEFT, 1, 1));
+		
 		jp = new JPanel[noodleImgs.length];
+		jp1 = new JPanel[noodleImgs.length];
 		jl = new JLabel[noodleImgs.length];
+		jl1 = new JLabel[noodleImgs.length];
 		lbl = new JLabel[noodleImgs.length];
-				
+		jb = new JButton[noodleImgs.length];
+		
 		for(int i = 0; i < noodleImgs.length; i++) {
 			jp[i] = new JPanel();
 			jp[i].setLayout(new BorderLayout());
+			
 			lbl[i] = new JLabel(noodleImgs[i]);
 			jp[i].add(lbl[i]);
+			
 			jl[i] = new JLabel(noodleStr[i]);
-			jp[i].add(jl[i], BorderLayout.SOUTH);
+			jp[i].add(jl[i], BorderLayout.NORTH);
+			
+			jp1[i] = new JPanel();
+			jp1[i].setLayout(new FlowLayout(FlowLayout.LEFT));
+			
+			jl1[i] = new JLabel(lblprice[i]);
+			jp1[i].add(jl1[i]);
+			
+			
+			jb[i] = new JButton("담기");
+			jb[i].addActionListener(this);
+			jp1[i].add(jb[i]);
+			
+			jp[i].add(jp1[i], BorderLayout.SOUTH);
+			
 			centerP.add(jp[i]);
 		}
 		menuSp = new JScrollPane(centerP, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -81,11 +111,11 @@ public class orderFrame extends JFrame implements MouseListener {
 		
 		//southwestP 시작
 		
-		pricelstlbl = new JLabel("상품 주문 목록                                                            ");
+		pricelstlbl = new JLabel("상품 주문 목록");
 		southwestP = new JPanel();
 		southwestP.setLayout(new BorderLayout());
 		southwestP.add(pricelstlbl, BorderLayout.NORTH);
-		lstprice = new JList<String>(price);
+		lstprice = new JList<>(model);
 		southwestP.add(lstprice, BorderLayout.CENTER);
 		
 		//southwestP 끝
@@ -140,7 +170,7 @@ public class orderFrame extends JFrame implements MouseListener {
 		//폰트 시작
 		
 		pricelstlbl.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		lstprice.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		lstprice.setFont(new Font("맑은 고딕", Font.BOLD, 10));
 		categorylbl.setFont(new Font("맑은 고딕", Font.BOLD, 60));
 		lstmenu.setFont(new Font("맑은 고딕", Font.BOLD, 60));
 		
@@ -159,15 +189,22 @@ public class orderFrame extends JFrame implements MouseListener {
 		add(westP, BorderLayout.WEST);
 		add(menuSp, BorderLayout.CENTER);
 		add(southP, BorderLayout.SOUTH);
-		
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		new orderFrame("하기 싫어....", 1200, 900);
+		new orderFrame("음식주문", 1200, 900);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		for(int i = 0; i < menulst.length; i++) {
+			if(e.getSource() == lstmenu) {
+				if(lstmenu.getSelectedIndex() == i) {
+					System.out.println(menulst[i]);
+					
+				}
+			}
+		}
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -180,5 +217,14 @@ public class orderFrame extends JFrame implements MouseListener {
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		for(int i = 0; i < noodleImgs.length; i++) {
+			if(e.getSource() == jb[i]) {
+				model.addElement(noodleStr[i]);
+			}
+		}
+		
 	}
 }

@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+
 public class Counter_Order extends JFrame implements ActionListener {
 	
 	private static DB db = new DB();
