@@ -60,6 +60,9 @@ public class Counter_Order extends JFrame implements ActionListener {
 		this.setUndecorated(true);
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
 		
+		
+		
+		
 		// 임시로 선언
 //		modelProductName.addElement("치킨");
 //		modelProductCount.addElement(1);
