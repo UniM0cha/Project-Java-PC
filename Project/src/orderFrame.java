@@ -241,7 +241,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 			
 			jb[i] = new JButton("담기");
 			jb[i].addActionListener(this);
-			jp1[i].add(jb[i], BorderLayout.EAST);			
+			jp1[i].add(jb[i], BorderLayout.EAST);
 			jp[i].add(jp1[i], BorderLayout.SOUTH);
 			
 			centerP.add(jp[i]);
