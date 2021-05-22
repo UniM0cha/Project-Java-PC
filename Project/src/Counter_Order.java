@@ -29,26 +29,9 @@ public class Counter_Order extends JFrame implements ActionListener {
 	private static DB db = new DB();
 	private final String FONT = "나눔고딕";
 	private JButton btnConfirm;
-//	private DefaultListModel<String> modelProductName = new DefaultListModel<>();
-//	private DefaultListModel<Integer> modelProductCount = new DefaultListModel<>();
-//	private JList<String> listProductName = new JList<>(modelProductName);
-//	private JList<Integer> listProductCount = new JList<>(modelProductCount);
-//	private String header[] = {"상품명", "개수"};
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명","개수"));
 	private Vector<Vector<String>> contents = new Vector<>();
 	private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
-//	private String contents[][] = new String[30][2];
-//	private String contents[][] = {
-//			{"치킨","1"},
-//			{"치킨","1"},
-//			{"치킨","1"},
-//			{"치킨","1"},
-//			{"치킨","1"},
-//			{"치킨","1"},
-//			{"치킨","1"},
-//			{"치킨","1"},
-//			{"치킨","1"}
-//	};
 	private JTable table = new JTable(tableModel);
 
 	public Counter_Order(int pcNum, Component com) {
@@ -58,7 +41,12 @@ public class Counter_Order extends JFrame implements ActionListener {
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(true);
-		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+		this.getRootPane().setBorder(BorderFactory.createLineBorder(new Color(0x25262B), 5));
+		
+		Color westcolor = new Color(0x202530);
+		Color btncolor = new Color(0xF3F1DF);
+		Color centersouthcolor = new Color(0x303745);
+		Color centernorthcolor = new Color(0xFFF7F1);
 		
 		
 		
@@ -71,15 +59,17 @@ public class Counter_Order extends JFrame implements ActionListener {
 		
 		// 왼쪽
 		JPanel west = new JPanel();
-		west.setBackground(Color.orange);
-		west.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 5, Color.black));
+		west.setBackground(westcolor);
+		west.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 5, new Color(0x25262B)));
 		
 		JLabel lblPcNum = new JLabel(Integer.toString(pcNum));
 		lblPcNum.setFont(new Font(FONT, Font.BOLD, 40));
+		lblPcNum.setForeground(Color.white);
 		west.add(lblPcNum);
 		
 		JLabel lblBun = new JLabel("번");
-		lblBun.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		lblBun.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		lblBun.setForeground(Color.white);
 		west.add(lblBun);
 		
 		this.add(west, BorderLayout.WEST);
@@ -89,10 +79,10 @@ public class Counter_Order extends JFrame implements ActionListener {
 
 		JPanel subCenter = new JPanel(new BorderLayout());
 		subCenter.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		subCenter.setBackground(Color.white);
+		subCenter.setBackground(centernorthcolor);
 		table.getColumnModel().getColumn(0).setPreferredWidth(300);
 		table.setRowHeight(25);
-		table.setFont(new Font(FONT, Font.PLAIN, 18));
+		table.setFont(new Font(FONT, Font.BOLD, 18));
 		JScrollPane scrollTable = new JScrollPane(table);
 		subCenter.add(scrollTable);
 		
@@ -114,21 +104,23 @@ public class Counter_Order extends JFrame implements ActionListener {
 		center.add(subCenter, BorderLayout.CENTER);
 		
 		JPanel subSouth = new JPanel(new BorderLayout());
+		subSouth.setBorder(BorderFactory.createMatteBorder(5, 0, 0, 0, new Color(0x25262B)));
 		
 		JPanel subSouthLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		subSouthLeft.setBackground(Color.DARK_GRAY);
+		subSouthLeft.setBackground(centersouthcolor);
 		subSouthLeft.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 		
 		JLabel lblPrice = new JLabel(price + "원 (" + pay + ")");
-		lblPrice.setFont(new Font(FONT, Font.PLAIN, 20));
+		lblPrice.setFont(new Font(FONT, Font.BOLD, 20));
 		lblPrice.setForeground(Color.white);
 		subSouthLeft.add(lblPrice);
 		
 		JPanel subSouthRight = new JPanel();
-		subSouthRight.setBackground(Color.DARK_GRAY);
+		subSouthRight.setBackground(centersouthcolor);
 
 		btnConfirm = new JButton("접수 완료");
 		btnConfirm.setFont(new Font(FONT, Font.BOLD, 13));
+		btnConfirm.setBackground(btncolor);
 		btnConfirm.addActionListener(this);
 		subSouthRight.add(btnConfirm);
 
