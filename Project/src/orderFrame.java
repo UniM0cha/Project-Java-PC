@@ -48,6 +48,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private String[] babprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원"};
 	private String[] drinkprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원", "5000원", "5000원"};
 	private String[] snackprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원"};
+	private int q = 0;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	
 	public orderFrame(String title, int width, int height) {
@@ -186,9 +187,13 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 					System.out.println(menulst[i]);
 					switch(i) {
 					case 0:
-						
+						q = 0;
 					case 1:
-						
+						q = 1;
+					case 2:
+						q = 2;
+					case 3:
+						q = 3;
 					}
 				}
 			}
