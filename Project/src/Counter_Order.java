@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -16,7 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Counter_Order extends JFrame implements ActionListener {
 	
@@ -27,11 +32,23 @@ public class Counter_Order extends JFrame implements ActionListener {
 //	private DefaultListModel<Integer> modelProductCount = new DefaultListModel<>();
 //	private JList<String> listProductName = new JList<>(modelProductName);
 //	private JList<Integer> listProductCount = new JList<>(modelProductCount);
-	private String header[] = {"상품명", "개수"};
-	private String contents[][] = {
-			{"치킨","1"}
-	};
-	private JTable table = new JTable(contents, header);
+//	private String header[] = {"상품명", "개수"};
+	private Vector<String> header = new Vector<>(Arrays.asList("상품명","개수"));
+	private Vector<Vector<String>> contents = new Vector<>();
+	private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
+//	private String contents[][] = new String[30][2];
+//	private String contents[][] = {
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"}
+//	};
+	private JTable table = new JTable(tableModel);
 
 	public Counter_Order(int pcNum, Component com) {
 		this.setSize(400, 200);
@@ -67,9 +84,13 @@ public class Counter_Order extends JFrame implements ActionListener {
 		JPanel center = new JPanel(new BorderLayout());
 
 		JPanel subCenter = new JPanel(new BorderLayout());
-		subCenter.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		subCenter.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		subCenter.setBackground(Color.white);
-		subCenter.add(table);
+		table.getColumnModel().getColumn(0).setPreferredWidth(300);
+		table.setRowHeight(25);
+		table.setFont(new Font(FONT, Font.PLAIN, 18));
+		JScrollPane scrollTable = new JScrollPane(table);
+		subCenter.add(scrollTable);
 		
 //		JPanel panProductName = new JPanel(new BorderLayout());
 //		panProductName.setBackground(Color.black);
@@ -124,3 +145,5 @@ public class Counter_Order extends JFrame implements ActionListener {
 		}
 	}
 }
+
+//현재 한계점 : 주문 내역을 확인하고 있을 때 주문이 들어온다면 확인 불가...?
