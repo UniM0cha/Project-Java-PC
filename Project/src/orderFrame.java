@@ -27,7 +27,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private JPanel[] jp1 = null;
 	private JLabel[] jl = null;
 	private JLabel[] jl1 = null;
-	private JLabel[] jl2 = null;
 	private JLabel[] lbl = null;
 	private JButton[] jb = null;
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
@@ -78,7 +77,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		jp1 = new JPanel[noodleImgs.length];
 		jl = new JLabel[noodleImgs.length];
 		jl1 = new JLabel[noodleImgs.length];
-		jl2 = new JLabel[noodleImgs.length];
 		lbl = new JLabel[noodleImgs.length];
 		jb = new JButton[noodleImgs.length];
 		
@@ -98,8 +96,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 			jl1[i] = new JLabel(lblprice[i]);
 			jp1[i].add(jl1[i]);
 			
-			jl2[i] = new JLabel("                                        ");
-			jp1[i].add(jl2[i]);
 			
 			jb[i] = new JButton("담기");
 			jb[i].addActionListener(this);
@@ -115,7 +111,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		
 		//southwestP 시작
 		
-		pricelstlbl = new JLabel("상품 주문 목록                                                            ");
+		pricelstlbl = new JLabel("상품 주문 목록");
 		southwestP = new JPanel();
 		southwestP.setLayout(new BorderLayout());
 		southwestP.add(pricelstlbl, BorderLayout.NORTH);
