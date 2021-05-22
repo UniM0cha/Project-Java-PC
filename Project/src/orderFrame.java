@@ -37,8 +37,17 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private JTextArea requestJt;
 	private JScrollPane categorySp, requestSp, menuSp;
 	private ImageIcon[] noodleImgs = {new ImageIcon("images/신라면.jpg"), new ImageIcon("images/삼양라면.png"), new ImageIcon("images/사리곰탕.jpg"), new ImageIcon("images/안성탕면.jpg"), new ImageIcon("images/진라면.jpg"), new ImageIcon("images/육개장.jpg"), new ImageIcon("images/짜파게티.jpg")};
+	private ImageIcon[] babImgs = {new ImageIcon("images/간장소고기덮밥.jpg"), new ImageIcon("images/김치삼겹볶음덮밥.jpg"), new ImageIcon("images/명란아보카도덥팝.jpg"), new ImageIcon("images/스테이크덮밥.jpg"), new ImageIcon("images/스팸김치덮밥.jpg"), new ImageIcon("images/양파덮밥.jpg"), new ImageIcon("images/연어마요덮밥.jpg"), new ImageIcon("images/장어덮밥.jpg"), new ImageIcon("images/제육덮밥.jpg")};
+	private ImageIcon[] drinkImgs = {new ImageIcon("images/콜라.jpg"), new ImageIcon("images/사이다.jpg"), new ImageIcon("images/몬스터.jpg"), new ImageIcon("images/맥콜.jpg"), new ImageIcon("images/지코.jpg"), new ImageIcon("images/실론티.jpg"), new ImageIcon("images/솔의눈.jpg"), new ImageIcon("images/데자와.jpg"), new ImageIcon("images/쿠우.jpg"), new ImageIcon("images/토레타.jpg"), new ImageIcon("images/참이슬.jpg"), new ImageIcon("images/카스.jpg")};
+	private ImageIcon[] snackImgs = {new ImageIcon("images/고구마깡.jpg"), new ImageIcon("images/신짱.jpg"), new ImageIcon("images/오잉.jpg"), new ImageIcon("images/포스틱.jpg"), new ImageIcon("images/쫄병.jpg"), new ImageIcon("images/베이컨칩.jpg"), new ImageIcon("images/무뚝뚝.jpg"), new ImageIcon("images/오징어집.jpg"), new ImageIcon("images/초코비.jpg"), new ImageIcon("images/자갈치.jpg")};
 	private String[] noodleStr = {"신라면", "삼양라면", "사리곰탕", "안성탕면", "진라면", "육개장", "짜파게티"};
-	private String[] lblprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000"};
+	private String[] babStr = {"간장소고기덮밥", "김치삼겹볶음덮밥", "명란아보카도덥팝", "스테이크덮밥", "스팸김치덮밥", "양파덮밥", "연어마요덮밥", "장어덮밥", "제육덮밥"};
+	private String[] drinkStr = {"콜라", "사이다", "몬스터", "맥콜", "지코", "실론티", "솔의눈", "데자와", "쿠우", "토레타", "참이슬", "카스"};
+	private String[] snackStr = {"콜라", "사이다", "몬스터", "맥콜", "지코", "실론티", "솔의눈", "데자와", "쿠우", "토레타"};
+	private String[] noodleprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원"};
+	private String[] babprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원"};
+	private String[] drinkprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원", "5000원", "5000원"};
+	private String[] snackprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원"};
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	
 	public orderFrame(String title, int width, int height) {
@@ -73,38 +82,11 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		centerP.setBackground(Color.orange);
 		centerP.setLayout(new WrapLayout(FlowLayout.LEFT, 1, 1));
 		
-		jp = new JPanel[noodleImgs.length];
-		jp1 = new JPanel[noodleImgs.length];
-		jl = new JLabel[noodleImgs.length];
-		jl1 = new JLabel[noodleImgs.length];
-		lbl = new JLabel[noodleImgs.length];
-		jb = new JButton[noodleImgs.length];
+		Menu(noodleImgs.length, noodleImgs, noodleStr, noodleprice);
+		Menu(babImgs.length, babImgs, babStr, babprice);
+		Menu(drinkImgs.length, drinkImgs, drinkStr, drinkprice);
+		Menu(snackImgs.length, snackImgs, snackStr, snackprice);
 		
-		for(int i = 0; i < noodleImgs.length; i++) {
-			jp[i] = new JPanel();
-			jp[i].setLayout(new BorderLayout());
-			
-			lbl[i] = new JLabel(noodleImgs[i]);
-			jp[i].add(lbl[i]);
-			
-			jl[i] = new JLabel(noodleStr[i]);
-			jp[i].add(jl[i], BorderLayout.NORTH);
-			
-			jp1[i] = new JPanel();
-			jp1[i].setLayout(new FlowLayout(FlowLayout.LEFT));
-			
-			jl1[i] = new JLabel(lblprice[i]);
-			jp1[i].add(jl1[i]);
-			
-			
-			jb[i] = new JButton("담기");
-			jb[i].addActionListener(this);
-			jp1[i].add(jb[i]);
-			
-			jp[i].add(jp1[i], BorderLayout.SOUTH);
-			
-			centerP.add(jp[i]);
-		}
 		menuSp = new JScrollPane(centerP, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 				
 		//centerP 끝
@@ -180,7 +162,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		//폰트 끝
 		
 		southP = new JPanel();
-		southP.setLayout(new BorderLayout());
+		southP.setLayout(new GridLayout(1, 2));
 		southP.setBackground(Color.yellow);
 		
 		southP.add(southwestP, BorderLayout.WEST);
@@ -193,6 +175,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	}
 	public static void main(String[] args) {
 		new orderFrame("음식주문", 1200, 900);
+
 	}
 
 	@Override
@@ -204,11 +187,9 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 					switch(i) {
 					case 0:
 						
-						break;
 					case 1:
-						break;
+						
 					}
-					
 				}
 			}
 		}
@@ -233,5 +214,37 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 			}
 		}
 		
+	}
+	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
+		jp = new JPanel[len];
+		jp1 = new JPanel[len];
+		jl = new JLabel[len];
+		jl1 = new JLabel[len];
+		lbl = new JLabel[len];
+		jb = new JButton[len];
+		
+		for(int i = 0; i < len; i++) {
+			jp[i] = new JPanel();
+			jp[i].setLayout(new BorderLayout());
+			
+			lbl[i] = new JLabel(imgs[i]);
+			jp[i].add(lbl[i]);
+			
+			jl[i] = new JLabel(str[i]);
+			jp[i].add(jl[i], BorderLayout.NORTH);
+			
+			jp1[i] = new JPanel();
+			jp1[i].setLayout(new BorderLayout());
+			
+			jl1[i] = new JLabel(price[i]);
+			jp1[i].add(jl1[i]);
+			
+			jb[i] = new JButton("담기");
+			jb[i].addActionListener(this);
+			jp1[i].add(jb[i], BorderLayout.EAST);			
+			jp[i].add(jp1[i], BorderLayout.SOUTH);
+			
+			centerP.add(jp[i]);
+		}
 	}
 }
