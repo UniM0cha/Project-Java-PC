@@ -251,8 +251,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 			centerP.add(jp[i]);
 			centerP.revalidate();
 			centerP.repaint();
-			menuSp.revalidate();
-			menuSp.repaint();
 		}
 	}
 }
