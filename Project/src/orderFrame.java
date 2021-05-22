@@ -201,6 +201,13 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 			if(e.getSource() == lstmenu) {
 				if(lstmenu.getSelectedIndex() == i) {
 					System.out.println(menulst[i]);
+					switch(i) {
+					case 0:
+						
+						break;
+					case 1:
+						break;
+					}
 					
 				}
 			}

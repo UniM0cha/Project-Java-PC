@@ -8,20 +8,50 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 public class Counter_Order extends JFrame implements ActionListener {
 	
-	final String FONT = "나눔고딕";
-	JButton btnConfirm;
+	private static DB db = new DB();
+	private final String FONT = "나눔고딕";
+	private JButton btnConfirm;
+//	private DefaultListModel<String> modelProductName = new DefaultListModel<>();
+//	private DefaultListModel<Integer> modelProductCount = new DefaultListModel<>();
+//	private JList<String> listProductName = new JList<>(modelProductName);
+//	private JList<Integer> listProductCount = new JList<>(modelProductCount);
+//	private String header[] = {"상품명", "개수"};
+	private Vector<String> header = new Vector<>(Arrays.asList("상품명","개수"));
+	private Vector<Vector<String>> contents = new Vector<>();
+	private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
+//	private String contents[][] = new String[30][2];
+//	private String contents[][] = {
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"},
+//			{"치킨","1"}
+//	};
+	private JTable table = new JTable(tableModel);
 
-	public Counter_Order(int pcNum, Component com, String[] menus, int price, String pay) {
+	public Counter_Order(int pcNum, Component com) {
 		this.setSize(400, 200);
 		this.setLocationRelativeTo(com);
 		this.setTitle(pcNum + "번 PC");
@@ -29,6 +59,12 @@ public class Counter_Order extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(true);
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+		
+		// 임시로 선언
+//		modelProductName.addElement("치킨");
+//		modelProductCount.addElement(1);
+		int price = 4000;
+		String pay = "카드";
 		
 		// 왼쪽
 		JPanel west = new JPanel();
@@ -48,16 +84,30 @@ public class Counter_Order extends JFrame implements ActionListener {
 		//오른쪽
 		JPanel center = new JPanel(new BorderLayout());
 
-		JPanel subCenter = new JPanel(new GridLayout(6,2));
-		subCenter.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		JPanel subCenter = new JPanel(new BorderLayout());
+		subCenter.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		subCenter.setBackground(Color.white);
-
-		// 준기가 만약 메뉴들을 스트링 배열로 준다면
-		for(String menu : menus) {
-			JLabel lblMenu = new JLabel(menu);
-			lblMenu.setFont(new Font(FONT, Font.BOLD, 15));
-			subCenter.add(lblMenu);
-		}
+		table.getColumnModel().getColumn(0).setPreferredWidth(300);
+		table.setRowHeight(25);
+		table.setFont(new Font(FONT, Font.PLAIN, 18));
+		JScrollPane scrollTable = new JScrollPane(table);
+		subCenter.add(scrollTable);
+		
+//		JPanel panProductName = new JPanel(new BorderLayout());
+//		panProductName.setBackground(Color.black);
+//		panProductName.add(listProductName);
+//		subCenter.add(panProductName, BorderLayout.CENTER);
+//		
+//		JPanel panProductCount = new JPanel(new BorderLayout());
+//		panProductCount.add(listProductCount);
+//		subCenter.add(panProductCount, BorderLayout.EAST);
+		
+//		for(String menu : menus) {
+//			JLabel lblMenu = new JLabel(menu);
+//			lblMenu.setFont(new Font(FONT, Font.BOLD, 15));
+//			subCenter.add(lblMenu);
+//		}
+		
 		center.add(subCenter, BorderLayout.CENTER);
 		
 		JPanel subSouth = new JPanel(new BorderLayout());
@@ -88,10 +138,6 @@ public class Counter_Order extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new Temp();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
@@ -101,41 +147,4 @@ public class Counter_Order extends JFrame implements ActionListener {
 	}
 }
 
-class Temp extends JFrame implements MouseListener{
-	
-	JPanel p;
-	String[] menus = {"후라이드 치킨", "소떡소떡", "너구리 라면", "참이슬"};
-	
-	public Temp() {
-		this.setSize(300,300);
-		this.setLocationRelativeTo(this);
-		this.setTitle("TEST");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		p = new JPanel();
-		p.addMouseListener(this);
-		this.add(p);
-		
-		this.setVisible(true);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		Object obj = e.getSource();
-		if (obj == p) {
-			if(e.getClickCount() == 2) {	//더블클릭
-				new Counter_Order(14, p, menus, 4000, "카드");
-			}
-		}
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {}
-	@Override
-	public void mouseReleased(MouseEvent e) {}
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-	@Override
-	public void mouseExited(MouseEvent e) {}
-}
+//현재 한계점 : 주문 내역을 확인하고 있을 때 주문이 들어온다면 확인 불가...?
