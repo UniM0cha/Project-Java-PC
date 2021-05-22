@@ -213,12 +213,32 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for(int i = 0; i < noodleImgs.length; i++) {
-			if(e.getSource() == jb[i]) {
-				model.addElement(noodleStr[i]);
+		switch(q) {		
+		case 0:
+			for(int i = 0; i < noodleImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(noodleStr[i]);
+				}
+			}
+		case 1:
+			for(int i = 0; i < babImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(babStr[i]);
+				}
+			}
+		case 2:
+			for(int i = 0; i < drinkImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(drinkStr[i]);
+				}
+			}
+		case 3:
+			for(int i = 0; i < snackImgs.length; i++) {
+				if(e.getSource() == jb[i]) {
+					model.addElement(snackStr[i]);
+				}
 			}
 		}
-		
 	}
 	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
 		jp = new JPanel[len];
