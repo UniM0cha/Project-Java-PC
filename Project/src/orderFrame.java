@@ -192,7 +192,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		new orderFrame("하기 싫어....", 1200, 900);
+		new orderFrame("음식주문", 1200, 900);
 	}
 
 	@Override

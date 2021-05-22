@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 public class Counter_Order extends JFrame implements ActionListener {
 	
 	final String FONT = "나눔고딕";
