@@ -98,7 +98,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		southwestP.add(lstprice, BorderLayout.CENTER);
 		
 		//southwestP 끝
-		
+		//가나다
 		//southeastP 시작
 		southeastP = new JPanel();
 		
