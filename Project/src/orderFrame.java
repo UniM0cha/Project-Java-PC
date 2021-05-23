@@ -112,8 +112,8 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		rbcash = new JRadioButton("현금");
 		bg.add(rbcard);						
 		bg.add(rbcash);
-		payP.add(rbcard, BorderLayout.CENTER);
-		payP.add(rbcash, BorderLayout.SOUTH);
+		payP.add(rbcard, BorderLayout.WEST);
+		payP.add(rbcash, BorderLayout.CENTER);
 		
 		priceP = new JPanel();
 		priceP.setLayout(new BorderLayout());
