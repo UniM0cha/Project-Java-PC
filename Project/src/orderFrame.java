@@ -29,9 +29,10 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private JLabel[] jl1 = null;
 	private JLabel[] lbl = null;
 	private JButton[] jb = null;
+	private JButton orderbtn;
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
 	private JList<String> lstmenu, lstprice;
-	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, orderlbl, categorylbl;
+	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, categorylbl;
 	private ButtonGroup bg;
 	private JRadioButton rbcard, rbcash;
 	private JTextArea requestJt;
@@ -98,7 +99,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		southwestP.add(lstprice, BorderLayout.CENTER);
 		
 		//southwestP 끝
-		//가나다
+		
 		//southeastP 시작
 		southeastP = new JPanel();
 		
@@ -135,8 +136,8 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		orderP.setLayout(new BorderLayout());
 		orderP.addMouseListener(this);
 		orderP.setBackground(Color.blue);
-		orderlbl = new JLabel("주문하기");
-		orderP.add(orderlbl, BorderLayout.CENTER);
+		orderbtn = new JButton("주문하기");
+		orderP.add(orderbtn, BorderLayout.CENTER);
 		
 		southeastP.setLayout(new GridLayout(2,2));
 		southeastP.add(payP);
@@ -154,7 +155,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		lstmenu.setFont(new Font("맑은 고딕", Font.BOLD, 60));
 		
 		pricelbl.setHorizontalAlignment(JLabel.CENTER);
-		orderlbl.setHorizontalAlignment(JLabel.CENTER);
 		
 		//폰트 끝
 		
