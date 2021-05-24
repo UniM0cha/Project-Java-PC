@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.border.LineBorder;
 
 public class orderFrame extends JFrame implements MouseListener, ActionListener {
 	
@@ -53,6 +55,9 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private String[] snackprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원"};
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private int len = 0;
+	
+	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
+	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
 
 	public orderFrame(String title, int width, int height) {
 		setTitle(title);
@@ -62,15 +67,30 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		
 		setLayout(new BorderLayout());	
 		
+		Color westPcolor = new Color(0xA99C90);
+		Color categorySPcolor = new Color(0xEEEEEE);
+		Color centerPcolor = new Color(0xEEEEEE);
+		Color southwestPcolor = new Color(0xA99C90);
+		Color payPcolor = new Color(0xA99C90);
+		Color pricePcolor = new Color(0xA99C90);
+		Color orderPcolor = new Color(0xA99C90);
+		Color orderbtncolor = new Color(0xF3F1DF);
+		Color requestPcolor = new Color(0xA99C90);
+		
+		
+		
 		//westP 시작
 		
 		categorylbl = new JLabel("카테고리");
+		categorylbl.setBorder(BorderFactory.createMatteBorder(0, 0, 4, 0, new Color(0x767171)));
 		lstmenu = new JList<String>(menulst);
+		lstmenu.setBackground(categorySPcolor);
 		lstmenu.addMouseListener(this);
 		
 		westP = new JPanel();
 		westP.setLayout(new BorderLayout());
-		westP.setBackground(Color.red);
+		westP.setBackground(westPcolor);
+		//westP.setBorder(borderThickness2);
 		
 		categorySp = new JScrollPane(lstmenu, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);	
 		
@@ -82,7 +102,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		//centerP 시작
 		
 		centerP = new JPanel();
-		centerP.setBackground(Color.orange);
+		centerP.setBackground(centerPcolor);
 		centerP.setLayout(new WrapLayout(FlowLayout.LEFT, 1, 1));
 		
 		menuSp = new JScrollPane(centerP, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -92,10 +112,13 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		//southwestP 시작
 		
 		pricelstlbl = new JLabel("상품 주문 목록");
+		
 		southwestP = new JPanel();
+		southwestP.setBackground(pricePcolor);
 		southwestP.setLayout(new BorderLayout());
 		southwestP.add(pricelstlbl, BorderLayout.NORTH);
 		lstprice = new JList<>(model);
+		lstprice.setBackground(categorySPcolor);
 		southwestP.add(lstprice, BorderLayout.CENTER);
 		
 		//southwestP 끝
@@ -104,8 +127,9 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		southeastP = new JPanel();
 		
 		payP = new JPanel();
+		payP.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 0, new Color(0x767171)));
 		payP.setLayout(new BorderLayout());
-		payP.setBackground(Color.red);
+		payP.setBackground(payPcolor);
 		paylbl = new JLabel("결제 방법");
 		payP.add(paylbl, BorderLayout.NORTH);
 		bg = new ButtonGroup();	
@@ -117,17 +141,20 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		payP.add(rbcash, BorderLayout.CENTER);
 		
 		priceP = new JPanel();
+		priceP.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 0, new Color(0x767171)));
 		priceP.setLayout(new BorderLayout());
-		priceP.setBackground(Color.cyan);
-		pricelbl = new JLabel("000원 ");
+		priceP.setBackground(pricePcolor);
+		pricelbl = new JLabel("0,000원 ");
 		priceP.add(pricelbl, BorderLayout.CENTER);
 		
 		requestlbl = new JLabel("주문 요청 사항");
 		requestP = new JPanel();
+		requestP.setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, new Color(0x767171)));
 		requestP.setLayout(new BorderLayout());
-		requestP.setBackground(Color.black);
+		requestP.setBackground(requestPcolor);
 		requestP.add(requestlbl, BorderLayout.NORTH);
 		requestJt = new JTextArea("", 5, 27);
+		requestJt.setBackground(categorySPcolor);
 		requestJt.setLineWrap(true);
 		requestSp = new JScrollPane(requestJt, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);	
 		requestP.add(requestSp, BorderLayout.CENTER);
@@ -135,8 +162,10 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		orderP = new JPanel();
 		orderP.setLayout(new BorderLayout());
 		orderP.addMouseListener(this);
-		orderP.setBackground(Color.blue);
+		orderP.setBackground(orderPcolor);
 		orderbtn = new JButton("주문하기");
+		orderbtn.setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, new Color(0x767171)));
+		orderbtn.setBackground(orderbtncolor);
 		orderP.add(orderbtn, BorderLayout.CENTER);
 		
 		southeastP.setLayout(new GridLayout(2,2));
@@ -149,10 +178,14 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		
 		//폰트 시작
 		
-		pricelstlbl.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		lstprice.setFont(new Font("맑은 고딕", Font.BOLD, 10));
-		categorylbl.setFont(new Font("맑은 고딕", Font.BOLD, 60));
-		lstmenu.setFont(new Font("맑은 고딕", Font.BOLD, 60));
+		pricelstlbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
+		paylbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
+		requestlbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
+		lstprice.setFont(new Font("나눔고딕", Font.BOLD, 10));
+		orderbtn.setFont(new Font("나눔고딕", Font.BOLD, 20));
+		pricelbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
+		categorylbl.setFont(new Font("나눔고딕", Font.BOLD, 50));
+		lstmenu.setFont(new Font("나눔고딕", Font.BOLD, 50));
 		
 		pricelbl.setHorizontalAlignment(JLabel.CENTER);
 		
@@ -160,7 +193,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		
 		southP = new JPanel();
 		southP.setLayout(new GridLayout(1, 2));
-		southP.setBackground(Color.yellow);
+		southP.setBorder(BorderFactory.createMatteBorder(4, 0, 0, 0, new Color(0x767171)));
 		
 		southP.add(southwestP, BorderLayout.WEST);
 		southP.add(southeastP, BorderLayout.EAST);
@@ -171,7 +204,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		new orderFrame("음식주문", 1200, 900);
+		new orderFrame("음식주문", 1220, 900);
 
 	}
 
@@ -223,8 +256,10 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		lbl = new JLabel[len];
 		jb = new JButton[len];
 		
+		
 		for(int i = 0; i < len; i++) {
 			jp[i] = new JPanel();
+			jp[i].setBorder(borderThickness1);
 			jp[i].setLayout(new BorderLayout());
 			
 			lbl[i] = new JLabel(imgs[i]);

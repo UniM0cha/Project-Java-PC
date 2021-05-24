@@ -67,7 +67,7 @@ public class CounterMainFrameDB extends JFrame {
 		
 		
 		// 임시 선언
-		orderedPC.addElement("3번 PC");
+		orderedPC.addElement("7번 PC");
 		
 		// 주문목록
 
