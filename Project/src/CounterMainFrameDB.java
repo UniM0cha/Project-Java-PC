@@ -29,10 +29,8 @@ public class CounterMainFrameDB extends JFrame {
 	private JPanel order, customer, customer1;
 	private JLabel orderlbl;
 	private JPanel pcnum1, pcnum2, pcnum3;
-	private LineBorder borderThickness4 = new LineBorder(Color.black, 4);
-	private LineBorder borderThickness3 = new LineBorder(Color.black, 3);
-	private LineBorder borderThickness2 = new LineBorder(Color.black, 2);
-	private LineBorder borderThickness1 = new LineBorder(Color.black, 1);
+	private LineBorder borderThickness4 = new LineBorder(new Color(0x1B1B22), 5);
+	private LineBorder borderThickness2 = new LineBorder(new Color(0x1B1B22), 4);
 	private DefaultListModel<String> orderedPC = new DefaultListModel<>();
 	private String[] pclist1 = { "2번 PC", "4번 PC", "6번 PC", "8번 PC", "10번 PC" };
 	private JList<String> pclist;
@@ -45,6 +43,9 @@ public class CounterMainFrameDB extends JFrame {
 	private int[] times = new int[30];
 	private boolean[] isOrder = new boolean[30];
 	private String[] menus = {"후라이드 치킨", "소떡소떡", "너구리 라면", "참이슬"};
+	private Color nocuscolor;
+	private Color yescuscolor;
+	private Color clickcolor;
 
 	public CounterMainFrameDB(String title, int width, int height) {
 		setTitle(title);
@@ -54,7 +55,17 @@ public class CounterMainFrameDB extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setLayout(new BorderLayout());
-
+		
+		Color ordercolor = new Color(0xF2F2EF);
+		Color ordernorth = new Color(0x202530);
+		Color pclistcolor = new Color(0x303745);
+		Color customercolor = new Color(0x303745);
+		Color customer1color = new Color(0x55627B);
+		nocuscolor = new Color(0xA6A3A1);
+		yescuscolor = new Color(0x64CD3C);
+		clickcolor = new Color(0xF56257);
+		
+		
 		// 임시 선언
 		orderedPC.addElement("안녕");
 		
@@ -67,20 +78,20 @@ public class CounterMainFrameDB extends JFrame {
 		add(order, BorderLayout.WEST);
 
 		orderNorth = new JPanel();
-		orderNorth.setBackground(Color.DARK_GRAY);
-		orderNorth.setBorder(BorderFactory.createMatteBorder(0, 0, 4, 0, Color.black));
+		orderNorth.setBackground(ordernorth);
+		orderNorth.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0x1B1B22)));
 
 		orderlbl = new JLabel("주문 목록");
 		orderlbl.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		orderlbl.setForeground(Color.YELLOW);
+		orderlbl.setForeground(Color.white);
 
 		orderNorth.add(orderlbl);
 		order.add(orderNorth, BorderLayout.NORTH);
 
 		pclist = new JList<>(orderedPC);
-		pclist.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		pclist.setBackground(Color.DARK_GRAY);
-		pclist.setForeground(Color.orange);
+		pclist.setFont(new Font("맑은 고딕", Font.BOLD, 25));
+		pclist.setBackground(pclistcolor);
+		pclist.setForeground(Color.white);
 		order.add(pclist);
 
 		// 손님 이용하는거 보는 틀
@@ -88,23 +99,26 @@ public class CounterMainFrameDB extends JFrame {
 		customer = new JPanel();
 		customer.setLayout(new BorderLayout());
 		customer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		customer.setBackground(Color.gray);
+		customer.setBackground(customercolor);
 
 		customer1 = new JPanel();
 		customer1.setLayout(new GridLayout(3, 1, 20, 20));
 		customer1.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		customer1.setBackground(Color.white);
+		customer1.setBackground(customer1color);
 
 		// 컴퓨터 자리 세팅
 		
 		pcnum1 = new JPanel();
 		pcnum1.setLayout(new GridLayout(2, 5, 5, 5));
+		pcnum1.setBackground(customer1color);
 
 		pcnum2 = new JPanel();
 		pcnum2.setLayout(new GridLayout(2, 5, 5, 5));
+		pcnum2.setBackground(customer1color);
 
 		pcnum3 = new JPanel();
 		pcnum3.setLayout(new GridLayout(2, 5, 5, 5));
+		pcnum3.setBackground(customer1color);
 
 		bt = new JButton[30];
 		lb = new JLabel[30];
@@ -114,7 +128,8 @@ public class CounterMainFrameDB extends JFrame {
 			bt[i] = new JButton();
 			bt[i].setLayout(new BorderLayout());
 			bt[i].setBorder(borderThickness2);
-			bt[i].addMouseListener(new MyListener());
+			bt[i].addActionListener(new MyListener());
+//			bt[i].addMouseListener(new MyListener());
 			
 			lb[i] = new JLabel((i + 1) + "번 PC");
 			lb[i].setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -201,31 +216,31 @@ public class CounterMainFrameDB extends JFrame {
 	}
 
 	private void Online(int i) {
-		bt[i].setBackground(Color.green);
+		bt[i].setBackground(yescuscolor);
 		bt[i].setEnabled(true);
 		timerset[i].setText("주문 대기 중");
 	}
 	private void Offline(int i) {
-		bt[i].setBackground(Color.gray);
+		bt[i].setBackground(nocuscolor);
 		bt[i].setEnabled(false);
 		timerset[i].setText("오프라인");
 	}
 
-	private class MyListener implements MouseListener {
+	private class MyListener implements MouseListener, ActionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			Object obj = e.getSource();
-			for (int i = 0; i < 30; i++) {
-				if (obj == bt[i]) {
-					bt[i].setBackground(Color.white);
-					isOrder[i] = true;
-					
-					if(e.getClickCount() == 2) {	//더블클릭
-						new Counter_Order(i+1, bt[i]);
-					}
-				}
-			}
+//			Object obj = e.getSource();
+//			for (int i = 0; i < 30; i++) {
+//				if (obj == bt[i]) {
+//					bt[i].setBackground(clickcolor);
+//					isOrder[i] = true;
+//					
+//					if(e.getClickCount() == 2) {	//더블클릭
+//						new Counter_Order(i+1, bt[i]);
+//					}
+//				}
+//			}
 		}
 
 		@Override
@@ -236,6 +251,16 @@ public class CounterMainFrameDB extends JFrame {
 		public void mouseEntered(MouseEvent e) {}
 		@Override
 		public void mouseExited(MouseEvent e) {}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Object obj = e.getSource();
+			for (int i = 0; i < 30; i++) {
+				if (obj == bt[i]) {
+					new Counter_Order(i+1, bt[i]);
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {
