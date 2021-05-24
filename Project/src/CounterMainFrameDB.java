@@ -126,6 +126,8 @@ public class CounterMainFrameDB extends JFrame {
 		
 		for (int i = 0; i < bt.length; i++) {
 			bt[i] = new JButton();
+			// 맥때문에 넣은거임
+			bt[i].setOpaque(true);
 			bt[i].setLayout(new BorderLayout());
 			bt[i].setBorder(borderThickness2);
 			bt[i].addActionListener(new MyListener());
@@ -218,7 +220,7 @@ public class CounterMainFrameDB extends JFrame {
 	private void Online(int i) {
 		bt[i].setBackground(yescuscolor);
 		bt[i].setEnabled(true);
-		timerset[i].setText("주문 대기 중");
+		timerset[i].setText("온라인");
 	}
 	private void Offline(int i) {
 		bt[i].setBackground(nocuscolor);
