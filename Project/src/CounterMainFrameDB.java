@@ -126,6 +126,8 @@ public class CounterMainFrameDB extends JFrame {
 		
 		for (int i = 0; i < bt.length; i++) {
 			bt[i] = new JButton();
+			// 맥때문에 넣은거임
+			bt[i].setOpaque(true);
 			bt[i].setLayout(new BorderLayout());
 			bt[i].setBorder(borderThickness2);
 			bt[i].addActionListener(new MyListener());
