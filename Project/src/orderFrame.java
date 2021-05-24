@@ -29,9 +29,10 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private JLabel[] jl1 = null;
 	private JLabel[] lbl = null;
 	private JButton[] jb = null;
+	private JButton orderbtn;
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
 	private JList<String> lstmenu, lstprice;
-	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, orderlbl, categorylbl;
+	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, categorylbl;
 	private ButtonGroup bg;
 	private JRadioButton rbcard, rbcash;
 	private JTextArea requestJt;
@@ -40,10 +41,12 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private ImageIcon[] babImgs = {new ImageIcon("images/간장소고기덮밥.jpg"), new ImageIcon("images/김치삼겹볶음덮밥.jpg"), new ImageIcon("images/명란아보카도덥팝.jpg"), new ImageIcon("images/스테이크덮밥.jpg"), new ImageIcon("images/스팸김치덮밥.jpg"), new ImageIcon("images/양파덮밥.jpg"), new ImageIcon("images/연어마요덮밥.jpg"), new ImageIcon("images/장어덮밥.jpg"), new ImageIcon("images/제육덮밥.jpg")};
 	private ImageIcon[] drinkImgs = {new ImageIcon("images/콜라.jpg"), new ImageIcon("images/사이다.jpg"), new ImageIcon("images/몬스터.jpg"), new ImageIcon("images/맥콜.jpg"), new ImageIcon("images/지코.jpg"), new ImageIcon("images/실론티.jpg"), new ImageIcon("images/솔의눈.jpg"), new ImageIcon("images/데자와.jpg"), new ImageIcon("images/쿠우.jpg"), new ImageIcon("images/토레타.jpg"), new ImageIcon("images/참이슬.jpg"), new ImageIcon("images/카스.jpg")};
 	private ImageIcon[] snackImgs = {new ImageIcon("images/고구마깡.jpg"), new ImageIcon("images/신짱.jpg"), new ImageIcon("images/오잉.jpg"), new ImageIcon("images/포스틱.jpg"), new ImageIcon("images/쫄병.jpg"), new ImageIcon("images/베이컨칩.jpg"), new ImageIcon("images/무뚝뚝.jpg"), new ImageIcon("images/오징어집.jpg"), new ImageIcon("images/초코비.jpg"), new ImageIcon("images/자갈치.jpg")};
+	
 	private String[] noodleStr = {"신라면", "삼양라면", "사리곰탕", "안성탕면", "진라면", "육개장", "짜파게티"};
 	private String[] babStr = {"간장소고기덮밥", "김치삼겹볶음덮밥", "명란아보카도덥팝", "스테이크덮밥", "스팸김치덮밥", "양파덮밥", "연어마요덮밥", "장어덮밥", "제육덮밥"};
 	private String[] drinkStr = {"콜라", "사이다", "몬스터", "맥콜", "지코", "실론티", "솔의눈", "데자와", "쿠우", "토레타", "참이슬", "카스"};
-	private String[] snackStr = {"콜라", "사이다", "몬스터", "맥콜", "지코", "실론티", "솔의눈", "데자와", "쿠우", "토레타"};
+	private String[] snackStr = {"고구마깡", "신짱", "오잉", "포스틱", "쫄병", "베이컨칩", "무뚝뚝", "오징어집", "초코비", "자갈치"};
+	
 	private String[] noodleprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원"};
 	private String[] babprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원"};
 	private String[] drinkprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원", "5000원", "5000원"};
@@ -110,8 +113,8 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		rbcash = new JRadioButton("현금");
 		bg.add(rbcard);						
 		bg.add(rbcash);
-		payP.add(rbcard, BorderLayout.CENTER);
-		payP.add(rbcash, BorderLayout.SOUTH);
+		payP.add(rbcard, BorderLayout.WEST);
+		payP.add(rbcash, BorderLayout.CENTER);
 		
 		priceP = new JPanel();
 		priceP.setLayout(new BorderLayout());
@@ -133,8 +136,8 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		orderP.setLayout(new BorderLayout());
 		orderP.addMouseListener(this);
 		orderP.setBackground(Color.blue);
-		orderlbl = new JLabel("주문하기");
-		orderP.add(orderlbl, BorderLayout.CENTER);
+		orderbtn = new JButton("주문하기");
+		orderP.add(orderbtn, BorderLayout.CENTER);
 		
 		southeastP.setLayout(new GridLayout(2,2));
 		southeastP.add(payP);
@@ -152,7 +155,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		lstmenu.setFont(new Font("맑은 고딕", Font.BOLD, 60));
 		
 		pricelbl.setHorizontalAlignment(JLabel.CENTER);
-		orderlbl.setHorizontalAlignment(JLabel.CENTER);
 		
 		//폰트 끝
 		
