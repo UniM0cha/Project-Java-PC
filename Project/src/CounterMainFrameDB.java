@@ -57,12 +57,12 @@ public class CounterMainFrameDB extends JFrame {
 		setLayout(new BorderLayout());
 		
 		Color ordercolor = new Color(0xF2F2EF);
-		Color ordernorth = new Color(0x202530);
-		Color pclistcolor = new Color(0x303745);
-		Color customercolor = new Color(0x303745);
-		Color customer1color = new Color(0x55627B);
-		nocuscolor = new Color(0xA6A3A1);
-		yescuscolor = new Color(0x64CD3C);
+		Color ordernorth = new Color(0xbbb8b8);
+		Color pclistcolor = new Color(0x767171);
+		Color customercolor = new Color(0x7f7f7f);//55627B
+		Color customer1color = new Color(0x7f7f7f);
+		nocuscolor = new Color(0xd0cece);
+		yescuscolor = new Color(0x92d050);
 		clickcolor = new Color(0xF56257);
 		
 		
@@ -83,7 +83,7 @@ public class CounterMainFrameDB extends JFrame {
 
 		orderlbl = new JLabel("주문 목록");
 		orderlbl.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		orderlbl.setForeground(Color.white);
+		orderlbl.setForeground(new Color(0x262626));
 
 		orderNorth.add(orderlbl);
 		order.add(orderNorth, BorderLayout.NORTH);
@@ -91,7 +91,7 @@ public class CounterMainFrameDB extends JFrame {
 		pclist = new JList<>(orderedPC);
 		pclist.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		pclist.setBackground(pclistcolor);
-		pclist.setForeground(Color.white);
+		pclist.setForeground(new Color(0x262626));
 		order.add(pclist);
 
 		// 손님 이용하는거 보는 틀
@@ -259,6 +259,7 @@ public class CounterMainFrameDB extends JFrame {
 			Object obj = e.getSource();
 			for (int i = 0; i < 30; i++) {
 				if (obj == bt[i]) {
+					
 					new Counter_Order(i+1, bt[i]);
 				}
 			}

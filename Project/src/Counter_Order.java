@@ -43,9 +43,9 @@ public class Counter_Order extends JFrame implements ActionListener {
 		this.setUndecorated(true);
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(new Color(0x25262B), 5));
 		
-		Color westcolor = new Color(0x202530);
+		Color westcolor = new Color(0x595959);
 		Color btncolor = new Color(0xF3F1DF);
-		Color centersouthcolor = new Color(0x303745);
+		Color centersouthcolor = new Color(0x84878a);
 		Color centernorthcolor = new Color(0xFFF7F1);
 		
 		
@@ -111,7 +111,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 		subSouthLeft.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 		
 		JLabel lblPrice = new JLabel(price + "원 (" + pay + ")");
-		lblPrice.setFont(new Font(FONT, Font.BOLD, 20));
+		lblPrice.setFont(new Font(FONT, Font.BOLD, 17));
 		lblPrice.setForeground(Color.white);
 		subSouthLeft.add(lblPrice);
 		
