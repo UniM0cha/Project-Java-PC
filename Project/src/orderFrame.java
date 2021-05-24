@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 
 public class orderFrame extends JFrame implements MouseListener, ActionListener {
 	
-	private JPanel westP, centerP, southP, southwestP, southeastP, payP, priceP, requestP, orderP;
+	private JPanel westP, centerP, southP, southwestP, southeastP, payP, priceP, requestP, orderP, payPcenter;
 	private JPanel[] jp = null;
 	private JPanel[] jp1 = null;
 	private JLabel[] jl = null;
@@ -103,18 +103,21 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		//southeastP 시작
 		southeastP = new JPanel();
 		
-		payP = new JPanel();
-		payP.setLayout(new BorderLayout());
+		payP = new JPanel(new BorderLayout());
 		payP.setBackground(Color.red);
 		paylbl = new JLabel("결제 방법");
 		payP.add(paylbl, BorderLayout.NORTH);
-		bg = new ButtonGroup();	
+		bg = new ButtonGroup();
+		JLabel chickshow = new JLabel("                                                                               ");
 		rbcard = new JRadioButton("카드", true);	
 		rbcash = new JRadioButton("현금");
+		payPcenter = new JPanel();
 		bg.add(rbcard);						
 		bg.add(rbcash);
-		payP.add(rbcard, BorderLayout.WEST);
-		payP.add(rbcash, BorderLayout.CENTER);
+		payPcenter.add(chickshow);
+		payPcenter.add(rbcard);
+		payPcenter.add(rbcash);
+		payP.add(payPcenter, BorderLayout.CENTER);
 		
 		priceP = new JPanel();
 		priceP.setLayout(new BorderLayout());
