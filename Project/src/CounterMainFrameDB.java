@@ -220,7 +220,7 @@ public class CounterMainFrameDB extends JFrame {
 	private void Online(int i) {
 		bt[i].setBackground(yescuscolor);
 		bt[i].setEnabled(true);
-		timerset[i].setText("주문 대기 중");
+		timerset[i].setText("온라인");
 	}
 	private void Offline(int i) {
 		bt[i].setBackground(nocuscolor);
