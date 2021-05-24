@@ -26,9 +26,9 @@ public class MainCustomer extends JFrame implements ActionListener{
 		this.setLocationRelativeTo(this);
 		this.setTitle("사용자 화면");
 		
-		Color maincolor = new Color(0xF2F2EF);
-		Color btnordercolor = new Color(0xDAF5FD);
-		Color btnexitcolor = new Color(0xFFD0BF);
+		Color maincolor = new Color(0xF2F2F2);
+		Color btnordercolor = new Color(0xA99C90);
+		Color btnexitcolor = new Color(0x84878A);
 		
 		JPanel main = new JPanel(new GridLayout(3, 2, 5, 5));
 		main.setBackground(maincolor);
