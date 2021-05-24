@@ -259,7 +259,6 @@ public class CounterMainFrameDB extends JFrame {
 			Object obj = e.getSource();
 			for (int i = 0; i < 30; i++) {
 				if (obj == bt[i]) {
-					
 					new Counter_Order(i+1, bt[i]);
 				}
 			}
