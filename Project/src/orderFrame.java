@@ -77,8 +77,6 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		Color orderbtncolor = new Color(0xF3F1DF);
 		Color requestPcolor = new Color(0xA99C90);
 		
-		
-		
 		//westP 시작
 		
 		categorylbl = new JLabel("카테고리");
@@ -168,6 +166,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		orderP.addMouseListener(this);
 		orderP.setBackground(orderPcolor);
 		orderbtn = new JButton("주문하기");
+		orderbtn.addActionListener(this);
 		orderbtn.setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, new Color(0x767171)));
 		orderbtn.setBackground(orderbtncolor);
 		orderP.add(orderbtn, BorderLayout.CENTER);
@@ -244,10 +243,14 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
 		for(int i = 0; i < len; i++) {
-			if(e.getSource() == jb[i]) {
+			if(obj == jb[i]) {
 				model.addElement(jl[i].getText());
 			}
+		}
+		if (obj == orderbtn) {
+			dispose();
 		}
 	}
 	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {

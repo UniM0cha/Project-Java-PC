@@ -98,12 +98,12 @@ public class CounterMainFrameDB extends JFrame {
 
 		customer = new JPanel();
 		customer.setLayout(new BorderLayout());
-		customer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		customer.setBorder(BorderFactory.createMatteBorder(5, 0, 5, 5, new Color(0x1B1B22)));
 		customer.setBackground(customercolor);
 
 		customer1 = new JPanel();
 		customer1.setLayout(new GridLayout(3, 1, 20, 20));
-		customer1.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		customer1.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 		customer1.setBackground(customer1color);
 
 		// 컴퓨터 자리 세팅
