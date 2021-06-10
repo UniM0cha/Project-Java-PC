@@ -20,7 +20,6 @@ public class DB {
 		try {
 			Class.forName(JDBC_DRIVER);
 			System.out.println("드라이버 지정 성공");
-			
 			conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
 			System.out.println("SQL 서버 연결 성공");
 
