@@ -35,8 +35,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private JLabel[] jl = null;
 	private JLabel[] jl1 = null;
 	private JLabel[] lbl = null;
-	private JLabel[] price = null;
-	private JLabel[] counts = null;
+	private int[] counts;
+	
 	private JButton[] jb = null;
 	private JButton orderbtn;
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
@@ -60,6 +60,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String[] babprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000"};
 	private String[] drinkprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000", "5000", "5000"};
 	private String[] snackprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000"};
+	private String[] price = null;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private int len = 0, pricetemp = 0, temp = 0;
 	
@@ -237,13 +238,14 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
 		centerP.removeAll();
 		this.len = len;
+		this.price = price;
 		jp = new JPanel[len];
 		jp1 = new JPanel[len];
 		jl = new JLabel[len];
 		jl1 = new JLabel[len];
 		lbl = new JLabel[len];
 		jb = new JButton[len];
-		counts = new JLabel[len];
+		counts = new int[len];
 		
 		
 		for(int i = 0; i < len; i++) {
@@ -265,7 +267,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jp1[i].add(jl1[i]);
 			
 			jb[i] = new JButton("담기");
-			counts[i] = new JLabel("0");
+			counts[i] = 0;
 			jb[i].addActionListener(this);
 			jp1[i].add(jb[i], BorderLayout.EAST);
 			jp[i].add(jp1[i], BorderLayout.SOUTH);
@@ -313,12 +315,12 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			if(obj == jb[i]) {
 				//model.addElement(jl[i].getText());
 				productName = jl[i].getText();
-				temp = Integer.parseInt(counts[i].getText()) + 1;
+				temp = counts[i] + 1;
 				count = Integer.toString(temp);
-				counts[i].setText(Integer.toString(temp));
-				pricetemp = Integer.parseInt(counts[i].getText()) * Integer.parseInt(price[i].getText());
+				pricetemp = temp * Integer.parseInt(price[i]);
 				pay = Integer.toString(pricetemp);
 				contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
+				tableModel.fireTableDataChanged();
 			}
 		}
 		if (obj == orderbtn) {
