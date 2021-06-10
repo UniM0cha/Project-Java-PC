@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,7 +30,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 	
 	private static DB db = new DB();
 	private final String FONT = "나눔고딕";
-	private JButton btnConfirm;
+	private JButton btnConfirm, btnClose;
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명","개수"));
 	private Vector<Vector<String>> contents = new Vector<>();
 	private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
@@ -49,13 +51,18 @@ public class Counter_Order extends JFrame implements ActionListener {
 		Color centernorthcolor = new Color(0xFFF7F1);
 		
 		
-		
-		
 		// 임시로 선언
 //		modelProductName.addElement("치킨");
 //		modelProductCount.addElement(1);
 		int price = 4000;
 		String pay = "카드";
+		
+		getDataFromDB();
+		
+		
+		
+		
+		
 		
 		// 왼쪽
 		JPanel west = new JPanel();
@@ -117,6 +124,12 @@ public class Counter_Order extends JFrame implements ActionListener {
 		
 		JPanel subSouthRight = new JPanel();
 		subSouthRight.setBackground(centersouthcolor);
+		
+		btnClose = new JButton("닫기");
+		btnClose.setFont(new Font(FONT, Font.BOLD, 13));
+		btnClose.addActionListener(this);
+		btnClose.setBackground(btncolor);
+		subSouthRight.add(btnClose);
 
 		btnConfirm = new JButton("접수 완료");
 		btnConfirm.setFont(new Font(FONT, Font.BOLD, 13));
@@ -133,10 +146,22 @@ public class Counter_Order extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
+	// DB로부터 주문내역을 얻어오는 메소드
+	private void getDataFromDB() {
+		
+		
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == btnConfirm) {
+			if (JOptionPane.showConfirmDialog(this, "상품을 제공하셨습니까?", "확인", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				// 주문내역 삭제 코드
+				System.out.println("주문내역 삭제");
+			}
+		}
+		else if (obj == btnClose) {
 			this.dispose();
 		}
 	}

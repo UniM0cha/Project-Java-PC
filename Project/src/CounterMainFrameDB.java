@@ -53,6 +53,7 @@ public class CounterMainFrameDB extends JFrame {
 		setLocationRelativeTo(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		setLayout(new BorderLayout());
 		
