@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -7,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -19,8 +22,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
 	
@@ -30,6 +35,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private JLabel[] jl = null;
 	private JLabel[] jl1 = null;
 	private JLabel[] lbl = null;
+	private JLabel[] price = null;
+	private JLabel[] counts = null;
 	private JButton[] jb = null;
 	private JButton orderbtn;
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
@@ -49,13 +56,20 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String[] drinkStr = {"콜라", "사이다", "몬스터", "맥콜", "지코", "실론티", "솔의눈", "데자와", "쿠우", "토레타", "참이슬", "카스"};
 	private String[] snackStr = {"고구마깡", "신짱", "오잉", "포스틱", "쫄병", "베이컨칩", "무뚝뚝", "오징어집", "초코비", "자갈치"};
 	
-	private String[] noodleprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원"};
-	private String[] babprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원"};
-	private String[] drinkprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원", "5000원", "5000원"};
-	private String[] snackprice = {"4500원", "3500원", "4000원", "3500원", "3500원", "3000원", "5000원", "5000원", "5000원", "5000원"};
+	private String[] noodleprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000"};
+	private String[] babprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000"};
+	private String[] drinkprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000", "5000", "5000"};
+	private String[] snackprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000"};
 	private DefaultListModel<String> model = new DefaultListModel<>();
-	private int len = 0;
+	private int len = 0, pricetemp = 0, temp = 0;
 	
+	private String productName, count, pay;
+	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
+    private Vector<Vector<String>> contents = new Vector<>();
+    private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
+    private JTable table = new JTable(tableModel);
+	private JScrollPane scrollpane = new JScrollPane(table);
+    
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
 
@@ -63,7 +77,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		setTitle(title);
 		setSize(width, height);
 		setLocationRelativeTo(this);
-		setResizable(false);
+		//setResizable(false);
 		
 		setLayout(new BorderLayout());	
 		
@@ -115,9 +129,18 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		southwestP.setBackground(pricePcolor);
 		southwestP.setLayout(new BorderLayout());
 		southwestP.add(pricelstlbl, BorderLayout.NORTH);
-		lstprice = new JList<>(model);
+		
+		/*String header[] = {"상품명", "주문 수량", "가격"};
+		String contents[][] = {
+				
+		};
+		JTable table = new JTable(contents, header);
+		JScrollPane scroll = new JScrollPane(table);*/
+		scrollpane.setPreferredSize(new Dimension(200,200));
+		southwestP.add(scrollpane, BorderLayout.CENTER);
+		/*lstprice = new JList<>(model);
 		lstprice.setBackground(categorySPcolor);
-		southwestP.add(lstprice, BorderLayout.CENTER);
+		southwestP.add(lstprice, BorderLayout.CENTER);*/
 		
 		//southwestP 끝
 		
@@ -184,7 +207,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		pricelstlbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		paylbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		requestlbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
-		lstprice.setFont(new Font("나눔고딕", Font.BOLD, 10));
+		//lstprice.setFont(new Font("나눔고딕", Font.BOLD, 10));
 		orderbtn.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		pricelbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		categorylbl.setFont(new Font("나눔고딕", Font.BOLD, 50));
@@ -211,6 +234,48 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 
 	}
 
+	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
+		centerP.removeAll();
+		this.len = len;
+		jp = new JPanel[len];
+		jp1 = new JPanel[len];
+		jl = new JLabel[len];
+		jl1 = new JLabel[len];
+		lbl = new JLabel[len];
+		jb = new JButton[len];
+		counts = new JLabel[len];
+		
+		
+		for(int i = 0; i < len; i++) {
+			
+			jp[i] = new JPanel();
+			jp[i].setBorder(borderThickness1);
+			jp[i].setLayout(new BorderLayout());
+			
+			lbl[i] = new JLabel(imgs[i]);
+			jp[i].add(lbl[i]);
+			
+			jl[i] = new JLabel(str[i]);
+			jp[i].add(jl[i], BorderLayout.NORTH);
+			
+			jp1[i] = new JPanel();
+			jp1[i].setLayout(new BorderLayout());
+			
+			jl1[i] = new JLabel(price[i]);
+			jp1[i].add(jl1[i]);
+			
+			jb[i] = new JButton("담기");
+			counts[i] = new JLabel("0");
+			jb[i].addActionListener(this);
+			jp1[i].add(jb[i], BorderLayout.EAST);
+			jp[i].add(jp1[i], BorderLayout.SOUTH);
+			
+			centerP.add(jp[i]);
+			centerP.revalidate();
+			centerP.repaint();
+		}
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		switch(lstmenu.getSelectedIndex()) {
@@ -227,7 +292,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			Menu(snackImgs.length, snackImgs, snackStr, snackprice);
 			break;
 		}
-
+		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -246,49 +311,19 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		Object obj = e.getSource();
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
-				model.addElement(jl[i].getText());
+				//model.addElement(jl[i].getText());
+				productName = jl[i].getText();
+				temp = Integer.parseInt(counts[i].getText()) + 1;
+				count = Integer.toString(temp);
+				counts[i].setText(Integer.toString(temp));
+				pricetemp = Integer.parseInt(counts[i].getText()) * Integer.parseInt(price[i].getText());
+				pay = Integer.toString(pricetemp);
+				contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
 			}
 		}
 		if (obj == orderbtn) {
 			dispose();
 		}
 	}
-	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
-		centerP.removeAll();
-		this.len = len;
-		jp = new JPanel[len];
-		jp1 = new JPanel[len];
-		jl = new JLabel[len];
-		jl1 = new JLabel[len];
-		lbl = new JLabel[len];
-		jb = new JButton[len];
-		
-		
-		for(int i = 0; i < len; i++) {
-			jp[i] = new JPanel();
-			jp[i].setBorder(borderThickness1);
-			jp[i].setLayout(new BorderLayout());
-			
-			lbl[i] = new JLabel(imgs[i]);
-			jp[i].add(lbl[i]);
-			
-			jl[i] = new JLabel(str[i]);
-			jp[i].add(jl[i], BorderLayout.NORTH);
-			
-			jp1[i] = new JPanel();
-			jp1[i].setLayout(new BorderLayout());
-			
-			jl1[i] = new JLabel(price[i]);
-			jp1[i].add(jl1[i]);
-			
-			jb[i] = new JButton("담기");
-			jb[i].addActionListener(this);
-			jp1[i].add(jb[i], BorderLayout.EAST);
-			jp[i].add(jp1[i], BorderLayout.SOUTH);
-			
-			centerP.add(jp[i]);
-			centerP.revalidate();
-			centerP.repaint();
-		}
-	}
+	
 }
