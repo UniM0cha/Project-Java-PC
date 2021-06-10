@@ -35,8 +35,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private JLabel[] jl = null;
 	private JLabel[] jl1 = null;
 	private JLabel[] lbl = null;
-	private String[] price = null;
 	private int[] counts;
+	
 	private JButton[] jb = null;
 	private JButton orderbtn;
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
@@ -60,6 +60,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String[] babprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000"};
 	private String[] drinkprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000", "5000", "5000"};
 	private String[] snackprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000"};
+	private String[] price = null;
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private int len = 0, pricetemp = 0, temp = 0;
 	
@@ -316,8 +317,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 				productName = jl[i].getText();
 				temp = counts[i] + 1;
 				count = Integer.toString(temp);
-				count[i].setText(Integer.toString(temp));
-				pricetemp = Integer.parseInt(counts[i].getText()) * Integer.parseInt(price[i]);
+				pricetemp = temp * Integer.parseInt(price[i]);
 				pay = Integer.toString(pricetemp);
 				contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
 				tableModel.fireTableDataChanged();
