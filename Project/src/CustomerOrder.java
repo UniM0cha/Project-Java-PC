@@ -313,14 +313,19 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		Object obj = e.getSource();
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
-				//model.addElement(jl[i].getText());
-				productName = jl[i].getText();
-				temp = counts[i] + 1;
-				count = Integer.toString(temp);
-				pricetemp = temp * Integer.parseInt(price[i]);
-				pay = Integer.toString(pricetemp);
-				contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
-				tableModel.fireTableDataChanged();
+				/*for(int j = 0; j <= table.getRowCount(); j++) {*/
+					if(jl[i].getText() == table.getValueAt(0, 1)){
+						System.out.println("ddd");
+					} else {
+						productName = jl[i].getText();
+						temp = counts[i] + 1;
+						count = Integer.toString(temp);
+						pricetemp = temp * Integer.parseInt(price[i]);
+						pay = Integer.toString(pricetemp);
+						contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
+						tableModel.fireTableDataChanged();
+				//	}
+				}
 			}
 		}
 		if (obj == orderbtn) {
