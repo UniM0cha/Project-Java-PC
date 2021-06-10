@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class MainCustomer extends JFrame implements ActionListener{
+public class CustomerMain extends JFrame implements ActionListener{
 
 	private final String FONT = "나눔고딕";
 	int num = 0;
@@ -21,7 +21,7 @@ public class MainCustomer extends JFrame implements ActionListener{
 	JLabel lblUsedTime;
 	Timer time;
 	
-	public MainCustomer() {
+	public CustomerMain() {
 		this.setSize(300, 200);
 		this.setLocationRelativeTo(this);
 		this.setTitle("사용자 화면");
@@ -75,7 +75,7 @@ public class MainCustomer extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String[] args) {
-		new MainCustomer();
+		new CustomerMain();
 		
 	}
 
@@ -83,7 +83,7 @@ public class MainCustomer extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == btnOrder) {
-			new orderFrame("음식주문", 1200, 900);
+			new CustomerOrder("음식주문", 1200, 900);
 		}
 		else if (obj == btnExit) {
 			System.exit(0);

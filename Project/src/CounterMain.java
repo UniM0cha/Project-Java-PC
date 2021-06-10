@@ -23,7 +23,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class CounterMainFrameDB extends JFrame {
+public class CounterMain extends JFrame {
 
 	private static DB db = new DB();
 	private JPanel order, customer, customer1;
@@ -47,7 +47,7 @@ public class CounterMainFrameDB extends JFrame {
 	private Color yescuscolor;
 	private Color clickcolor;
 
-	public CounterMainFrameDB(String title, int width, int height) {
+	public CounterMain(String title, int width, int height) {
 		setTitle(title);
 		setSize(width, height);
 		setLocationRelativeTo(this);
@@ -260,14 +260,14 @@ public class CounterMainFrameDB extends JFrame {
 			Object obj = e.getSource();
 			for (int i = 0; i < 30; i++) {
 				if (obj == bt[i]) {
-					new Counter_Order(i+1, bt[i]);
+					new CounterOrder(i+1, bt[i]);
 				}
 			}
 		}
 	}
 
 	public static void main(String[] args) {
-		new CounterMainFrameDB("카운터 화면", 1200, 900);
+		new CounterMain("카운터 화면", 1200, 900);
 	}
 
 }

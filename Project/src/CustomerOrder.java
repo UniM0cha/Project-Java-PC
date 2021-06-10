@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
-public class orderFrame extends JFrame implements MouseListener, ActionListener {
+public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
 	
 	private JPanel westP, centerP, southP, southwestP, southeastP, payP, priceP, requestP, orderP, payPcenter;
 	private JPanel[] jp = null;
@@ -59,7 +59,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
 
-	public orderFrame(String title, int width, int height) {
+	public CustomerOrder(String title, int width, int height) {
 		setTitle(title);
 		setSize(width, height);
 		setLocationRelativeTo(this);
@@ -207,7 +207,7 @@ public class orderFrame extends JFrame implements MouseListener, ActionListener 
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		new orderFrame("음식주문", 1197, 900);
+		new CustomerOrder("음식주문", 1197, 900);
 
 	}
 

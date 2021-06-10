@@ -26,7 +26,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-public class Counter_Order extends JFrame implements ActionListener {
+public class CounterOrder extends JFrame implements ActionListener {
 	
 	private static DB db = new DB();
 	private final String FONT = "나눔고딕";
@@ -37,7 +37,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 	private JTable table = new JTable(tableModel);
 	private int pcNum;
 
-	public Counter_Order(int pcNum, Component com) {
+	public CounterOrder(int pcNum, Component com) {
 		this.setSize(400, 200);
 		this.setLocationRelativeTo(com);
 		this.setTitle(pcNum + "번 PC");
