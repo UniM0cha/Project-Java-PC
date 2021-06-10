@@ -35,6 +35,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 	private Vector<Vector<String>> contents = new Vector<>();
 	private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
 	private JTable table = new JTable(tableModel);
+	private int pcNum;
 
 	public Counter_Order(int pcNum, Component com) {
 		this.setSize(400, 200);
@@ -57,6 +58,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 		int price = 4000;
 		String pay = "카드";
 		
+		this.pcNum = pcNum;
 		getDataFromDB();
 		
 		
@@ -148,7 +150,7 @@ public class Counter_Order extends JFrame implements ActionListener {
 	
 	// DB로부터 주문내역을 얻어오는 메소드
 	private void getDataFromDB() {
-		
+		String sql = "SELECT * FROM Order WHERE pcNum =" + pcNum;
 		
 	}
 
