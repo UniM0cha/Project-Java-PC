@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -152,7 +153,8 @@ public class Stock extends JFrame{
 		        contents1.add(new Vector<String>(Arrays.asList(Integer.toString(sequence), Integer.toString(productID)
 		        											 , Integer.toString(counts), Integer.toString(salePrice))));
 		        sumresult  += salePrice;
-		        salessum.setText(Integer.toString(sumresult));
+		        String priceString = NumberFormat.getInstance().format(sumresult);
+		        salessum.setText(priceString);
 		    }
 		} catch (SQLException e) {
 		    e.printStackTrace();

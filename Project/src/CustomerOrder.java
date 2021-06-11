@@ -74,9 +74,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
 
-	public CustomerOrder(String title, int width, int height) {
-		setTitle(title);
-		setSize(width, height);
+	public CustomerOrder() {
+		setTitle("음식주문");
+		setSize(1200, 900);
 		setLocationRelativeTo(this);
 		//setResizable(false);
 		
@@ -231,7 +231,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		new CustomerOrder("음식주문", 1197, 900);
+		new CustomerOrder();
 
 	}
 
@@ -297,17 +297,13 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 	}
 	@Override
-	public void mousePressed(MouseEvent e) {
-	}
+	public void mousePressed(MouseEvent e) {}
 	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
+	public void mouseReleased(MouseEvent e) {}
 	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+	public void mouseEntered(MouseEvent e) {}
 	@Override
-	public void mouseExited(MouseEvent e) {
-	}
+	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
