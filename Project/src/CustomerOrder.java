@@ -313,19 +313,29 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		Object obj = e.getSource();
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
-				/*for(int j = 0; j <= table.getRowCount(); j++) {*/
-					if(jl[i].getText() == table.getValueAt(0, 1)){
-						System.out.println("ddd");
-					} else {
-						productName = jl[i].getText();
-						temp = counts[i] + 1;
-						count = Integer.toString(temp);
-						pricetemp = temp * Integer.parseInt(price[i]);
-						pay = Integer.toString(pricetemp);
-						contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
-						tableModel.fireTableDataChanged();
-				//	}
+				productName = jl[i].getText();
+				temp = counts[i] + 1;
+				count = Integer.toString(temp);
+				counts[i] = temp;
+				pricetemp = temp * Integer.parseInt(price[i]);
+				pay = Integer.toString(pricetemp);
+				if(temp == 1) {
+					contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
+				}else {
+					
+					for(int j = 0; j < table.getRowCount(); j++) {
+						System.out.println(table.getRowCount());
+						if(jl[i] == table.getValueAt(j, 0)) {
+							table.setValueAt("200", 0, 1);
+							System.out.println("dd");
+							table.setValueAt(count, j, 1);
+							table.setValueAt(pay, j, 2);
+						}
+					}
 				}
+				tableModel.fireTableDataChanged();
+
+			
 			}
 		}
 		if (obj == orderbtn) {
