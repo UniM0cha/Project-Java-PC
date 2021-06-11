@@ -330,8 +330,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 					}
 				}
 				tableModel.fireTableDataChanged();
-
-			
 			}
 		}
 		if (obj == orderbtn) {
