@@ -26,7 +26,7 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 	private static DB db = new DB();
 	private final String FONT = "나눔고딕";
 	int pcNum;
-	JLabel lbltemp;
+	JLabel lbltemp, lblLeftTime, lblUsedTime;
 	int usedTime = 0;
 	long diff ,startTime, currentTime, chargedTime, leftTime;
 	JButton btnOrder, btnExit;
@@ -40,7 +40,12 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		this.setTitle("사용자 화면");
 		this.addWindowListener(this);
 		
-		pcNum = random.nextInt(29) + 1;	// 1~30 무작위 숫자
+		pcNum = random.nextInt(29) + 1;					// 1~30 무작위 숫자
+		startTime = System.currentTimeMillis();			// 시작 시간 설정
+		chargedTime = 5 * (60*60*1000) - 32400000;		// 충전한 시간 설정 (임시로 5시간 설정)
+		time = new Timer();
+		TimerTask task = new TimerTasks();				// 따로 타이머 태스크 클래스 정의
+		time.scheduleAtFixedRate(task, 1000, 1000);		// 타이머 작동
 		
 		Color maincolor = new Color(0xF2F2F2);
 		Color btnordercolor = new Color(0xA99C90);
@@ -58,23 +63,10 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		lbltemp.setHorizontalAlignment(JLabel.CENTER);
 		panUsedTime.add(lbltemp, BorderLayout.NORTH);
 		
-		JLabel lblUsedTime = new JLabel();
+		lblUsedTime = new JLabel();
 		lblUsedTime.setFont(new Font(FONT, Font.BOLD, 15));
 		lblUsedTime.setHorizontalAlignment(JLabel.CENTER);
-		
-		//사용시간 타이머에 따라 증가
-		startTime = System.currentTimeMillis();
-		TimerTask taskDiffTime = new TimerTask() {
-			@Override
-			public void run() {
-				currentTime = System.currentTimeMillis();
-				diff = currentTime - startTime;
-				String usedTime = format.format(diff - 32400000);
-				lblUsedTime.setText(usedTime);
-			}
-		};
-		time = new Timer();
-		time.scheduleAtFixedRate(taskDiffTime, 1000, 1000);
+
 		panUsedTime.add(lblUsedTime, BorderLayout.CENTER);
 		
 		main.add(panUsedTime);
@@ -119,32 +111,21 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		lbltemp.setHorizontalAlignment(JLabel.CENTER);
 		panLeftTime.add(lbltemp, BorderLayout.NORTH);
 		
-		JLabel lblLeftTime = new JLabel();
-		
-		chargedTime = 5 * (24*60*60*1000);
-		TimerTask taskLeftTime = new TimerTask() {
-			@Override
-			public void run() {
-				leftTime = chargedTime - diff;
-				String stringLeftTime = format.format(leftTime);
-				lblLeftTime.setText(stringLeftTime);
-			}
-		};
-		time = new Timer();
-		time.scheduleAtFixedRate(taskLeftTime, 1000, 1000);
-		
+		lblLeftTime = new JLabel();
 		lblLeftTime.setFont(new Font(FONT, Font.BOLD, 15));
 		lblLeftTime.setHorizontalAlignment(JLabel.CENTER);
 		panLeftTime.add(lblLeftTime, BorderLayout.CENTER);
 		
 		main.add(panLeftTime);
 		
+		//먹거리 주문 버튼
 		btnOrder = new JButton("먹거리 주문");
 		btnOrder.setFont(new Font(FONT, Font.BOLD, 15));
 		btnOrder.setBackground(btnordercolor);
 		btnOrder.addActionListener(this);
 		main.add(btnOrder);
 		
+		//사용 종료 버튼
 		btnExit = new JButton("사용 종료");
 		btnExit.setFont(new Font(FONT, Font.BOLD, 15));
 		btnExit.setBackground(btnexitcolor);
@@ -155,6 +136,22 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		
 		this.setVisible(true);
 	}
+	
+	private class TimerTasks extends TimerTask {
+		@Override
+		public void run() {
+			// 사용시간 업데이트
+			currentTime = System.currentTimeMillis();
+			diff = currentTime - startTime;
+			String usedTime = format.format(diff - 32400000);
+			lblUsedTime.setText(usedTime);
+			
+			// 남은시간 업데이트
+			leftTime = chargedTime - diff;
+			String stringLeftTime = format.format(leftTime);
+			lblLeftTime.setText(stringLeftTime);
+		}
+	};
 	
 	private void updateStatementAtState(int state) {
 		String sql = "UPDATE state "
