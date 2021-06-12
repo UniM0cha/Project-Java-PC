@@ -50,6 +50,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(true);
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(new Color(0x25262B), 5));
+		this.setResizable(false);
 		
 		Color westcolor = new Color(0x595959);
 		Color btncolor = new Color(0xF3F1DF);
@@ -163,6 +164,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		}
 	}
 	
+	// 주문한 만큼 product 테이블의 stock을 줄임
 	private void updateStockAtProduct() {
 		String sqlSelect = "SELECT pcNum, productID, SUM(counts) counts "
 				+ "FROM orders o "
@@ -183,7 +185,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		}
 	}
 
-	// orders 테이블로부터 주문내역을 얻어오는 메소드
+	// orders 테이블로부터 주문내역을 얻어옴
 	private void getDataFromOrders() {
 		String sql = "SELECT pcNum, productName, counts, payment, salePrice, request "
 				+ "FROM orders o "
@@ -234,6 +236,6 @@ public class CounterOrder extends JFrame implements ActionListener {
 
 /*
  * 한계점
- * 1. 주문 내역을 보고있는 중 주문이 들어오면 확인 불가
+ * 1. 주문 내역을 보고있는 중 주문이 들어오면 확인 불가 (실시간 연동 필요)
  * 2. 다른 결제수단으로 한번 더 주문시 확인 불가
  */
