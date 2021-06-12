@@ -232,6 +232,6 @@ public class CounterOrder extends JFrame implements ActionListener {
 
 /*
  * 한계점
- * 1. 주문 내역을 보고있는 중 주문이 들어오면 확인 불가
+ * 1. 주문 내역을 보고있는 중 주문이 들어오면 확인 불가 (실시간 연동 필요)
  * 2. 다른 결제수단으로 한번 더 주문시 확인 불가
  */
