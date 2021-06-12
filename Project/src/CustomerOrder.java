@@ -16,7 +16,6 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,8 +28,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-
-import com.mysql.cj.x.protobuf.MysqlxCrud.Update;
 
 public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
 	
@@ -45,7 +42,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private JButton[] jb = null;
 	private JButton orderbtn;
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
-	private JList<String> lstmenu, lstprice;
+	private JList<String> lstmenu;
 	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, categorylbl;
 	private ButtonGroup bg;
 	private JRadioButton rbcard, rbcash;
@@ -56,16 +53,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private ImageIcon[] drinkImgs = {new ImageIcon("images/콜라.jpg"), new ImageIcon("images/사이다.jpg"), new ImageIcon("images/몬스터.jpg"), new ImageIcon("images/맥콜.jpg"), new ImageIcon("images/지코.jpg"), new ImageIcon("images/실론티.jpg"), new ImageIcon("images/솔의눈.jpg"), new ImageIcon("images/데자와.jpg"), new ImageIcon("images/쿠우.jpg"), new ImageIcon("images/토레타.jpg"), new ImageIcon("images/참이슬.jpg"), new ImageIcon("images/카스.jpg")};
 	private ImageIcon[] snackImgs = {new ImageIcon("images/고구마깡.jpg"), new ImageIcon("images/신짱.jpg"), new ImageIcon("images/오잉.jpg"), new ImageIcon("images/포스틱.jpg"), new ImageIcon("images/쫄병.jpg"), new ImageIcon("images/베이컨칩.jpg"), new ImageIcon("images/무뚝뚝.jpg"), new ImageIcon("images/오징어집.jpg"), new ImageIcon("images/초코비.jpg"), new ImageIcon("images/자갈치.jpg"), new ImageIcon("images/자갈치.jpg"), new ImageIcon("images/자갈치.jpg")};
 	
-	/*private String[] noodleStr = {"신라면", "삼양라면", "사리곰탕", "안성탕면", "진라면", "육개장", "짜파게티"};
-	private String[] babStr = {"간장소고기덮밥", "김치삼겹볶음덮밥", "명란아보카도덥팝", "스테이크덮밥", "스팸김치덮밥", "양파덮밥", "연어마요덮밥", "장어덮밥", "제육덮밥"};
-	private String[] drinkStr = {"콜라", "사이다", "몬스터", "맥콜", "지코", "실론티", "솔의눈", "데자와", "쿠우", "토레타", "참이슬", "카스"};
-	private String[] snackStr = {"고구마깡", "신짱", "오잉", "포스틱", "쫄병", "베이컨칩", "무뚝뚝", "오징어집", "초코비", "자갈치"};
-	
-	private String[] noodleprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000"};
-	private String[] babprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000"};
-	private String[] drinkprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000", "5000", "5000"};
-	private String[] snackprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000"};*/
-	private DefaultListModel<String> model = new DefaultListModel<>();
 	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
 	
 	private String productName, count, pay, productname, category, payment;
@@ -88,13 +75,14 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private Vector<String> drinkPrice = new Vector<>();
 	private Vector<String> snackPrice = new Vector<>();
 	
+	private Vector<String> id = new Vector<>();
+	
     private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
     private JTable table = new JTable(tableModel);
 	private JScrollPane scrollpane = new JScrollPane(table);
     
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
-	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
-	private int pcNum, productID, Price, sequence;
+	private int pcNum, Price, productid;
 	private static DB db = new DB();
 	
 
@@ -114,24 +102,24 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		ResultSet rs = db.Query(sql);
 		try {
 		    while(rs.next()) {
-		    	productID = rs.getInt("productID");
+		    	productid = rs.getInt("productID");
 		    	productname = rs.getString("productName");
 		        category = rs.getString("category");
 		        Price = rs.getInt("price");
 		        if(category.equals("라면")) {
-		        	noodleID.add(Integer.toString(productID));
+		        	noodleID.add(Integer.toString(productid));
 		        	noodlestr.add(productname);
 		        	noodlePrice.add(Integer.toString(Price));
 		        }else if(category.equals("밥")) {
-		        	babID.add(Integer.toString(productID));
+		        	babID.add(Integer.toString(productid));
 		        	babstr.add(productname);
 		        	babPrice.add(Integer.toString(Price));
 		        }else if(category.equals("음료수")) {
-		        	drinkID.add(Integer.toString(productID));
+		        	drinkID.add(Integer.toString(productid));
 		        	drinkstr.add(productname);
 		        	drinkPrice.add(Integer.toString(Price));
 		        }else if(category.equals("스낵")) {
-		        	snackID.add(Integer.toString(productID));
+		        	snackID.add(Integer.toString(productid));
 		        	snackstr.add(productname);
 		        	snackPrice.add(Integer.toString(Price));
 		        }
@@ -146,7 +134,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		Color westPcolor = new Color(0xA99C90);
 		Color categorySPcolor = new Color(0xEEEEEE);
 		Color centerPcolor = new Color(0xEEEEEE);
-		Color southwestPcolor = new Color(0xA99C90);
 		Color payPcolor = new Color(0xA99C90);
 		Color pricePcolor = new Color(0xA99C90);
 		Color orderPcolor = new Color(0xA99C90);
@@ -164,7 +151,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		westP = new JPanel();
 		westP.setLayout(new BorderLayout());
 		westP.setBackground(westPcolor);
-		//westP.setBorder(borderThickness2);
 		
 		categorySp = new JScrollPane(lstmenu, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);	
 		
@@ -192,17 +178,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		southwestP.setLayout(new BorderLayout());
 		southwestP.add(pricelstlbl, BorderLayout.NORTH);
 		
-		/*String header[] = {"상품명", "주문 수량", "가격"};
-		String contents[][] = {
-				
-		};
-		JTable table = new JTable(contents, header);
-		JScrollPane scroll = new JScrollPane(table);*/
 		scrollpane.setPreferredSize(new Dimension(200,200));
 		southwestP.add(scrollpane, BorderLayout.CENTER);
-		/*lstprice = new JList<>(model);
-		lstprice.setBackground(categorySPcolor);
-		southwestP.add(lstprice, BorderLayout.CENTER);*/
 		
 		//southwestP 끝
 		
@@ -219,6 +196,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		JLabel chickshow = new JLabel("                                                                               ");
 		rbcard = new JRadioButton("카드", true);	
 		rbcash = new JRadioButton("현금");
+		rbcard.addActionListener(this);
+		rbcash.addActionListener(this);
 		payPcenter = new JPanel();
 		payment = "카드";
 		bg.add(rbcard);						
@@ -299,10 +278,11 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 
 	}
 
-	public void Menu(int len, ImageIcon[] imgs, Vector<String> str, Vector<String> price) {
+	public void Menu(int len, ImageIcon[] imgs, Vector<String> str, Vector<String> price, Vector<String> id) {
 		centerP.removeAll();
 		this.len = len;
 		this.price = price;
+		this.id = id;
 		jp = new JPanel[len];
 		jp1 = new JPanel[len];
 		jl = new JLabel[len];
@@ -330,6 +310,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jl1[i] = new JLabel(price.get(i));
 			jp1[i].add(jl1[i]);
 			
+			
 			jb[i] = new JButton("담기");
 			counts[i] = 0;
 			jb[i].addActionListener(this);
@@ -346,16 +327,16 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	public void mouseClicked(MouseEvent e) {
 		switch(lstmenu.getSelectedIndex()) {
 		case 0:
-			Menu(noodleImgs.length, noodleImgs, noodlestr, noodlePrice);
+			Menu(noodleImgs.length, noodleImgs, noodlestr, noodlePrice, noodleID);
 			break;
 		case 1:
-			Menu(babImgs.length, babImgs, babstr, babPrice);
+			Menu(babImgs.length, babImgs, babstr, babPrice, babID);
 			break;
 		case 2:
-			Menu(drinkImgs.length, drinkImgs, drinkstr, drinkPrice);
+			Menu(drinkImgs.length, drinkImgs, drinkstr, drinkPrice, drinkID);
 			break;
 		case 3:
-			Menu(snackImgs.length, snackImgs, snackstr, snackPrice);
+			Menu(snackImgs.length, snackImgs, snackstr, snackPrice, snackID);
 			break;
 		}
 		
@@ -371,6 +352,13 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
+		
+		if (obj == rbcard) {
+			payment = "카드";
+		}else if (obj == rbcash) {
+			payment = "현금";
+		}
+		
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
 				sumprice += Integer.parseInt(jl1[i].getText());
@@ -399,18 +387,12 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			
 			}
 		}
-		if (obj == rbcard) {
-			payment = "카드";
-		}else if (obj == rbcash) {
-			payment = "현금";
-		}
+		
 		if (obj == orderbtn) {
 			updateisOrderAtState(1);
-			System.out.println(productID);
 			for(int i = 0; i < table.getRowCount(); i++) {
-				
 				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
-				+ pcNum + ", " + productID + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+				+ pcNum + ", " + id.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
 				db.Update(sql2);
 			}
 			dispose();
