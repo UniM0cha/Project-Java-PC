@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -26,6 +28,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud.Update;
 
 public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
 	
@@ -67,20 +71,75 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String productName, count, pay;
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
     private Vector<Vector<String>> contents = new Vector<>();
+    
+    private Vector<String> noodleID = new Vector<>();
+	private Vector<String> babID = new Vector<>();
+	private Vector<String> drinkID = new Vector<>();
+	private Vector<String> snackID = new Vector<>();
+
+	private Vector<String> noodlestr = new Vector<>();
+	private Vector<String> babstr = new Vector<>();
+	private Vector<String> drinkstr = new Vector<>();
+	private Vector<String> snackstr = new Vector<>();
+	
+	private Vector<String> noodlePrice = new Vector<>();
+	private Vector<String> babPrice = new Vector<>();
+	private Vector<String> drinkPrice = new Vector<>();
+	private Vector<String> snackPrice = new Vector<>();
+	
     private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
     private JTable table = new JTable(tableModel);
 	private JScrollPane scrollpane = new JScrollPane(table);
     
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
+	private static DB db = new DB();
+	
 
 	public CustomerOrder() {
 		setTitle("음식주문");
 		setSize(1200, 900);
 		setLocationRelativeTo(this);
-		//setResizable(false);
+		setResizable(false);
 		
 		setLayout(new BorderLayout());	
+		
+		
+		
+		
+		
+		String sql = "SELECT * FROM product";
+		ResultSet rs = db.Query(sql);
+		try {
+		    while(rs.next()) {
+		    	int productID = rs.getInt("productID");
+		    	String productname = rs.getString("prouductName");
+		        String category = rs.getString("category");
+		        int price = rs.getInt("price");
+		        if(category == "라면") {
+		        	noodleID.add(Integer.toString(productID));
+		        	noodlestr.add(productname);
+		        	noodlePrice.add(Integer.toString(price));
+		        }else if(category == "밥") {
+		        	babID.add(Integer.toString(productID));
+		        	babstr.add(productname);
+		        	babPrice.add(Integer.toString(price));
+		        }else if(category == "음료수") {
+		        	drinkID.add(Integer.toString(productID));
+		        	drinkstr.add(productname);
+		        	drinkPrice.add(Integer.toString(price));
+		        }else if(category == "스낵") {
+		        	snackID.add(Integer.toString(productID));
+		        	snackstr.add(productname);
+		        	snackPrice.add(Integer.toString(price));
+		        }
+		    }
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    System.out.println("DB에서 데이터를 받아오지 못함");
+		}
+		
+		
 		
 		Color westPcolor = new Color(0xA99C90);
 		Color categorySPcolor = new Color(0xEEEEEE);
@@ -171,19 +230,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		priceP.setLayout(new BorderLayout());
 		priceP.setBackground(pricePcolor);
 		
-		
-		
-		
-		
-		
 		pricelbl = new JLabel("0,000원 ");
-		
-		
-		
-		
-		
-		
-		
 		priceP.add(pricelbl, BorderLayout.CENTER);
 		
 		requestlbl = new JLabel("주문 요청 사항");
@@ -349,6 +396,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			}
 		}
 		if (obj == orderbtn) {
+			String sql = "Update orders SET state = false WHERE pcNum = 1";
+			db.Update(sql);
+			
 			dispose();
 		}
 	}
