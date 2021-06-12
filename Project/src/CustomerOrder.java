@@ -16,6 +16,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,20 +31,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-<<<<<<< HEAD
 import javax.swing.table.TableColumnModel;
-=======
->>>>>>> origin/정우
 
 public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
-	
-	private static DB db = new DB();
 	
 	//상품을 표시하기 위한 임시 변수
 	private JPanel[] jp, jp1;
 	private JLabel[] jl, jl1, lbl;
 	private JButton[] jb = null;
-<<<<<<< HEAD
 	private int[] counts;
 
 	//레이아웃 설정을 위한 JPanel
@@ -53,18 +48,12 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private JButton orderbtn;	//주문하기 버튼
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};	//카테고리 리스트
 	private JList<String> lstmenu, lstprice;
-=======
-	private JButton orderbtn;
-	private String[] menulst = {"라면", "밥", "음료수", "스낵"};
-	private JList<String> lstmenu;
->>>>>>> origin/정우
 	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, categorylbl;
 	private ButtonGroup bg;
 	private JRadioButton rbcard, rbcash;
 	private JTextArea requestJt;
 	private JScrollPane categorySp, requestSp, menuSp;
 	
-<<<<<<< HEAD
 	//이미지
 	private ImageIcon[] noodleImgs = {
 			new ImageIcon("images/신라면.jpg"),
@@ -114,60 +103,39 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/자갈치.jpg")};
 
 	private DefaultListModel<String> model = new DefaultListModel<>();
-=======
->>>>>>> origin/정우
 	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
 	
 	private String productName, count, pay, productname, category, payment;
 	
 	//주문내용을 표시하기 위한 테이블
+	private static DB db = new DB();
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
     private Vector<Vector<String>> contents = new Vector<>();
     private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
     private JTable table = new JTable(tableModel);
     private JScrollPane scrollpane = new JScrollPane(table);
-    
-    
-    
-    
-    
-    
     private Vector<String> price = new Vector<>();
-    
     private Vector<String> noodleID = new Vector<>();
 	private Vector<String> babID = new Vector<>();
 	private Vector<String> drinkID = new Vector<>();
 	private Vector<String> snackID = new Vector<>();
-
 	private Vector<String> noodlestr = new Vector<>();
 	private Vector<String> babstr = new Vector<>();
 	private Vector<String> drinkstr = new Vector<>();
 	private Vector<String> snackstr = new Vector<>();
-	
 	private Vector<String> noodlePrice = new Vector<>();
 	private Vector<String> babPrice = new Vector<>();
 	private Vector<String> drinkPrice = new Vector<>();
 	private Vector<String> snackPrice = new Vector<>();
-	
-<<<<<<< HEAD
-    
-	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
-	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
-	private int pcNum, productID, Price, sequence;
-=======
 	private Vector<String> id = new Vector<>();
 	private Vector<String> ID = new Vector<>();
+	private int pcNum, productID, Price, sequence, productid;
 	
-    private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
-    private JTable table = new JTable(tableModel);
-	private JScrollPane scrollpane = new JScrollPane(table);
-    
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
-	private int pcNum, Price, productid;
-	private static DB db = new DB();
->>>>>>> origin/정우
-	
+	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
 
+	
+	
 	public CustomerOrder(int pcNum) {
 		setTitle("음식주문");
 		setSize(1200, 900);
@@ -252,7 +220,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		southwestP.add(pricelstlbl, BorderLayout.NORTH);
 		
 		scrollpane.setPreferredSize(new Dimension(200,200));
-<<<<<<< HEAD
 		table.getTableHeader().setReorderingAllowed(false); // 이동 불가
 		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table.getTableHeader().setBackground(new Color(0xF3F1DF));
@@ -270,9 +237,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		for (int i = 0; i < tcmSchedule1.getColumnCount(); i++) {
 		tcmSchedule1.getColumn(i).setCellRenderer(tScheduleCellRenderer1);
 		}
-=======
 		southwestP.add(scrollpane, BorderLayout.CENTER);
->>>>>>> origin/정우
 		
 		southwestP.add(scrollpane, BorderLayout.CENTER);
 		//southwestP 끝
