@@ -16,6 +16,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,23 +30,17 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
+public class CustomerOrder2 extends JFrame implements MouseListener, ActionListener {
 	
 	private static DB db = new DB();
-	
-	//상품을 표시하기 위한 임시 변수
-	private JPanel[] jp, jp1;
-	private JLabel[] jl, jl1, lbl;
-	private JButton[] jb = null;
-	private int[] counts;
 
-	//레이아웃 설정을 위한 JPanel
+	//레이아웃 설정을 위한 Panel
 	private JPanel westP, centerP, southP, southwestP, southeastP, payP, priceP, requestP, orderP, payPcenter;
 	
 	//구성 요소들
 	private JButton orderbtn;	//주문하기 버튼
 	private String[] menulst = {"라면", "밥", "음료수", "스낵"};	//카테고리 리스트
-	private JList<String> lstmenu, lstprice;
+	private JList<String> lstmenu;
 	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, categorylbl;
 	private ButtonGroup bg;
 	private JRadioButton rbcard, rbcash;
@@ -65,7 +60,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private ImageIcon[] babImgs = {
 			new ImageIcon("images/간장소고기덮밥.jpg"),
 			new ImageIcon("images/김치삼겹볶음덮밥.jpg"),
-			new ImageIcon("images/명란아보카도덥팝.jpg"),
+			new ImageIcon("images/명란아보카도덮밥.jpg"),
 			new ImageIcon("images/스테이크덮밥.jpg"),
 			new ImageIcon("images/스팸김치덮밥.jpg"),
 			new ImageIcon("images/양파덮밥.jpg"),
@@ -99,43 +94,57 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/자갈치.jpg"),
 			new ImageIcon("images/자갈치.jpg"),
 			new ImageIcon("images/자갈치.jpg")};
-
-	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
-	
-	private String productName, count, pay, productname, category, payment;
 	
 	//주문내용을 표시하기 위한 테이블
-	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
+	private Vector<String> header = new Vector<>(Arrays.asList("상품코드", "상품명", "개수", "가격"));
     private Vector<Vector<String>> contents = new Vector<>();
     private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
     private JTable table = new JTable(tableModel);
     private JScrollPane scrollpane = new JScrollPane(table);
     
-    private Vector<String> price = new Vector<>();
+    //product테이블에서 값을 받아오기 위한 배열
+    private Vector<String> productName;
+    private Vector<Integer> productID, count, price;
     
-    private Vector<String> noodleID = new Vector<>();
-	private Vector<String> babID = new Vector<>();
-	private Vector<String> drinkID = new Vector<>();
-	private Vector<String> snackID = new Vector<>();
-
-	private Vector<String> noodlestr = new Vector<>();
-	private Vector<String> babstr = new Vector<>();
-	private Vector<String> drinkstr = new Vector<>();
-	private Vector<String> snackstr = new Vector<>();
+	//상품을 표시하기 위한 임시 변수
+	private JPanel[] jp, jp1;
+	private JLabel[] jl, jl1, lbl;
+	private JButton[] jb;
+	private int[] counts;
+	private int len;
+    
+	//상품을 테이블에 담기 위한 변수
+	private String countString, payString; 
+	private int sumPrice = 0;
+	private int pay;
 	
-	private Vector<String> noodlePrice = new Vector<>();
-	private Vector<String> babPrice = new Vector<>();
-	private Vector<String> drinkPrice = new Vector<>();
-	private Vector<String> snackPrice = new Vector<>();
-	
-	private Vector<String> id = new Vector<>();
-	private Vector<String> ID = new Vector<>();
-	
+	//담은 상품을 데이터베이스에 입력하기 위한 변수
+	private String payment = "카드";
+	private int pcNum;
+    
+	//디자인
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
-	private int pcNum, Price, productid;
-	
 
-	public CustomerOrder(int pcNum) {
+//  private Vector<String> noodleID = new Vector<>();
+//	private Vector<String> babID = new Vector<>();
+//	private Vector<String> drinkID = new Vector<>();
+//	private Vector<String> snackID = new Vector<>();
+//
+//	private Vector<String> noodlestr = new Vector<>();
+//	private Vector<String> babstr = new Vector<>();
+//	private Vector<String> drinkstr = new Vector<>();
+//	private Vector<String> snackstr = new Vector<>();
+//	
+//	private Vector<String> noodlePrice = new Vector<>();
+//	private Vector<String> babPrice = new Vector<>();
+//	private Vector<String> drinkPrice = new Vector<>();
+//	private Vector<String> snackPrice = new Vector<>();
+//	
+//	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
+//	private int Price, sequence;
+
+
+	public CustomerOrder2(int pcNum) {
 		setTitle("음식주문");
 		setSize(1200, 900);
 		setLocationRelativeTo(this);
@@ -144,41 +153,10 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 		this.pcNum = pcNum;
 		
-		String sql = "SELECT * FROM product";
-		ResultSet rs = db.Query(sql);
-		try {
-		    while(rs.next()) {
-		    	productid = rs.getInt("productID");
-		    	productname = rs.getString("productName");
-		        category = rs.getString("category");
-		        Price = rs.getInt("price");
-		        if(category.equals("라면")) {
-		        	noodleID.add(Integer.toString(productid));
-		        	noodlestr.add(productname);
-		        	noodlePrice.add(Integer.toString(Price));
-		        }else if(category.equals("밥")) {
-		        	babID.add(Integer.toString(productid));
-		        	babstr.add(productname);
-		        	babPrice.add(Integer.toString(Price));
-		        }else if(category.equals("음료수")) {
-		        	drinkID.add(Integer.toString(productid));
-		        	drinkstr.add(productname);
-		        	drinkPrice.add(Integer.toString(Price));
-		        }else if(category.equals("스낵")) {
-		        	snackID.add(Integer.toString(productid));
-		        	snackstr.add(productname);
-		        	snackPrice.add(Integer.toString(Price));
-		        }
-		    }
-		} catch (SQLException e) {
-		    e.printStackTrace();
-		    System.out.println("DB에서 데이터를 받아오지 못함");
-		}
-		
-		
 		Color westPcolor = new Color(0xA99C90);
 		Color categorySPcolor = new Color(0xEEEEEE);
 		Color centerPcolor = new Color(0xEEEEEE);
+		Color southwestPcolor = new Color(0xA99C90);
 		Color payPcolor = new Color(0xA99C90);
 		Color pricePcolor = new Color(0xA99C90);
 		Color orderPcolor = new Color(0xA99C90);
@@ -218,13 +196,17 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		southwestP.setLayout(new BorderLayout());
 		southwestP.add(pricelstlbl, BorderLayout.NORTH);
 		
+		//상품코드 안보이게
+		table.getColumn("상품코드").setWidth(0);
+		table.getColumn("상품코드").setMinWidth(0);
+		table.getColumn("상품코드").setMaxWidth(0);
 		scrollpane.setPreferredSize(new Dimension(200,200));
 		southwestP.add(scrollpane, BorderLayout.CENTER);
-		
 		//southwestP 끝
 		
 		//southeastP 시작
 		southeastP = new JPanel();
+		
 		payP = new JPanel();
 		payP.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 0, new Color(0x767171)));
 		payP.setLayout(new BorderLayout());
@@ -235,10 +217,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		JLabel chickshow = new JLabel("                                                                               ");
 		rbcard = new JRadioButton("카드", true);	
 		rbcash = new JRadioButton("현금");
-		rbcard.addActionListener(this);
-		rbcash.addActionListener(this);
 		payPcenter = new JPanel();
-		payment = "카드";
+//		payment = "카드";
 		bg.add(rbcard);						
 		bg.add(rbcash);
 		payPcenter.add(chickshow);
@@ -310,15 +290,32 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	}
 	
 	public static void main(String[] args) {
-		new CustomerOrder(5);
+		new CustomerOrder2(5);
 
 	}
-
-	public void Menu(int len, ImageIcon[] imgs, Vector<String> str, Vector<String> price, Vector<String> id) {
+	
+	public void Menu(String category, ImageIcon[] imgs) {
+		productID = new Vector<>();
+	    productName = new Vector<>();
+	    count = new Vector<>();
+	    price = new Vector<>();
+		
+		String sql = "SELECT * FROM product WHERE category = '" + category + "'";
+		ResultSet rs = db.Query(sql);
+		try {
+		    while(rs.next()) {
+		    	productID.add(rs.getInt("productID"));
+		    	productName.add(rs.getString("productName"));
+		        price.add(rs.getInt("price"));
+		    }
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    System.out.println("DB에서 데이터를 받아오지 못함");
+		}
+		
+		len = productID.size();
 		centerP.removeAll();
-		this.len = len;
-		this.price = price;
-		this.id = id;
+		
 		jp = new JPanel[len];
 		jp1 = new JPanel[len];
 		jl = new JLabel[len];
@@ -334,24 +331,27 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jp[i].setBorder(borderThickness1);
 			jp[i].setLayout(new BorderLayout());
 			
-			lbl[i] = new JLabel(imgs[i]);
-			jp[i].add(lbl[i]);
-			
-			jl[i] = new JLabel(str.get(i));
+			jl[i] = new JLabel(productName.get(i));
 			jp[i].add(jl[i], BorderLayout.NORTH);
+
+			lbl[i] = new JLabel(imgs[i]);
+			// 확장자가 png 인 이미지도 있으므로 실패
+//			lbl[i] = new JLabel(new ImageIcon("images/" + productName.get(i) + ".jpg"));
+			jp[i].add(lbl[i]);
 			
 			jp1[i] = new JPanel();
 			jp1[i].setLayout(new BorderLayout());
 			
-			jl1[i] = new JLabel(price.get(i));
+			jl1[i] = new JLabel(NumberFormat.getInstance().format(price.get(i)) + "원");
 			jp1[i].add(jl1[i]);
 			
-			
 			jb[i] = new JButton("담기");
-			counts[i] = 0;
-			jb[i].addActionListener(this);
 			jp1[i].add(jb[i], BorderLayout.EAST);
+			jb[i].addActionListener(this);
+
 			jp[i].add(jp1[i], BorderLayout.SOUTH);
+			
+			counts[i] = 0;
 			
 			centerP.add(jp[i]);
 			centerP.revalidate();
@@ -363,16 +363,16 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	public void mouseClicked(MouseEvent e) {
 		switch(lstmenu.getSelectedIndex()) {
 		case 0:
-			Menu(noodleImgs.length, noodleImgs, noodlestr, noodlePrice, noodleID);
+			Menu("라면", noodleImgs);
 			break;
 		case 1:
-			Menu(babImgs.length, babImgs, babstr, babPrice, babID);
+			Menu("밥", babImgs);
 			break;
 		case 2:
-			Menu(drinkImgs.length, drinkImgs, drinkstr, drinkPrice, drinkID);
+			Menu("음료수", drinkImgs);
 			break;
 		case 3:
-			Menu(snackImgs.length, snackImgs, snackstr, snackPrice, snackID);
+			Menu("스낵", snackImgs);
 			break;
 		}
 		
@@ -388,62 +388,58 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
-		
+		for(int i = 0; i < len; i++) {
+			if(obj == jb[i]) {
+				sumPrice += price.get(i);	//총 가격 증가
+				counts[i] += 1;				//수량 증가
+				countString = Integer.toString(counts[i]);	//문자열로 변환
+				
+				pay = counts[i] * price.get(i);		//가격*수량 계산
+				payString = Integer.toString(pay);	//문자열로 변환
+				
+				if(counts[i] == 1) { 
+					//항목이 있다면
+					contents.add(new Vector<String>(Arrays.asList(productID.get(i).toString() ,productName.get(i), countString, payString)));
+				}
+				else {
+					//항목이 없다면
+					for(int j = 0; j < table.getRowCount(); j++) {
+						if(productName.get(i) == table.getValueAt(j, 1)) {
+							table.setValueAt(counts[i], j, 2);
+							table.setValueAt(pay, j, 3);
+						}
+					}
+				}
+				tableModel.fireTableDataChanged();
+				pricelbl.setText(NumberFormat.getInstance().format(sumPrice) + "원");
+			
+			}
+		}
 		if (obj == rbcard) {
 			payment = "카드";
 		}else if (obj == rbcash) {
 			payment = "현금";
 		}
-		
-		for(int i = 0; i < len; i++) {
-			if(obj == jb[i]) {
-				sumprice += Integer.parseInt(jl1[i].getText());
-				productName = jl[i].getText();
-				temp = counts[i] + 1;
-				count = Integer.toString(temp);
-				counts[i] = temp;
-				pricetemp = temp * Integer.parseInt(price.get(i));
-				pay = Integer.toString(pricetemp);
-				
-				if(temp == 1) {
-					contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
-					ID.add(id.get(i));
-				}else {
-					
-					for(int j = 0; j < table.getRowCount(); j++) {
-						if(jl[i].getText() == table.getValueAt(j, 0)) {
-							table.setValueAt(count, j, 1);
-							table.setValueAt(pay, j, 2);
-						}
-						
-					}
-				}
-				tableModel.fireTableDataChanged();
-
-				
-				pricelbl.setText(NumberFormat.getInstance().format(sumprice) + "원");
-			
-			}
-		}
-		
 		if (obj == orderbtn) {
-			updateisOrderAtState(1);
+			System.out.println(productID);
+			
 			for(int i = 0; i < table.getRowCount(); i++) {
-				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
-				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ", '" + requestJt.getText() + "')";
-				db.Update(sql2);
+				String sql = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
+				+ pcNum + ", " + table.getValueAt(i, 0) + ", " + table.getValueAt(i, 2) + ", '" + payment + "', " + table.getValueAt(i, 3) + ")";
+				db.Update(sql);
 			}
+			updateisOrderAtState();
 			dispose();
 			
 		}
 	}
 
-	private void updateisOrderAtState(int isOrder) {
-		String sql1 = "UPDATE state " + "SET isOrder = " + isOrder + " " + "WHERE pcNum = " + pcNum;
-		db.Update(sql1);
+	//isOrder를 true로 만듦
+	private void updateisOrderAtState() {
+		String sql = "UPDATE state SET isOrder = 1 WHERE pcNum = " + pcNum;
+		db.Update(sql);
 	}
 	
 	
 	
 }
-

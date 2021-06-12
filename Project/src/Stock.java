@@ -55,7 +55,6 @@ public class Stock extends JFrame{
 		setSize(width, height);
 		setLocationRelativeTo(this);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		setLayout(null);
 		
