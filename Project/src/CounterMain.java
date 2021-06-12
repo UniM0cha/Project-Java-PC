@@ -249,6 +249,7 @@ public class CounterMain extends JFrame {
 
 	private void Online(int i) {
 		bt[i].setBackground(yescuscolor);
+		bt[i].setEnabled(false);
 		timerset[i].setText("온라인");
 	}
 	private void Offline(int i) {
@@ -259,6 +260,7 @@ public class CounterMain extends JFrame {
 	}
 	private void OfflineOrder(int i) {
 		bt[i].setBackground(yescuscolor);
+		bt[i].setEnabled(false);
 		orderedPC.removeElement(lb[i].getText());
 	}
 	private void OnlineOrder(int i) {
