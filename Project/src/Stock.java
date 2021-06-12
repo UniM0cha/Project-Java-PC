@@ -132,7 +132,7 @@ public class Stock extends JFrame{
 		sumtable.getTableHeader().setBackground(new Color(0xF3F1DF));
 		sumtable.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		sumtable.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		stock1.setRowHeight(25);
+		sumtable.setRowHeight(25);
 		sumtable.setBackground(new Color(0xFFFFFF));
 		
 		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
