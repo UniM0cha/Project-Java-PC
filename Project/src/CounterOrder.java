@@ -160,6 +160,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		}
 	}
 	
+	// 주문한 만큼 product 테이블의 stock을 줄임
 	private void updateStockAtProduct() {
 		String sqlSelect = "SELECT pcNum, productID, SUM(counts) counts "
 				+ "FROM orders o "
@@ -180,7 +181,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		}
 	}
 
-	// orders 테이블로부터 주문내역을 얻어오는 메소드
+	// orders 테이블로부터 주문내역을 얻어옴
 	private void getDataFromOrders() {
 		String sql = "SELECT pcNum, productName, counts, payment, salePrice, request "
 				+ "FROM orders o "

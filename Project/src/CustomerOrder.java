@@ -231,7 +231,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		priceP.setLayout(new BorderLayout());
 		priceP.setBackground(pricePcolor);
 		
-		pricelbl = new JLabel("0,000원 ");
+		pricelbl = new JLabel("0원");
 		priceP.add(pricelbl, BorderLayout.CENTER);
 		
 		requestlbl = new JLabel("주문 요청 사항");
@@ -399,7 +399,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		}
 		if (obj == orderbtn) {
 			updateisOrderAtState(1);
-			
 			dispose();
 			
 		}
