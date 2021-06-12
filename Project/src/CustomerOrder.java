@@ -62,7 +62,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String[] snackprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000"};
 	private String[] price = null;
 	private DefaultListModel<String> model = new DefaultListModel<>();
-	private int len = 0, pricetemp = 0, temp = 0;
+	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
 	
 	private String productName, count, pay;
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
@@ -170,7 +170,20 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		priceP.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 0, new Color(0x767171)));
 		priceP.setLayout(new BorderLayout());
 		priceP.setBackground(pricePcolor);
+		
+		
+		
+		
+		
+		
 		pricelbl = new JLabel("0,000원 ");
+		
+		
+		
+		
+		
+		
+		
 		priceP.add(pricelbl, BorderLayout.CENTER);
 		
 		requestlbl = new JLabel("주문 요청 사항");
@@ -309,10 +322,30 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		Object obj = e.getSource();
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
-				for(int j = 0; j < table.getRowCount(); j++)
-				{
-				
+				sumprice += Integer.parseInt(jl1[i].getText());
+				productName = jl[i].getText();
+				temp = counts[i] + 1;
+				count = Integer.toString(temp);
+				counts[i] = temp;
+				pricetemp = temp * Integer.parseInt(price[i]);
+				pay = Integer.toString(pricetemp);
+				if(temp == 1) {
+					contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
+				}else {
+					
+					for(int j = 0; j < table.getRowCount(); j++) {
+						if(jl[i].getText() == table.getValueAt(j, 0)) {
+							table.setValueAt(count, j, 1);
+							table.setValueAt(pay, j, 2);
+						}
+						
+					}
 				}
+				tableModel.fireTableDataChanged();
+
+				
+				pricelbl.setText(Integer.toString(sumprice) + "원");
+			
 			}
 		}
 		if (obj == orderbtn) {

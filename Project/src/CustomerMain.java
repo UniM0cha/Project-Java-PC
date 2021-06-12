@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -5,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,9 +23,10 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 	private static DB db = new DB();
 	private final String FONT = "나눔고딕";
 	int pcNum;
+	JLabel lbltemp;
+	JLabel lblUsedTime;
 	int usedTime = 0;
 	JButton btnOrder, btnExit;
-	JLabel lblUsedTime;
 	Timer time;
 	Random random = new Random();
 	
@@ -42,43 +46,57 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		main.setBackground(maincolor);
 		main.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		lblUsedTime = new JLabel("사용 시간   0초");
-		lblUsedTime.setFont(new Font(FONT, Font.BOLD, 15));
+		//사용시간
+		JPanel panUsedTime = new JPanel(new BorderLayout());
+		lbltemp = new JLabel("사용 시간");
+		lbltemp.setFont(new Font(FONT, Font.BOLD, 15));
+		lbltemp.setHorizontalAlignment(JLabel.CENTER);
+		panUsedTime.add(lbltemp, BorderLayout.NORTH);
 		
+		lblUsedTime = new JLabel();
+		lblUsedTime.setFont(new Font(FONT, Font.BOLD, 15));
+		lblUsedTime.setHorizontalAlignment(JLabel.CENTER);
 		TimerTask task = new TimerTask() {
 			
 			@Override
 			public void run() {
 				usedTime++;
-				lblUsedTime.setText("사용 시간   " + usedTime + "초");
-				lblUsedTime.setFont(new Font(FONT, Font.BOLD, 15));
+				lblUsedTime.setText("00:" + usedTime + "");
 			}
 		};
+		panUsedTime.add(lblUsedTime, BorderLayout.CENTER);
+		main.add(panUsedTime);
 		
 		time = new Timer();
 		time.scheduleAtFixedRate(task, 1000, 1000);
 		
+		//시작시간
 		JLabel lblStartTime = new JLabel("시작 시간   00:00");
 		lblStartTime.setFont(new Font(FONT, Font.BOLD, 15));
+		main.add(lblStartTime);
+		
+		//PC번호
 		JLabel lblPc = new JLabel("PC번호 : " + pcNum);
 		lblPc.setFont(new Font(FONT, Font.BOLD, 15));
+		main.add(lblPc);
+		
+		//남은시간
 		JLabel lblLeftTime = new JLabel("남은 시간   00:00");
 		lblLeftTime.setFont(new Font(FONT, Font.BOLD, 15));
+		main.add(lblLeftTime);
+		
 		btnOrder = new JButton("먹거리 주문");
 		btnOrder.setFont(new Font(FONT, Font.BOLD, 18));
 		btnOrder.setBackground(btnordercolor);
 		btnOrder.addActionListener(this);
+		main.add(btnOrder);
+		
 		btnExit = new JButton("사용 종료");
 		btnExit.setFont(new Font(FONT, Font.BOLD, 18));
 		btnExit.setBackground(btnexitcolor);
 		btnExit.addActionListener(this);
-		
-		main.add(lblUsedTime);
-		main.add(lblStartTime);
-		main.add(lblPc);
-		main.add(lblLeftTime);
-		main.add(btnOrder);
 		main.add(btnExit);
+		
 		this.add(main);
 		
 		this.setVisible(true);
