@@ -93,6 +93,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
     
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
+	private int pcNum;
 	private static DB db = new DB();
 	
 
@@ -104,9 +105,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 		setLayout(new BorderLayout());	
 		
-		
-		
-		
+		this.pcNum = pcNum;
+		getDataFromOrders();
 		
 		String sql = "SELECT * FROM product";
 		ResultSet rs = db.Query(sql);
@@ -290,6 +290,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		add(southP, BorderLayout.SOUTH);
 		setVisible(true);
 	}
+	private void getDataFromOrders() {
+		
+	}
 	public static void main(String[] args) {
 		new CustomerOrder();
 
@@ -397,9 +400,12 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		}
 		if (obj == orderbtn) {
 			String sql = "Update orders SET state = false WHERE pcNum = 1";
+			String sql1 = "Update state SET isOrder = true WHERE pcNum = " + pcNum;
 			db.Update(sql);
+			db.Update(sql1);
 			
 			dispose();
+			
 		}
 	}
 	
