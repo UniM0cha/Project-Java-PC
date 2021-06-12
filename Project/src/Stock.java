@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -24,7 +25,7 @@ public class Stock extends JFrame{
 	private JLabel saleslabel;
 	private JLabel wonlabel;
 	
-	private Vector<String> header = new Vector<>(Arrays.asList("순서", "상품 이름", "종류", "가격", "재고"));
+	private Vector<String> header = new Vector<>(Arrays.asList("상품코드", "상품이름", "종류", "가격", "재고"));
     private Vector<Vector<String>> contents = new Vector<>();
 	private DefaultTableModel tableModel = new DefaultTableModel(contents, header) {
         public boolean isCellEditable(int row, int column) {
@@ -34,7 +35,7 @@ public class Stock extends JFrame{
     private JTable stock1 = new JTable(tableModel);
     private JScrollPane sc = new JScrollPane(stock1);
     
-    private Vector<String> header1 = new Vector<>(Arrays.asList("순서", "상품바코드", "개수", "가격"));
+    private Vector<String> header1 = new Vector<>(Arrays.asList("순서", "상품이름", "개수", "가격"));
     private Vector<Vector<String>> contents1 = new Vector<>();
     private DefaultTableModel tableModel1 = new DefaultTableModel(contents1, header1) {
         public boolean isCellEditable(int row, int column) {
@@ -124,8 +125,8 @@ public class Stock extends JFrame{
 		salessum = new JTextField("0,000");
 		salessum.setHorizontalAlignment(JLabel.RIGHT);
 		salessum.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		salessum.setForeground(Color.black);
-		salessum.setEnabled(false);
+		salessum.setForeground(new Color(0x333333));
+		salessum.setEditable(false);
 		salessum.setSize(250, 40);
 		salessum.setLocation(1150, 860);
 		mainpanel.add(salessum);
@@ -138,27 +139,31 @@ public class Stock extends JFrame{
 		mainpanel.add(wonlabel);
 		
 		
-		String sql = "SELECT * FROM sales";
+		String sql = "SELECT * "
+				+ "FROM sales s "
+				+ "JOIN product p "
+				+ "WHERE s.productID = p.productID ";
 		String sql1 = "SELECT * FROM product";
 		ResultSet rs = db.Query(sql);
 		ResultSet rs1 = db.Query(sql1);
-		// sumtable 테이블
+		// sumtable 테이블 (현재 매출)
 		try {
 		    while(rs.next()) {
 		        sequence = rs.getInt("sequence");
-		        productID = rs.getInt("productID");
+		        productName = rs.getString("productName");
 		        counts = rs.getInt("counts");
 		        salePrice = rs.getInt("salePrice");
-		        contents1.add(new Vector<String>(Arrays.asList(Integer.toString(sequence), Integer.toString(productID)
+		        contents1.add(new Vector<String>(Arrays.asList(Integer.toString(sequence), productName
 		        											 , Integer.toString(counts), Integer.toString(salePrice))));
 		        sumresult  += salePrice;
-		        salessum.setText(Integer.toString(sumresult));
+		        String priceString = NumberFormat.getInstance().format(sumresult);
+		        salessum.setText(priceString);
 		    }
 		} catch (SQLException e) {
 		    e.printStackTrace();
 		    System.out.println("DB에서 데이터를 받아오지 못함");
 		}
-		// stock1 테이블
+		// stock1 테이블 (남은 재고)
 		try {
 		    while(rs1.next()) {
 		        sequence = rs1.getInt("productID");

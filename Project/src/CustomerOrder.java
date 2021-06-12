@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -96,9 +97,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private static DB db = new DB();
 	
 
-	public CustomerOrder(String title, int width, int height) {
-		setTitle(title);
-		setSize(width, height);
+	public CustomerOrder() {
+		setTitle("음식주문");
+		setSize(1200, 900);
 		setLocationRelativeTo(this);
 		setResizable(false);
 		
@@ -291,7 +292,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		setVisible(true);
 	}
 	public static void main(String[] args) {
-		new CustomerOrder("음식주문", 1197, 900);
+		new CustomerOrder();
 
 	}
 
@@ -357,17 +358,13 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 	}
 	@Override
-	public void mousePressed(MouseEvent e) {
-	}
+	public void mousePressed(MouseEvent e) {}
 	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
+	public void mouseReleased(MouseEvent e) {}
 	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+	public void mouseEntered(MouseEvent e) {}
 	@Override
-	public void mouseExited(MouseEvent e) {
-	}
+	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
@@ -395,7 +392,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 				tableModel.fireTableDataChanged();
 
 				
-				pricelbl.setText(Integer.toString(sumprice) + "원");
+				pricelbl.setText(NumberFormat.getInstance().format(sumprice) + "원");
 			
 			}
 		}
