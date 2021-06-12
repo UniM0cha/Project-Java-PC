@@ -87,6 +87,9 @@ public class CounterOrder extends JFrame implements ActionListener {
 		table.getColumnModel().getColumn(0).setPreferredWidth(300);
 		table.setRowHeight(25);
 		table.setFont(new Font(FONT, Font.BOLD, 18));
+		table.getTableHeader().setBackground(new Color(0xF3F1DF));
+		table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		table.setBackground(new Color(0xFFFFFF));
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
 		JScrollPane scrollTable = new JScrollPane(table);

@@ -73,10 +73,10 @@ public class Stock extends JFrame{
 		
 		// 재고관리 테이블
 		
-		JLabel stocklabel = new JLabel("남은 재고");
+		JLabel stocklabel = new JLabel("남은 재고 (모두 50개입니다.)");
 		stocklabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		stocklabel.setSize(100, 60);
-		stocklabel.setLocation(325, 0);
+		stocklabel.setSize(300, 60);
+		stocklabel.setLocation(255, 0);
 		mainpanel.add(stocklabel);
 		
 		stocktable = new JPanel();
@@ -86,6 +86,10 @@ public class Stock extends JFrame{
 		
 		stock1.getTableHeader().setReorderingAllowed(false); // 이동 불가
 		stock1.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
+		stock1.getTableHeader().setBackground(new Color(0xF3F1DF));
+		stock1.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		stock1.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		stock1.setBackground(new Color(0xFFFFFF));
 		JScrollPane sc = new JScrollPane(stock1);
 		sc.setPreferredSize(new Dimension(650,750));
 		
@@ -108,6 +112,10 @@ public class Stock extends JFrame{
 		
 		sumtable.getTableHeader().setReorderingAllowed(false); // 이동 불가
 		sumtable.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
+		sumtable.getTableHeader().setBackground(new Color(0xF3F1DF));
+		sumtable.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		sumtable.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		sumtable.setBackground(new Color(0xFFFFFF));
 		sc1.setPreferredSize(new Dimension(650,750));
 		salestable.add(sc1);
 		
