@@ -20,7 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 
 public class CounterOrder extends JFrame implements ActionListener {
@@ -88,8 +91,21 @@ public class CounterOrder extends JFrame implements ActionListener {
 		table.getColumnModel().getColumn(0).setPreferredWidth(300);
 		table.setRowHeight(25);
 		table.setFont(new Font(FONT, Font.BOLD, 18));
+		table.getTableHeader().setBackground(new Color(0xF3F1DF));
+		table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		table.setBackground(new Color(0xFFFFFF));
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
+		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
+		DefaultTableCellRenderer tScheduleCellRenderer1 = new DefaultTableCellRenderer();
+		// DefaultTableCellHeaderRenderer의 정렬을 가운데 정렬로 지정
+		tScheduleCellRenderer1.setHorizontalAlignment(SwingConstants.CENTER);
+		// 정렬할 테이블의 ColumnModel을 가져옴
+		TableColumnModel tcmSchedule1 = table.getColumnModel();
+		// 반복문을 이용하여 테이블을 가운데 정렬로 지정
+		for (int i = 0; i < tcmSchedule1.getColumnCount(); i++) {
+		tcmSchedule1.getColumn(i).setCellRenderer(tScheduleCellRenderer1);
+		}
 		JScrollPane scrollTable = new JScrollPane(table);
 		subCenter.add(scrollTable, BorderLayout.CENTER);
 		
