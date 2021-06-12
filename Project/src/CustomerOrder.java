@@ -76,6 +76,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private Vector<String> snackPrice = new Vector<>();
 	
 	private Vector<String> id = new Vector<>();
+	private Vector<String> ID = new Vector<>();
 	
     private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
     private JTable table = new JTable(tableModel);
@@ -95,8 +96,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		setLayout(new BorderLayout());	
 		
 		this.pcNum = pcNum;
-		
-		
 		
 		String sql = "SELECT * FROM product";
 		ResultSet rs = db.Query(sql);
@@ -368,8 +367,10 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 				counts[i] = temp;
 				pricetemp = temp * Integer.parseInt(price.get(i));
 				pay = Integer.toString(pricetemp);
+				
 				if(temp == 1) {
 					contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
+					ID.add(id.get(i));
 				}else {
 					
 					for(int j = 0; j < table.getRowCount(); j++) {
@@ -391,8 +392,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		if (obj == orderbtn) {
 			updateisOrderAtState(1);
 			for(int i = 0; i < table.getRowCount(); i++) {
+				System.out.println(ID.get(i));
 				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
-				+ pcNum + ", " + id.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
 				db.Update(sql2);
 			}
 			dispose();
