@@ -50,12 +50,12 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private JRadioButton rbcard, rbcash;
 	private JTextArea requestJt;
 	private JScrollPane categorySp, requestSp, menuSp;
-	private ImageIcon[] noodleImgs = {new ImageIcon("images/신라면.jpg"), new ImageIcon("images/삼양라면.png"), new ImageIcon("images/사리곰탕.jpg"), new ImageIcon("images/안성탕면.jpg"), new ImageIcon("images/진라면.jpg"), new ImageIcon("images/육개장.jpg"), new ImageIcon("images/짜파게티.jpg")};
-	private ImageIcon[] babImgs = {new ImageIcon("images/간장소고기덮밥.jpg"), new ImageIcon("images/김치삼겹볶음덮밥.jpg"), new ImageIcon("images/명란아보카도덥팝.jpg"), new ImageIcon("images/스테이크덮밥.jpg"), new ImageIcon("images/스팸김치덮밥.jpg"), new ImageIcon("images/양파덮밥.jpg"), new ImageIcon("images/연어마요덮밥.jpg"), new ImageIcon("images/장어덮밥.jpg"), new ImageIcon("images/제육덮밥.jpg")};
+	private ImageIcon[] noodleImgs = {new ImageIcon("images/신라면.jpg"), new ImageIcon("images/삼양라면.png"), new ImageIcon("images/사리곰탕.jpg"), new ImageIcon("images/사리곰탕.jpg"), new ImageIcon("images/안성탕면.jpg"), new ImageIcon("images/진라면.jpg"), new ImageIcon("images/육개장.jpg"), new ImageIcon("images/짜파게티.jpg")};
+	private ImageIcon[] babImgs = {new ImageIcon("images/간장소고기덮밥.jpg"), new ImageIcon("images/김치삼겹볶음덮밥.jpg"), new ImageIcon("images/명란아보카도덥팝.jpg"), new ImageIcon("images/스테이크덮밥.jpg"), new ImageIcon("images/스팸김치덮밥.jpg"), new ImageIcon("images/양파덮밥.jpg"), new ImageIcon("images/연어마요덮밥.jpg"), new ImageIcon("images/장어덮밥.jpg"), new ImageIcon("images/제육덮밥.jpg"), new ImageIcon("images/제육덮밥.jpg")};
 	private ImageIcon[] drinkImgs = {new ImageIcon("images/콜라.jpg"), new ImageIcon("images/사이다.jpg"), new ImageIcon("images/몬스터.jpg"), new ImageIcon("images/맥콜.jpg"), new ImageIcon("images/지코.jpg"), new ImageIcon("images/실론티.jpg"), new ImageIcon("images/솔의눈.jpg"), new ImageIcon("images/데자와.jpg"), new ImageIcon("images/쿠우.jpg"), new ImageIcon("images/토레타.jpg"), new ImageIcon("images/참이슬.jpg"), new ImageIcon("images/카스.jpg")};
-	private ImageIcon[] snackImgs = {new ImageIcon("images/고구마깡.jpg"), new ImageIcon("images/신짱.jpg"), new ImageIcon("images/오잉.jpg"), new ImageIcon("images/포스틱.jpg"), new ImageIcon("images/쫄병.jpg"), new ImageIcon("images/베이컨칩.jpg"), new ImageIcon("images/무뚝뚝.jpg"), new ImageIcon("images/오징어집.jpg"), new ImageIcon("images/초코비.jpg"), new ImageIcon("images/자갈치.jpg")};
+	private ImageIcon[] snackImgs = {new ImageIcon("images/고구마깡.jpg"), new ImageIcon("images/신짱.jpg"), new ImageIcon("images/오잉.jpg"), new ImageIcon("images/포스틱.jpg"), new ImageIcon("images/쫄병.jpg"), new ImageIcon("images/베이컨칩.jpg"), new ImageIcon("images/무뚝뚝.jpg"), new ImageIcon("images/오징어집.jpg"), new ImageIcon("images/초코비.jpg"), new ImageIcon("images/자갈치.jpg"), new ImageIcon("images/자갈치.jpg"), new ImageIcon("images/자갈치.jpg")};
 	
-	private String[] noodleStr = {"신라면", "삼양라면", "사리곰탕", "안성탕면", "진라면", "육개장", "짜파게티"};
+	/*private String[] noodleStr = {"신라면", "삼양라면", "사리곰탕", "안성탕면", "진라면", "육개장", "짜파게티"};
 	private String[] babStr = {"간장소고기덮밥", "김치삼겹볶음덮밥", "명란아보카도덥팝", "스테이크덮밥", "스팸김치덮밥", "양파덮밥", "연어마요덮밥", "장어덮밥", "제육덮밥"};
 	private String[] drinkStr = {"콜라", "사이다", "몬스터", "맥콜", "지코", "실론티", "솔의눈", "데자와", "쿠우", "토레타", "참이슬", "카스"};
 	private String[] snackStr = {"고구마깡", "신짱", "오잉", "포스틱", "쫄병", "베이컨칩", "무뚝뚝", "오징어집", "초코비", "자갈치"};
@@ -63,8 +63,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String[] noodleprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000"};
 	private String[] babprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000"};
 	private String[] drinkprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000", "5000", "5000"};
-	private String[] snackprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000"};
-	private String[] price = null;
+	private String[] snackprice = {"4500", "3500", "4000", "3500", "3500", "3000", "5000", "5000", "5000", "5000"};*/
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
 	
@@ -113,22 +112,22 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		try {
 		    while(rs.next()) {
 		    	int productID = rs.getInt("productID");
-		    	String productname = rs.getString("prouductName");
+		    	String productname = rs.getString("productName");
 		        String category = rs.getString("category");
 		        int price = rs.getInt("price");
-		        if(category == "라면") {
+		        if(category.equals("라면")) {
 		        	noodleID.add(Integer.toString(productID));
 		        	noodlestr.add(productname);
 		        	noodlePrice.add(Integer.toString(price));
-		        }else if(category == "밥") {
+		        }else if(category.equals("밥")) {
 		        	babID.add(Integer.toString(productID));
 		        	babstr.add(productname);
 		        	babPrice.add(Integer.toString(price));
-		        }else if(category == "음료수") {
+		        }else if(category.equals("음료수")) {
 		        	drinkID.add(Integer.toString(productID));
 		        	drinkstr.add(productname);
 		        	drinkPrice.add(Integer.toString(price));
-		        }else if(category == "스낵") {
+		        }else if(category.equals("스낵")) {
 		        	snackID.add(Integer.toString(productID));
 		        	snackstr.add(productname);
 		        	snackPrice.add(Integer.toString(price));
@@ -295,10 +294,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 
 	}
 
-	public void Menu(int len, ImageIcon[] imgs, String[] str, String[] price) {
+	public void Menu(int len, ImageIcon[] imgs, Vector<String> str, Vector<String> price) {
 		centerP.removeAll();
 		this.len = len;
-		this.price = price;
 		jp = new JPanel[len];
 		jp1 = new JPanel[len];
 		jl = new JLabel[len];
@@ -317,13 +315,13 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			lbl[i] = new JLabel(imgs[i]);
 			jp[i].add(lbl[i]);
 			
-			jl[i] = new JLabel(str[i]);
+			jl[i] = new JLabel(str.get(i));
 			jp[i].add(jl[i], BorderLayout.NORTH);
 			
 			jp1[i] = new JPanel();
 			jp1[i].setLayout(new BorderLayout());
 			
-			jl1[i] = new JLabel(price[i]);
+			jl1[i] = new JLabel(price.get(i));
 			jp1[i].add(jl1[i]);
 			
 			jb[i] = new JButton("담기");
@@ -342,16 +340,16 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	public void mouseClicked(MouseEvent e) {
 		switch(lstmenu.getSelectedIndex()) {
 		case 0:
-			Menu(noodleImgs.length, noodleImgs, noodleStr, noodleprice);
+			Menu(noodleImgs.length, noodleImgs, noodlestr, noodlePrice);
 			break;
 		case 1:
-			Menu(babImgs.length, babImgs, babStr, babprice);
+			Menu(babImgs.length, babImgs, babstr, babPrice);
 			break;
 		case 2:
-			Menu(drinkImgs.length, drinkImgs, drinkStr, drinkprice);
+			Menu(drinkImgs.length, drinkImgs, drinkstr, drinkPrice);
 			break;
 		case 3:
-			Menu(snackImgs.length, snackImgs, snackStr, snackprice);
+			Menu(snackImgs.length, snackImgs, snackstr, snackPrice);
 			break;
 		}
 		
@@ -378,7 +376,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 				temp = counts[i] + 1;
 				count = Integer.toString(temp);
 				counts[i] = temp;
-				pricetemp = temp * Integer.parseInt(price[i]);
+				pricetemp = temp * Integer.parseInt(price.get(i));
 				pay = Integer.toString(pricetemp);
 				if(temp == 1) {
 					contents.add(new Vector<String>(Arrays.asList(productName, count, pay)));
