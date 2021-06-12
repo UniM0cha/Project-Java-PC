@@ -143,6 +143,43 @@ public class CounterOrder extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		if (obj == btnConfirm) {
+			if (JOptionPane.showConfirmDialog(this, "상품을 제공하셨습니까?", "확인", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				updateStockAtProduct();
+				insertDataAtSales();
+				deleteDataAtOrders();
+				falseIsOrderAtState();
+				this.dispose();
+			}
+		}
+		else if (obj == btnClose) {
+			this.dispose();
+		}
+	}
+	
+	private void updateStockAtProduct() {
+		String sqlSelect = "SELECT pcNum, productID, SUM(counts) counts "
+				+ "FROM orders o "
+				+ "WHERE pcNum = " + pcNum + " "
+				+ "GROUP BY productID";
+		ResultSet rs = db.Query(sqlSelect); 
+		try {
+			while(rs.next()) {
+				int productID = rs.getInt("productID");
+				int sumCounts = rs.getInt("counts");
+				String sqlUpdate =  "UPDATE product "
+						+ "SET stock = stock - " + sumCounts + " "
+						+ "WHERE productID = " + productID;
+				db.Update(sqlUpdate);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// orders 테이블로부터 주문내역을 얻어오는 메소드
 	private void getDataFromOrders() {
 		String sql = "SELECT pcNum, productName, counts, payment, salePrice, request "
@@ -176,34 +213,20 @@ public class CounterOrder extends JFrame implements ActionListener {
 		db.Update(sql);
 	}
 	
-	// orders의 주문내역을 삭제 & state의 isOrder false
+	// orders의 주문내역을 삭제
 	private void deleteDataAtOrders() {
 		String sql = "DELETE FROM orders "
 				+ "WHERE pcNum = " + pcNum;
 		db.Update(sql);
-		
-		sql = "UPDATE state "
+	}
+	
+	// state의 isOrder false
+	private void falseIsOrderAtState() {
+		String sql = "UPDATE state "
 				+ "SET isOrder = 0 "
 				+ "WHERE pcNum = " + pcNum;
 		db.Update(sql);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object obj = e.getSource();
-		if (obj == btnConfirm) {
-			if (JOptionPane.showConfirmDialog(this, "상품을 제공하셨습니까?", "확인", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				insertDataAtSales();
-				deleteDataAtOrders();
-				this.dispose();
-			}
-		}
-		else if (obj == btnClose) {
-			this.dispose();
-		}
-	}
-
-
 }
 
 /*
