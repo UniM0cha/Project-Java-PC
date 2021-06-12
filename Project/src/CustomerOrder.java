@@ -71,6 +71,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String productName, count, pay;
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
     private Vector<Vector<String>> contents = new Vector<>();
+    private Vector<String> price = new Vector<>();
     
     private Vector<String> noodleID = new Vector<>();
 	private Vector<String> babID = new Vector<>();
@@ -298,6 +299,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	public void Menu(int len, ImageIcon[] imgs, Vector<String> str, Vector<String> price) {
 		centerP.removeAll();
 		this.len = len;
+		this.price = price;
 		jp = new JPanel[len];
 		jp1 = new JPanel[len];
 		jl = new JLabel[len];
