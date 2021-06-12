@@ -125,8 +125,8 @@ public class Stock extends JFrame{
 		salessum = new JTextField("0,000");
 		salessum.setHorizontalAlignment(JLabel.RIGHT);
 		salessum.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		salessum.setForeground(Color.black);
-		salessum.setEnabled(false);
+		salessum.setForeground(new Color(0x333333));
+		salessum.setEditable(false);
 		salessum.setSize(250, 40);
 		salessum.setLocation(1150, 860);
 		mainpanel.add(salessum);
