@@ -98,7 +98,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private static DB db = new DB();
 	
 
-	public CustomerOrder() {
+	public CustomerOrder(int pcNum) {
 		setTitle("음식주문");
 		setSize(1200, 900);
 		setLocationRelativeTo(this);
@@ -107,7 +107,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		setLayout(new BorderLayout());	
 		
 		this.pcNum = pcNum;
-		getDataFromOrders();
+		
 		
 		String sql = "SELECT * FROM product";
 		ResultSet rs = db.Query(sql);
@@ -291,11 +291,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		add(southP, BorderLayout.SOUTH);
 		setVisible(true);
 	}
-	private void getDataFromOrders() {
-		
-	}
+	
 	public static void main(String[] args) {
-		new CustomerOrder();
+		new CustomerOrder(5);
 
 	}
 
@@ -400,14 +398,18 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			}
 		}
 		if (obj == orderbtn) {
-			String sql = "Update orders SET state = false WHERE pcNum = 1";
-			String sql1 = "Update state SET isOrder = true WHERE pcNum = " + pcNum;
-			db.Update(sql);
-			db.Update(sql1);
+			updateisOrderAtState(1);
 			
 			dispose();
 			
 		}
+	}
+
+	private void updateisOrderAtState(int isOrder) {
+		String sql1 = "UPDATE state "
+				+ "SET isOrder = " + isOrder + " "
+				+ "WHERE pcNum = " + pcNum;
+		db.Update(sql1);
 	}
 	
 	

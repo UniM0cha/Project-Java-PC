@@ -168,7 +168,7 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == btnOrder) {
-			new CustomerOrder();
+			new CustomerOrder(pcNum);
 		}
 		else if (obj == btnExit) {
 			updateStatementAtState(0);  //사용 종료 버튼을 누를 때 오프라인으로 변경
