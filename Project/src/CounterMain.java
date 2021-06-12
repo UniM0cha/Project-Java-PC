@@ -105,6 +105,7 @@ public class CounterMain extends JFrame {
 		checkbutton.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		checkbutton.setBackground(ordernorth);
 		checkbutton.setForeground(new Color(0x262626));
+		checkbutton.addActionListener(new MyListener());
 		order.add(checkbutton, BorderLayout.SOUTH);
 		
 		// 손님 이용하는거 보는 틀
@@ -281,6 +282,10 @@ public class CounterMain extends JFrame {
 				if (obj == bt[i]) {
 					new CounterOrder(i+1, bt[i]);
 				}
+			}
+			if(obj == checkbutton) {
+				new Stock("재고 관리", 1500, 1000);
+				
 			}
 		}
 	}
