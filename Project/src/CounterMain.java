@@ -166,6 +166,7 @@ public class CounterMain extends JFrame {
 				pcnum3.add(bt[i]);
 			}
 		}
+		
 
 		customer1.add(pcnum1, BorderLayout.NORTH);
 		customer1.add(pcnum2, BorderLayout.CENTER);
@@ -200,7 +201,8 @@ public class CounterMain extends JFrame {
 			while(rs.next()) {
 				int pcNum = rs.getInt("pcNum");
 				boolean state = rs.getBoolean("statement");
-				stateUpdate(pcNum-1, state);
+				boolean isorder = rs.getBoolean("isOrder");
+				stateUpdate(pcNum-1, state, isorder);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -209,15 +211,32 @@ public class CounterMain extends JFrame {
 	}
 
 	boolean[] isOnline = new boolean[30];
-	boolean[] isOnline1 = new boolean[30];
+	boolean[] isOnlineorder = new boolean[30];
 	
-	private void stateUpdate(int i, boolean state) {
+	private void stateUpdate(int i, boolean state, boolean isorder) {
 		// DB에서 자리가 온라인인 경우
 		if(state) {
 			if(isOnline[i] == false) {
 				isOnline[i] = true;
 				Online(i);
-				
+				// DB에서 자리에서 주문을 했을 경우
+				if(isorder)
+				{
+					if(isOnlineorder[i] == false)
+					{
+						isOnlineorder[i] = true;
+						OnlineOrder(i);
+					}
+				}
+				// 주문 완료 버튼을 눌렀을때
+				else
+				{
+					if(isOnlineorder[i] == true)
+					{
+						isOnlineorder[i] = false;
+						OfflineOrder(i);
+					}
+				}
 			}
 		}
 		// DB에서 자리가 오프라인인 경우
@@ -231,15 +250,22 @@ public class CounterMain extends JFrame {
 
 	private void Online(int i) {
 		bt[i].setBackground(yescuscolor);
-		bt[i].setEnabled(true);
 		timerset[i].setText("온라인");
-		orderedPC.addElement(lb[i].getText());
 	}
 	private void Offline(int i) {
 		bt[i].setBackground(nocuscolor);
 		bt[i].setEnabled(false);
 		timerset[i].setText("오프라인");
+		
+	}
+	private void OfflineOrder(int i) {
+		bt[i].setBackground(yescuscolor);
 		orderedPC.removeElement(lb[i].getText());
+	}
+	private void OnlineOrder(int i) {
+		bt[i].setBackground(clickcolor);
+		bt[i].setEnabled(true);
+		orderedPC.addElement(lb[i].getText());
 	}
 
 	private class MyListener implements MouseListener, ActionListener {
