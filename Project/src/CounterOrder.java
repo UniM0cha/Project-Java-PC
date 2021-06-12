@@ -1,33 +1,29 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 
 public class CounterOrder extends JFrame implements ActionListener {
@@ -57,6 +53,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(true);
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(new Color(0x25262B), 5));
+		this.setResizable(false);
 		
 		Color westcolor = new Color(0x595959);
 		Color btncolor = new Color(0xF3F1DF);
@@ -94,8 +91,21 @@ public class CounterOrder extends JFrame implements ActionListener {
 		table.getColumnModel().getColumn(0).setPreferredWidth(300);
 		table.setRowHeight(25);
 		table.setFont(new Font(FONT, Font.BOLD, 18));
+		table.getTableHeader().setBackground(new Color(0xF3F1DF));
+		table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		table.setBackground(new Color(0xFFFFFF));
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
+		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
+		DefaultTableCellRenderer tScheduleCellRenderer1 = new DefaultTableCellRenderer();
+		// DefaultTableCellHeaderRenderer의 정렬을 가운데 정렬로 지정
+		tScheduleCellRenderer1.setHorizontalAlignment(SwingConstants.CENTER);
+		// 정렬할 테이블의 ColumnModel을 가져옴
+		TableColumnModel tcmSchedule1 = table.getColumnModel();
+		// 반복문을 이용하여 테이블을 가운데 정렬로 지정
+		for (int i = 0; i < tcmSchedule1.getColumnCount(); i++) {
+		tcmSchedule1.getColumn(i).setCellRenderer(tScheduleCellRenderer1);
+		}
 		JScrollPane scrollTable = new JScrollPane(table);
 		subCenter.add(scrollTable, BorderLayout.CENTER);
 		
@@ -150,7 +160,45 @@ public class CounterOrder extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 	
-	// orders 테이블로부터 주문내역을 얻어오는 메소드
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object obj = e.getSource();
+		if (obj == btnConfirm) {
+			if (JOptionPane.showConfirmDialog(this, "상품을 제공하셨습니까?", "확인", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				updateStockAtProduct();
+				insertDataAtSales();
+				deleteDataAtOrders();
+				falseIsOrderAtState();
+				this.dispose();
+			}
+		}
+		else if (obj == btnClose) {
+			this.dispose();
+		}
+	}
+	
+	// 주문한 만큼 product 테이블의 stock을 줄임
+	private void updateStockAtProduct() {
+		String sqlSelect = "SELECT pcNum, productID, SUM(counts) counts "
+				+ "FROM orders o "
+				+ "WHERE pcNum = " + pcNum + " "
+				+ "GROUP BY productID";
+		ResultSet rs = db.Query(sqlSelect); 
+		try {
+			while(rs.next()) {
+				int productID = rs.getInt("productID");
+				int sumCounts = rs.getInt("counts");
+				String sqlUpdate =  "UPDATE product "
+						+ "SET stock = stock - " + sumCounts + " "
+						+ "WHERE productID = " + productID;
+				db.Update(sqlUpdate);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// orders 테이블로부터 주문내역을 얻어옴
 	private void getDataFromOrders() {
 		String sql = "SELECT pcNum, productName, counts, payment, salePrice, request "
 				+ "FROM orders o "
@@ -183,38 +231,24 @@ public class CounterOrder extends JFrame implements ActionListener {
 		db.Update(sql);
 	}
 	
-	// orders의 주문내역을 삭제 & state의 isOrder false
+	// orders의 주문내역을 삭제
 	private void deleteDataAtOrders() {
 		String sql = "DELETE FROM orders "
 				+ "WHERE pcNum = " + pcNum;
 		db.Update(sql);
-		
-		sql = "UPDATE state "
+	}
+	
+	// state의 isOrder false
+	private void falseIsOrderAtState() {
+		String sql = "UPDATE state "
 				+ "SET isOrder = 0 "
 				+ "WHERE pcNum = " + pcNum;
 		db.Update(sql);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object obj = e.getSource();
-		if (obj == btnConfirm) {
-			if (JOptionPane.showConfirmDialog(this, "상품을 제공하셨습니까?", "확인", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				insertDataAtSales();
-				deleteDataAtOrders();
-				this.dispose();
-			}
-		}
-		else if (obj == btnClose) {
-			this.dispose();
-		}
-	}
-
-
 }
 
 /*
  * 한계점
- * 1. 주문 내역을 보고있는 중 주문이 들어오면 확인 불가
+ * 1. 주문 내역을 보고있는 중 주문이 들어오면 확인 불가 (실시간 연동 필요)
  * 2. 다른 결제수단으로 한번 더 주문시 확인 불가
  */
