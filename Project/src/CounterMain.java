@@ -219,24 +219,6 @@ public class CounterMain extends JFrame {
 			if(isOnline[i] == false) {
 				isOnline[i] = true;
 				Online(i);
-				// DB에서 자리에서 주문을 했을 경우
-				if(isorder)
-				{
-					if(isOnlineorder[i] == false)
-					{
-						isOnlineorder[i] = true;
-						OnlineOrder(i);
-					}
-				}
-				// 주문 완료 버튼을 눌렀을때
-				else
-				{
-					if(isOnlineorder[i] == true)
-					{
-						isOnlineorder[i] = false;
-						OfflineOrder(i);
-					}
-				}
 			}
 		}
 		// DB에서 자리가 오프라인인 경우
@@ -244,6 +226,23 @@ public class CounterMain extends JFrame {
 			if(isOnline[i] == true) {
 				isOnline[i] = false;
 				Offline(i);
+			}
+		}
+		if(isorder) {
+			// DB에서 자리에서 주문을 했을 경우
+			if(isOnlineorder[i] == false)
+			{
+				isOnlineorder[i] = true;
+				OnlineOrder(i);
+			}
+		}
+		// 주문 완료 버튼을 눌렀을때
+		else
+		{
+			if(isOnlineorder[i] == true)
+			{
+				isOnlineorder[i] = false;
+				OfflineOrder(i);
 			}
 		}
 	}
