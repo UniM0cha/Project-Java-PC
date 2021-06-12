@@ -15,7 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class Stock extends JFrame{
 	
@@ -90,6 +93,20 @@ public class Stock extends JFrame{
 		stock1.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		stock1.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		stock1.setBackground(new Color(0xFFFFFF));
+		stock1.setRowHeight(25);
+		
+		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
+		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
+		// DefaultTableCellHeaderRenderer의 정렬을 가운데 정렬로 지정
+		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		// 정렬할 테이블의 ColumnModel을 가져옴
+		TableColumnModel tcmSchedule = stock1.getColumnModel();
+		// 반복문을 이용하여 테이블을 가운데 정렬로 지정
+		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
+		tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+		}
+		
+		
 		JScrollPane sc = new JScrollPane(stock1);
 		sc.setPreferredSize(new Dimension(650,750));
 		
@@ -115,7 +132,20 @@ public class Stock extends JFrame{
 		sumtable.getTableHeader().setBackground(new Color(0xF3F1DF));
 		sumtable.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		sumtable.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		stock1.setRowHeight(25);
 		sumtable.setBackground(new Color(0xFFFFFF));
+		
+		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
+				DefaultTableCellRenderer tScheduleCellRenderer1 = new DefaultTableCellRenderer();
+				// DefaultTableCellHeaderRenderer의 정렬을 가운데 정렬로 지정
+				tScheduleCellRenderer1.setHorizontalAlignment(SwingConstants.CENTER);
+				// 정렬할 테이블의 ColumnModel을 가져옴
+				TableColumnModel tcmSchedule1 = sumtable.getColumnModel();
+				// 반복문을 이용하여 테이블을 가운데 정렬로 지정
+				for (int i = 0; i < tcmSchedule1.getColumnCount(); i++) {
+				tcmSchedule1.getColumn(i).setCellRenderer(tScheduleCellRenderer1);
+				}
+				
 		sc1.setPreferredSize(new Dimension(650,750));
 		salestable.add(sc1);
 		
