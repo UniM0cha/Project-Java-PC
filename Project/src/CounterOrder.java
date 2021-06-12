@@ -183,9 +183,14 @@ public class CounterOrder extends JFrame implements ActionListener {
 		db.Update(sql);
 	}
 	
-	// orders의 주문내역을 삭제
+	// orders의 주문내역을 삭제 & state의 isOrder false
 	private void deleteDataAtOrders() {
 		String sql = "DELETE FROM orders "
+				+ "WHERE pcNum = " + pcNum;
+		db.Update(sql);
+		
+		sql = "UPDATE state "
+				+ "SET isOrder = 0 "
 				+ "WHERE pcNum = " + pcNum;
 		db.Update(sql);
 	}
