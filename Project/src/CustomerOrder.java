@@ -392,9 +392,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		if (obj == orderbtn) {
 			updateisOrderAtState(1);
 			for(int i = 0; i < table.getRowCount(); i++) {
-				System.out.println(ID.get(i));
-				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
-				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
+				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ", '" + requestJt.getText() + "')";
 				db.Update(sql2);
 			}
 			dispose();
