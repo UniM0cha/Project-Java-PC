@@ -214,41 +214,35 @@ public class CounterMain extends JFrame {
 	boolean[] isOnlineorder = new boolean[30];
 	
 	private void stateUpdate(int i, boolean state, boolean isorder) {
-		// DB에서 자리가 온라인인 경우
-		if(state) {
-			if(isOnline[i] == false) {
-				isOnline[i] = true;
-				Online(i);
+		if(state) {								// 온라인
+			if(isorder) {						// 주문 내역 존재
+				if(isOnlineorder[i] == false) {
+					isOnlineorder[i] = true;
+					OnlineOrder(i);
+				}
+			}
+			else {								// 온라인
+				if(isOnlineorder[i] == true) {
+					isOnlineorder[i] = false;
+					OfflineOrder(i);
+				}
+				if(isOnline[i] == false) {
+					isOnline[i] = true;
+					Online(i);
+				}
 			}
 		}
-		// DB에서 자리가 오프라인인 경우
-		else {
+		else {									//오프라인
 			if(isOnline[i] == true) {
 				isOnline[i] = false;
 				Offline(i);
-			}
-		}
-		if(isorder) {
-			// DB에서 자리에서 주문을 했을 경우
-			if(isOnlineorder[i] == false)
-			{
-				isOnlineorder[i] = true;
-				OnlineOrder(i);
-			}
-		}
-		// 주문 완료 버튼을 눌렀을때
-		else
-		{
-			if(isOnlineorder[i] == true)
-			{
-				isOnlineorder[i] = false;
-				OfflineOrder(i);
 			}
 		}
 	}
 
 	private void Online(int i) {
 		bt[i].setBackground(yescuscolor);
+		bt[i].setEnabled(false);
 		timerset[i].setText("온라인");
 	}
 	private void Offline(int i) {
@@ -258,13 +252,14 @@ public class CounterMain extends JFrame {
 		
 	}
 	private void OfflineOrder(int i) {
-		bt[i].setBackground(yescuscolor);
+		Online(i);
 		orderedPC.removeElement(lb[i].getText());
 	}
 	private void OnlineOrder(int i) {
 		bt[i].setBackground(clickcolor);
 		bt[i].setEnabled(true);
 		orderedPC.addElement(lb[i].getText());
+		timerset[i].setText("주문 요청");
 	}
 
 	private class MyListener implements MouseListener, ActionListener {
