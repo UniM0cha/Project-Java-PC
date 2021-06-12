@@ -36,7 +36,7 @@ import javax.swing.table.TableColumnModel;
 public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
 	
 	//상품을 표시하기 위한 임시 변수
-	private JPanel[] jp, jp1;
+	private JPanel[] jp, jp1, junki;
 	private JLabel[] jl, jl1, lbl;
 	private JButton[] jb = null;
 	private int[] counts;
