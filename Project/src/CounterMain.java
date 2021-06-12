@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,6 +48,8 @@ public class CounterMain extends JFrame {
 	private Color nocuscolor;
 	private Color yescuscolor;
 	private Color clickcolor;
+	private SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy년 MM월dd일");
+	private JButton checkbutton;
 
 	public CounterMain(String title, int width, int height) {
 		setTitle(title);
@@ -65,10 +69,11 @@ public class CounterMain extends JFrame {
 		nocuscolor = new Color(0xd0cece);
 		yescuscolor = new Color(0x92d050);
 		clickcolor = new Color(0xF56257);
+		Date time = new Date();
+		String time2 = format2.format(time); // 시간
 		
-		
-		// 임시 선언
-		orderedPC.addElement("7번 PC");
+		// 임시 선언  238번줄로 바뀜
+		//orderedPC.addElement("7번 PC");
 		
 		// 주문목록
 
@@ -82,7 +87,8 @@ public class CounterMain extends JFrame {
 		orderNorth.setBackground(ordernorth);
 		orderNorth.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0x1B1B22)));
 
-		orderlbl = new JLabel("주문 목록");
+		orderlbl = new JLabel("");
+		orderlbl.setText(time2);
 		orderlbl.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		orderlbl.setForeground(new Color(0x262626));
 
@@ -93,8 +99,14 @@ public class CounterMain extends JFrame {
 		pclist.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		pclist.setBackground(pclistcolor);
 		pclist.setForeground(new Color(0x262626));
-		order.add(pclist);
-
+		order.add(pclist, BorderLayout.CENTER);
+		
+		checkbutton = new JButton("재고 관리 및 매출");
+		checkbutton.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		checkbutton.setBackground(ordernorth);
+		checkbutton.setForeground(new Color(0x262626));
+		order.add(checkbutton, BorderLayout.SOUTH);
+		
 		// 손님 이용하는거 보는 틀
 
 		customer = new JPanel();
@@ -200,6 +212,7 @@ public class CounterMain extends JFrame {
 	}
 
 	boolean[] isOnline = new boolean[30];
+	boolean[] isOnline1 = new boolean[30];
 	
 	private void stateUpdate(int i, boolean state) {
 		// DB에서 자리가 온라인인 경우
@@ -207,6 +220,7 @@ public class CounterMain extends JFrame {
 			if(isOnline[i] == false) {
 				isOnline[i] = true;
 				Online(i);
+				
 			}
 		}
 		// DB에서 자리가 오프라인인 경우
@@ -222,11 +236,13 @@ public class CounterMain extends JFrame {
 		bt[i].setBackground(yescuscolor);
 		bt[i].setEnabled(true);
 		timerset[i].setText("온라인");
+		orderedPC.addElement(lb[i].getText());
 	}
 	private void Offline(int i) {
 		bt[i].setBackground(nocuscolor);
 		bt[i].setEnabled(false);
 		timerset[i].setText("오프라인");
+		orderedPC.removeElement(lb[i].getText());
 	}
 
 	private class MyListener implements MouseListener, ActionListener {
