@@ -127,12 +127,9 @@ public class CounterMain extends JFrame {
 		
 		for (int i = 0; i < bt.length; i++) {
 			bt[i] = new JButton();
-			// 맥때문에 넣은거임
-			bt[i].setOpaque(true);
 			bt[i].setLayout(new BorderLayout());
 			bt[i].setBorder(borderThickness2);
 			bt[i].addActionListener(new MyListener());
-//			bt[i].addMouseListener(new MyListener());
 			
 			lb[i] = new JLabel((i + 1) + "번 PC");
 			lb[i].setFont(new Font("맑은 고딕", Font.BOLD, 20));
@@ -230,22 +227,8 @@ public class CounterMain extends JFrame {
 	}
 
 	private class MyListener implements MouseListener, ActionListener {
-
 		@Override
-		public void mouseClicked(MouseEvent e) {
-//			Object obj = e.getSource();
-//			for (int i = 0; i < 30; i++) {
-//				if (obj == bt[i]) {
-//					bt[i].setBackground(clickcolor);
-//					isOrder[i] = true;
-//					
-//					if(e.getClickCount() == 2) {	//더블클릭
-//						new Counter_Order(i+1, bt[i]);
-//					}
-//				}
-//			}
-		}
-
+		public void mouseClicked(MouseEvent e) {}
 		@Override
 		public void mousePressed(MouseEvent e) {}
 		@Override
