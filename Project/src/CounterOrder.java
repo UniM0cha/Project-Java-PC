@@ -50,6 +50,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setUndecorated(true);
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(new Color(0x25262B), 5));
+		this.setResizable(false);
 		
 		Color westcolor = new Color(0x595959);
 		Color btncolor = new Color(0xF3F1DF);
