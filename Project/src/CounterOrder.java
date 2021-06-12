@@ -71,7 +71,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		west.setBackground(westcolor);
 		west.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 5, new Color(0x25262B)));
 		
-		// PC번호
+		// PC번호 (00번)
 		JLabel lblPcNum = new JLabel(Integer.toString(pcNum));
 		lblPcNum.setFont(new Font(FONT, Font.BOLD, 40));
 		lblPcNum.setForeground(Color.white);

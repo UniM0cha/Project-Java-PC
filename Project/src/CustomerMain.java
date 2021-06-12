@@ -6,8 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,12 +59,18 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		lblUsedTime = new JLabel();
 		lblUsedTime.setFont(new Font(FONT, Font.BOLD, 15));
 		lblUsedTime.setHorizontalAlignment(JLabel.CENTER);
+		
+		DateFormat format = new SimpleDateFormat("HH:mm:ss");
+		long startTime = System.currentTimeMillis();
+		
 		TimerTask task = new TimerTask() {
 			
 			@Override
 			public void run() {
-				usedTime++;
-				lblUsedTime.setText("00:" + usedTime + "");
+				long currentTime = System.currentTimeMillis();
+				long diff = currentTime - startTime;
+				String usedTime = format.format(diff - 32400000);
+				lblUsedTime.setText(usedTime);
 			}
 		};
 		panUsedTime.add(lblUsedTime, BorderLayout.CENTER);
@@ -76,8 +85,10 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		main.add(lblStartTime);
 		
 		//PC번호
+		JPanel panPc = new JPanel(new BorderLayout());
 		JLabel lblPc = new JLabel("PC번호 : " + pcNum);
 		lblPc.setFont(new Font(FONT, Font.BOLD, 15));
+		panPc.add(lblPc, BorderLayout.CENTER);
 		main.add(lblPc);
 		
 		//남은시간
@@ -86,13 +97,13 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		main.add(lblLeftTime);
 		
 		btnOrder = new JButton("먹거리 주문");
-		btnOrder.setFont(new Font(FONT, Font.BOLD, 18));
+		btnOrder.setFont(new Font(FONT, Font.BOLD, 15));
 		btnOrder.setBackground(btnordercolor);
 		btnOrder.addActionListener(this);
 		main.add(btnOrder);
 		
 		btnExit = new JButton("사용 종료");
-		btnExit.setFont(new Font(FONT, Font.BOLD, 18));
+		btnExit.setFont(new Font(FONT, Font.BOLD, 15));
 		btnExit.setBackground(btnexitcolor);
 		btnExit.addActionListener(this);
 		main.add(btnExit);
