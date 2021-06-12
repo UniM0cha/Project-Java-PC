@@ -68,7 +68,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
 	
-	private String productName, count, pay;
+	private String productName, count, pay, productname, category, payment;
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
     private Vector<Vector<String>> contents = new Vector<>();
     private Vector<String> price = new Vector<>();
@@ -94,7 +94,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
     
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
-	private int pcNum;
+	private int pcNum, productID, Price, sequence;
 	private static DB db = new DB();
 	
 
@@ -109,30 +109,31 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		this.pcNum = pcNum;
 		
 		
+		
 		String sql = "SELECT * FROM product";
 		ResultSet rs = db.Query(sql);
 		try {
 		    while(rs.next()) {
-		    	int productID = rs.getInt("productID");
-		    	String productname = rs.getString("productName");
-		        String category = rs.getString("category");
-		        int price = rs.getInt("price");
+		    	productID = rs.getInt("productID");
+		    	productname = rs.getString("productName");
+		        category = rs.getString("category");
+		        Price = rs.getInt("price");
 		        if(category.equals("라면")) {
 		        	noodleID.add(Integer.toString(productID));
 		        	noodlestr.add(productname);
-		        	noodlePrice.add(Integer.toString(price));
+		        	noodlePrice.add(Integer.toString(Price));
 		        }else if(category.equals("밥")) {
 		        	babID.add(Integer.toString(productID));
 		        	babstr.add(productname);
-		        	babPrice.add(Integer.toString(price));
+		        	babPrice.add(Integer.toString(Price));
 		        }else if(category.equals("음료수")) {
 		        	drinkID.add(Integer.toString(productID));
 		        	drinkstr.add(productname);
-		        	drinkPrice.add(Integer.toString(price));
+		        	drinkPrice.add(Integer.toString(Price));
 		        }else if(category.equals("스낵")) {
 		        	snackID.add(Integer.toString(productID));
 		        	snackstr.add(productname);
-		        	snackPrice.add(Integer.toString(price));
+		        	snackPrice.add(Integer.toString(Price));
 		        }
 		    }
 		} catch (SQLException e) {
@@ -219,6 +220,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		rbcard = new JRadioButton("카드", true);	
 		rbcash = new JRadioButton("현금");
 		payPcenter = new JPanel();
+		payment = "카드";
 		bg.add(rbcard);						
 		bg.add(rbcash);
 		payPcenter.add(chickshow);
@@ -397,18 +399,27 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			
 			}
 		}
+		if (obj == rbcard) {
+			payment = "카드";
+		}else if (obj == rbcash) {
+			payment = "현금";
+		}
 		if (obj == orderbtn) {
 			updateisOrderAtState(1);
-			
+			System.out.println(productID);
+			for(int i = 0; i < table.getRowCount(); i++) {
+				
+				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
+				+ pcNum + ", " + productID + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+				db.Update(sql2);
+			}
 			dispose();
 			
 		}
 	}
 
 	private void updateisOrderAtState(int isOrder) {
-		String sql1 = "UPDATE state "
-				+ "SET isOrder = " + isOrder + " "
-				+ "WHERE pcNum = " + pcNum;
+		String sql1 = "UPDATE state " + "SET isOrder = " + isOrder + " " + "WHERE pcNum = " + pcNum;
 		db.Update(sql1);
 	}
 	
