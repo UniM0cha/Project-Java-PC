@@ -37,6 +37,7 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		this.setLocationRelativeTo(this);
 		this.setTitle(pcNum + "번 PC");
 		this.addWindowListener(this);
+		this.setResizable(false);
 		
 		startTime = System.currentTimeMillis();			// 시작 시간 설정
 		chargedTime = 5 * (60*60*1000) - 32400000;		// 충전한 시간 설정 (임시로 5시간 설정)
