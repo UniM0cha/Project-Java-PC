@@ -68,7 +68,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private ImageIcon[] babImgs = {
 			new ImageIcon("images/간장소고기덮밥.jpg"),
 			new ImageIcon("images/김치삼겹볶음덮밥.jpg"),
-			new ImageIcon("images/명란아보카도덥팝.jpg"),
+			new ImageIcon("images/명란아보카도덮밥.jpg"),
 			new ImageIcon("images/스테이크덮밥.jpg"),
 			new ImageIcon("images/스팸김치덮밥.jpg"),
 			new ImageIcon("images/양파덮밥.jpg"),
@@ -447,10 +447,14 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 		if (obj == orderbtn) {
 			updateisOrderAtState(1);
-			for(int i = 0; i < table.getRowCount(); i++) {
-				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
-				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ", '" + requestJt.getText() + "')";
-				db.Update(sql2);
+			int j = 0;
+			String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
+					+ pcNum + ", " + ID.get(j) + ", " + table.getValueAt(j, 1) + ", '" + payment + "', " + table.getValueAt(j, 2) + ", '" + requestJt.getText() + "')";
+			db.Update(sql2);
+			for(int i = 1; i < table.getRowCount(); i++) {
+				String sql3 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
+				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+				db.Update(sql3);
 			}
 			dispose();
 			
