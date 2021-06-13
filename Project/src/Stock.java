@@ -61,6 +61,7 @@ public class Stock extends JFrame{
 		
 		setLayout(null);
 		
+		// 컬러들
 		Color mainpanelcolor = new Color(0x7f7f7f);
 		Color stocktablecolor = new Color(0xD0CECE);
 		Color salestablecolor = new Color(0xD0CECE);
@@ -106,13 +107,10 @@ public class Stock extends JFrame{
 		tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
 		}
 		
-		
 		JScrollPane sc = new JScrollPane(stock1);
 		sc.setPreferredSize(new Dimension(650,750));
 		
 		stocktable.add(sc);
-		
-		
 		mainpanel.add(stocktable);
 		
 		// 현재매출 테이블
