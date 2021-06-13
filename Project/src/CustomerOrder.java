@@ -59,7 +59,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/신라면.jpg"),
 			new ImageIcon("images/삼양라면.png"),
 			new ImageIcon("images/사리곰탕.jpg"),
-			new ImageIcon("images/사리곰탕.jpg"),
 			new ImageIcon("images/안성탕면.jpg"),
 			new ImageIcon("images/진라면.jpg"),
 			new ImageIcon("images/육개장.jpg"),
@@ -67,7 +66,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private ImageIcon[] babImgs = {
 			new ImageIcon("images/간장소고기덮밥.jpg"),
 			new ImageIcon("images/김치삼겹볶음덮밥.jpg"),
-			new ImageIcon("images/명란아보카도덥밥.jpg"),
+			new ImageIcon("images/명란아보카도덮밥.jpg"),
 			new ImageIcon("images/스테이크덮밥.jpg"),
 			new ImageIcon("images/스팸김치덮밥.jpg"),
 			new ImageIcon("images/양파덮밥.jpg"),
