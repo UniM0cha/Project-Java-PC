@@ -61,7 +61,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/안성탕면.jpg"),
 			new ImageIcon("images/진라면.jpg"),
 			new ImageIcon("images/육개장.jpg"),
-			new ImageIcon("images/짜파게티.jpg")};
+			new ImageIcon("images/짜파게티.jpg"),
+			new ImageIcon("images/비빔면.jpg")};
 	private ImageIcon[] babImgs = {
 			new ImageIcon("images/치킨카레볶음밥.jpg"),
 			new ImageIcon("images/잡채볶음밥.jpg"),
@@ -341,6 +342,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		counts = new int[len];
 		
 		
+		
 		for(int i = 0; i < len; i++) {
 			
 			jp[i] = new JPanel();
@@ -356,7 +358,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jp1[i] = new JPanel();
 			jp1[i].setLayout(new BorderLayout());
 			
-			jl1[i] = new JLabel(price.get(i), JLabel.CENTER);
+			jl1[i] = new JLabel(price.get(i) + "원", JLabel.CENTER);
 			jp1[i].add(jl1[i]);
 			
 			
@@ -410,7 +412,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
-				sumprice += Integer.parseInt(jl1[i].getText());
+				sumprice += Integer.parseInt(jl1[i].getText().substring(0, (jl1[i].getText().length() - 1)));
 				productName = jl[i].getText();
 				temp = counts[i] + 1;
 				count = Integer.toString(temp);
