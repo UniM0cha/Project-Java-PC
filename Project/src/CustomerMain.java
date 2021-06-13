@@ -141,6 +141,7 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		btnOrder = new JButton("먹거리 주문");
 		btnOrder.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
 		btnOrder.setBackground(btnordercolor);
+		btnOrder.setForeground(Color.white);
 		btnOrder.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));
 		btnOrder.addActionListener(this);
 		panDown.add(btnOrder);
@@ -148,6 +149,7 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		btnExit = new JButton("사용 종료");
 		btnExit.setFont(new Font(FONT, Font.BOLD, FONTSIZE));
 		btnExit.setBackground(btnexitcolor);
+		btnExit.setForeground(Color.white);
 		btnExit.addActionListener(this);
 		panDown.add(btnExit);
 		

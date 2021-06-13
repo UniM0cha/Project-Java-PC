@@ -59,8 +59,8 @@ public class CounterMain extends JFrame {
 		setLayout(new BorderLayout());
 		
 		Color ordercolor = new Color(0xF2F2EF);
-		Color ordernorth = new Color(0xbbb8b8);
-		Color pclistcolor = new Color(0x767171);
+		Color ordernorth = new Color(0xd0cece);
+		Color pclistcolor = new Color(0x7F7F7F);
 		Color customercolor = new Color(0x7f7f7f);//55627B
 		Color customer1color = new Color(0x7f7f7f);
 		nocuscolor = new Color(0xd0cece);
@@ -68,9 +68,6 @@ public class CounterMain extends JFrame {
 		clickcolor = new Color(0xF56257);
 		Date time = new Date();
 		String time2 = format2.format(time); // 시간
-		
-		// 임시 선언  238번줄로 바뀜
-		//orderedPC.addElement("7번 PC");
 		
 		// 주문목록
 
@@ -81,7 +78,7 @@ public class CounterMain extends JFrame {
 		add(order, BorderLayout.WEST);
 
 		orderNorth = new JPanel();
-		orderNorth.setBackground(ordernorth);
+		orderNorth.setBackground(pclistcolor);
 		orderNorth.setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, new Color(0x1B1B22)));
 
 		orderlbl = new JLabel("");
@@ -93,16 +90,17 @@ public class CounterMain extends JFrame {
 		order.add(orderNorth, BorderLayout.NORTH);
 
 		pclist = new JList<>(orderedPC);
-		pclist.setFont(new Font("맑은 고딕", Font.BOLD, 25));
-		pclist.setBackground(pclistcolor);
+		pclist.setFont(new Font("나눔 고딕", Font.BOLD, 25));
+		pclist.setBackground(ordernorth);
 		pclist.setForeground(new Color(0x262626));
 		order.add(pclist, BorderLayout.CENTER);
 		
 		checkbutton = new JButton("재고 관리 및 매출");
-		checkbutton.setFont(new Font("맑은 고딕", Font.BOLD, 30));
-		checkbutton.setBackground(ordernorth);
+		checkbutton.setFont(new Font("나눔 고딕", Font.BOLD, 30));
+		checkbutton.setBackground(pclistcolor);
 		checkbutton.setForeground(new Color(0x262626));
 		checkbutton.addActionListener(new MyListener());
+		checkbutton.setBorder(BorderFactory.createMatteBorder(5, 0, 0, 0, new Color(0x1B1B22)));
 		order.add(checkbutton, BorderLayout.SOUTH);
 		
 		// 손님 이용하는거 보는 틀
