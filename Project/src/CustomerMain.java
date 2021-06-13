@@ -21,16 +21,27 @@ import javax.swing.JPanel;
 public class CustomerMain extends JFrame implements ActionListener, WindowListener{
 
 	private static DB db = new DB();
+	
+	//폰트
 	private final String FONT = "나눔고딕";
 	private final int FONTSIZE = 23;
+	
+	//구성요소
 	private JLabel lbltemp, lblLeftTime, lblUsedTime;
-	private int usedTime = 0;
-	private long diff ,startTime, currentTime, chargedTime, leftTime;
 	private JButton btnOrder, btnExit;
+	
+	//시간 관련
+	private long diff ,startTime, currentTime, chargedTime, leftTime;
 	private Timer time;
-	private Random random = new Random();
 	private DateFormat format = new SimpleDateFormat("HH:mm");
-	private int pcNum = random.nextInt(29) + 1;					// 1~30 무작위 숫자
+	
+	//랜덤
+	private Random random = new Random();
+	private int pcNum = random.nextInt(29) + 1;			// 1~30 무작위 숫자
+	
+	public static void main(String[] args) {
+		new CustomerMain();
+	}
 	
 	public CustomerMain() {
 		this.setSize(350, 300);
@@ -45,6 +56,7 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		TimerTask task = new TimerTasks();				// 따로 타이머 태스크 클래스 정의
 		time.scheduleAtFixedRate(task, 1000, 1000);		// 타이머 작동
 		
+		//색깔
 		Color maincolor = Color.DARK_GRAY;
 		Color btnordercolor = new Color(0xA99C90);
 		Color btnexitcolor = new Color(0x84878A);
@@ -177,15 +189,12 @@ public class CustomerMain extends JFrame implements ActionListener, WindowListen
 		}
 	};
 	
+	//state 테이블의 statement 업데이트
 	private void updateStatementAtState(int state) {
 		String sql = "UPDATE state "
 				+ "SET statement = " + state + " "
 				+ "WHERE pcNum = " + pcNum;
 		db.Update(sql);
-	}
-
-	public static void main(String[] args) {
-		new CustomerMain();
 	}
 
 	@Override

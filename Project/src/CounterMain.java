@@ -90,13 +90,13 @@ public class CounterMain extends JFrame {
 		order.add(orderNorth, BorderLayout.NORTH);
 
 		pclist = new JList<>(orderedPC);
-		pclist.setFont(new Font("나눔 고딕", Font.BOLD, 25));
+		pclist.setFont(new Font("나눔고딕", Font.BOLD, 25));
 		pclist.setBackground(ordernorth);
 		pclist.setForeground(new Color(0x262626));
 		order.add(pclist, BorderLayout.CENTER);
 		
 		checkbutton = new JButton("재고 관리 및 매출");
-		checkbutton.setFont(new Font("나눔 고딕", Font.BOLD, 30));
+		checkbutton.setFont(new Font("나눔고딕", Font.BOLD, 30));
 		checkbutton.setBackground(pclistcolor);
 		checkbutton.setForeground(new Color(0x262626));
 		checkbutton.addActionListener(new MyListener());
@@ -258,17 +258,7 @@ public class CounterMain extends JFrame {
 		timerset[i].setText("주문 요청");
 	}
 
-	private class MyListener implements MouseListener, ActionListener {
-		@Override
-		public void mouseClicked(MouseEvent e) {}
-		@Override
-		public void mousePressed(MouseEvent e) {}
-		@Override
-		public void mouseReleased(MouseEvent e) {}
-		@Override
-		public void mouseEntered(MouseEvent e) {}
-		@Override
-		public void mouseExited(MouseEvent e) {}
+	private class MyListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {

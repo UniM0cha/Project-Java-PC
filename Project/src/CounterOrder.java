@@ -25,7 +25,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-
 public class CounterOrder extends JFrame implements ActionListener {
 	
 	private static DB db = new DB();
@@ -88,6 +87,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		JPanel subCenter = new JPanel(new BorderLayout());
 		subCenter.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		subCenter.setBackground(centernorthcolor);
+		// 테이블 디자인
 		table.getColumnModel().getColumn(0).setPreferredWidth(300);
 		table.setRowHeight(25);
 		table.setFont(new Font(FONT, Font.BOLD, 18));
@@ -96,7 +96,6 @@ public class CounterOrder extends JFrame implements ActionListener {
 		table.setBackground(new Color(0xFFFFFF));
 		table.getTableHeader().setReorderingAllowed(false);
 		table.getTableHeader().setResizingAllowed(false);
-		
 		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
 		DefaultTableCellRenderer tScheduleCellRenderer1 = new DefaultTableCellRenderer();
 		// DefaultTableCellHeaderRenderer의 정렬을 가운데 정렬로 지정

@@ -130,7 +130,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private int pcNum, Price, productid;
 	
-
 	
 	
 	public CustomerOrder(int pcNum) {
@@ -323,10 +322,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new CustomerOrder(5);
-
-	}
 
 	public void Menu(int len, ImageIcon[] imgs, Vector<String> str, Vector<String> price, Vector<String> id) {
 		centerP.removeAll();
