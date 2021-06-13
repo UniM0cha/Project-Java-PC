@@ -77,7 +77,7 @@ public class Stock extends JFrame{
 		// 재고관리 테이블
 		
 		JLabel stocklabel = new JLabel("남은 재고 (모두 50개입니다.)");
-		stocklabel.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		stocklabel.setFont(new Font("나눔 고딕", Font.BOLD, 20));
 		stocklabel.setSize(300, 60);
 		stocklabel.setLocation(255, 0);
 		mainpanel.add(stocklabel);
@@ -90,8 +90,8 @@ public class Stock extends JFrame{
 		stock1.getTableHeader().setReorderingAllowed(false); // 이동 불가
 		stock1.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		stock1.getTableHeader().setBackground(new Color(0xF3F1DF));
-		stock1.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		stock1.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		stock1.getTableHeader().setFont(new Font("나눔 바른펜", Font.BOLD, 12));
+		stock1.setFont(new Font("나눔 바른펜", Font.BOLD, 12));
 		stock1.setBackground(new Color(0xFFFFFF));
 		stock1.setRowHeight(25);
 		
@@ -130,9 +130,9 @@ public class Stock extends JFrame{
 		sumtable.getTableHeader().setReorderingAllowed(false); // 이동 불가
 		sumtable.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		sumtable.getTableHeader().setBackground(new Color(0xF3F1DF));
-		sumtable.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		sumtable.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		stock1.setRowHeight(25);
+		sumtable.getTableHeader().setFont(new Font("나눔 바른펜", Font.BOLD, 12));
+		sumtable.setFont(new Font("나눔 바른펜", Font.BOLD, 12));
+		sumtable.setRowHeight(25);
 		sumtable.setBackground(new Color(0xFFFFFF));
 		
 		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
@@ -153,7 +153,7 @@ public class Stock extends JFrame{
 		
 		// 현재 매출 상황
 		saleslabel = new JLabel("현재 매출 상황 : ");
-		saleslabel.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		saleslabel.setFont(new Font("나눔 고딕", Font.BOLD, 30));
 		saleslabel.setSize(250, 40);
 		saleslabel.setLocation(910, 860);
 		mainpanel.add(saleslabel);
@@ -161,7 +161,7 @@ public class Stock extends JFrame{
 		// 현재가격
 		salessum = new JTextField("0,000");
 		salessum.setHorizontalAlignment(JLabel.RIGHT);
-		salessum.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		salessum.setFont(new Font("나눔 고딕", Font.BOLD, 30));
 		salessum.setForeground(new Color(0x333333));
 		salessum.setEditable(false);
 		salessum.setSize(250, 40);
@@ -170,7 +170,7 @@ public class Stock extends JFrame{
 				
 		// 원
 		wonlabel = new JLabel("원");
-		wonlabel.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		wonlabel.setFont(new Font("나눔 고딕", Font.BOLD, 30));
 		wonlabel.setSize(250, 40);
 		wonlabel.setLocation(1410, 860);
 		mainpanel.add(wonlabel);

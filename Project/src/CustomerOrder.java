@@ -16,6 +16,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,10 +35,8 @@ import javax.swing.table.TableColumnModel;
 
 public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
 	
-	private static DB db = new DB();
-	
 	//상품을 표시하기 위한 임시 변수
-	private JPanel[] jp, jp1;
+	private JPanel[] jp, jp1, junki;
 	private JLabel[] jl, jl1, lbl;
 	private JButton[] jb = null;
 	private int[] counts;
@@ -59,7 +58,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private ImageIcon[] noodleImgs = {
 			new ImageIcon("images/신라면.jpg"),
 			new ImageIcon("images/삼양라면.png"),
-			new ImageIcon("images/사리곰탕.jpg"),
 			new ImageIcon("images/사리곰탕.jpg"),
 			new ImageIcon("images/안성탕면.jpg"),
 			new ImageIcon("images/진라면.jpg"),
@@ -108,36 +106,35 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private String productName, count, pay, productname, category, payment;
 	
 	//주문내용을 표시하기 위한 테이블
+	private static DB db = new DB();
 	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수", "가격"));
     private Vector<Vector<String>> contents = new Vector<>();
     private DefaultTableModel tableModel = new DefaultTableModel(contents, header);
     private JTable table = new JTable(tableModel);
     private JScrollPane scrollpane = new JScrollPane(table);
-    
     private Vector<String> price = new Vector<>();
-    
     private Vector<String> noodleID = new Vector<>();
 	private Vector<String> babID = new Vector<>();
 	private Vector<String> drinkID = new Vector<>();
 	private Vector<String> snackID = new Vector<>();
-
 	private Vector<String> noodlestr = new Vector<>();
 	private Vector<String> babstr = new Vector<>();
 	private Vector<String> drinkstr = new Vector<>();
 	private Vector<String> snackstr = new Vector<>();
-	
 	private Vector<String> noodlePrice = new Vector<>();
 	private Vector<String> babPrice = new Vector<>();
 	private Vector<String> drinkPrice = new Vector<>();
 	private Vector<String> snackPrice = new Vector<>();
-    
 	private Vector<String> id = new Vector<>();
 	private Vector<String> ID = new Vector<>();
+	private int pcNum, productID, Price, sequence, productid;
 	
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private int pcNum, Price, productid;
 	
 
+	
+	
 	public CustomerOrder(int pcNum) {
 		setTitle("음식주문");
 		setSize(1200, 900);
@@ -179,19 +176,20 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		}
 		
 		
-		Color westPcolor = new Color(0xA99C90);
+		Color westPcolor = new Color(0xb4b4b4);
 		Color categorySPcolor = new Color(0xEEEEEE);
 		Color centerPcolor = new Color(0xEEEEEE);
-		Color payPcolor = new Color(0xA99C90);
-		Color pricePcolor = new Color(0xA99C90);
-		Color orderPcolor = new Color(0xA99C90);
+		Color payPcolor = new Color(0xb4b4b4);
+		Color pricePcolor = new Color(0xb4b4b4);
+		Color orderPcolor = new Color(0xb4b4b4);
 		Color orderbtncolor = new Color(0xF3F1DF);
-		Color requestPcolor = new Color(0xA99C90);
+		Color requestPcolor = new Color(0xb4b4b4);
 		
 		//westP 시작
 		categorylbl = new JLabel("카테고리");
 		categorylbl.setBorder(BorderFactory.createMatteBorder(0, 0, 4, 0, new Color(0x767171)));
 		lstmenu = new JList<String>(menulst);
+		
 		lstmenu.setBackground(categorySPcolor);
 		lstmenu.addMouseListener(this);
 		
@@ -214,7 +212,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		//centerP 끝
 		
 		//southwestP 시작
-		pricelstlbl = new JLabel("상품 주문 목록");
+		pricelstlbl = new JLabel("상품 주문 목록", JLabel.CENTER);
 		
 		southwestP = new JPanel();
 		southwestP.setBackground(pricePcolor);
@@ -225,8 +223,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		table.getTableHeader().setReorderingAllowed(false); // 이동 불가
 		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table.getTableHeader().setBackground(new Color(0xF3F1DF));
-		table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		table.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		table.getTableHeader().setFont(new Font("나눔 고딕", Font.BOLD, 12));
+		table.setFont(new Font("나눔 고딕", Font.BOLD, 12));
 		table.setBackground(new Color(0xFFFFFF));
 		table.setRowHeight(22);
 		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
@@ -248,7 +246,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		payP.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 0, new Color(0x767171)));
 		payP.setLayout(new BorderLayout());
 		payP.setBackground(payPcolor);
-		paylbl = new JLabel("결제 방법");
+		paylbl = new JLabel("결제 방법", JLabel.CENTER);
 		payP.add(paylbl, BorderLayout.NORTH);
 		bg = new ButtonGroup();
 		JLabel chickshow = new JLabel("                                                                               ");
@@ -273,7 +271,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		pricelbl = new JLabel("0원");
 		priceP.add(pricelbl, BorderLayout.CENTER);
 		
-		requestlbl = new JLabel("주문 요청 사항");
+		requestlbl = new JLabel("주문 요청 사항", JLabel.CENTER);
 		requestP = new JPanel();
 		requestP.setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, new Color(0x767171)));
 		requestP.setLayout(new BorderLayout());
@@ -353,16 +351,16 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jp[i].setBorder(borderThickness1);
 			jp[i].setLayout(new BorderLayout());
 			
-			lbl[i] = new JLabel(imgs[i]);
+			lbl[i] = new JLabel(imgs[i], JLabel.CENTER);
 			jp[i].add(lbl[i]);
 			
-			jl[i] = new JLabel(str.get(i));
+			jl[i] = new JLabel(str.get(i), JLabel.CENTER);
 			jp[i].add(jl[i], BorderLayout.NORTH);
 			
 			jp1[i] = new JPanel();
 			jp1[i].setLayout(new BorderLayout());
 			
-			jl1[i] = new JLabel(price.get(i));
+			jl1[i] = new JLabel(price.get(i), JLabel.CENTER);
 			jp1[i].add(jl1[i]);
 			
 			
