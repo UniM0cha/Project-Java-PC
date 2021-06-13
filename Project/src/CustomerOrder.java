@@ -16,7 +16,6 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,7 +35,7 @@ import javax.swing.table.TableColumnModel;
 public class CustomerOrder extends JFrame implements MouseListener, ActionListener {
 	
 	//상품을 표시하기 위한 임시 변수
-	private JPanel[] jp, jp1, junki;
+	private JPanel[] jp, jp1;
 	private JLabel[] jl, jl1, lbl;
 	private JButton[] jb = null;
 	private int[] counts;
@@ -46,8 +45,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	
 	//구성 요소들
 	private JButton orderbtn;	//주문하기 버튼
-	private String[] menulst = {"라면", "밥", "음료수", "스낵"};	//카테고리 리스트
-	private JList<String> lstmenu, lstprice;
+	private String[] menulst = {"라면", "밥", "음료수", "스낵"}; //카테고리 리스트
+	private JList<String> lstmenu;
 	private JLabel pricelstlbl, paylbl, pricelbl, requestlbl, categorylbl;
 	private ButtonGroup bg;
 	private JRadioButton rbcard, rbcash;
@@ -64,16 +63,16 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/육개장.jpg"),
 			new ImageIcon("images/짜파게티.jpg")};
 	private ImageIcon[] babImgs = {
-			new ImageIcon("images/간장소고기덮밥.jpg"),
-			new ImageIcon("images/김치삼겹볶음덮밥.jpg"),
-			new ImageIcon("images/명란아보카도덮밥.jpg"),
-			new ImageIcon("images/스테이크덮밥.jpg"),
-			new ImageIcon("images/스팸김치덮밥.jpg"),
-			new ImageIcon("images/양파덮밥.jpg"),
-			new ImageIcon("images/연어마요덮밥.jpg"),
-			new ImageIcon("images/장어덮밥.jpg"),
-			new ImageIcon("images/제육덮밥.jpg"),
-			new ImageIcon("images/제육덮밥.jpg")};
+			new ImageIcon("images/치킨카레볶음밥.jpg"),
+			new ImageIcon("images/잡채볶음밥.jpg"),
+			new ImageIcon("images/옛날제육덮밥.jpg"),
+			new ImageIcon("images/소불고기덮밥.jpg"),
+			new ImageIcon("images/새우볶음밥.jpg"),
+			new ImageIcon("images/상하이치킨덮밥.jpg"),
+			new ImageIcon("images/햄김치참치덮밥.jpg"),
+			new ImageIcon("images/햄에그필라프볶음밥.jpg"),
+			new ImageIcon("images/갈릭소시지필라프.jpg"),
+			new ImageIcon("images/커리소시지필라프.jpg")};
 	private ImageIcon[] drinkImgs = {
 			new ImageIcon("images/콜라.jpg"),
 			new ImageIcon("images/사이다.jpg"),
@@ -98,10 +97,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/오징어집.jpg"),
 			new ImageIcon("images/초코비.jpg"),
 			new ImageIcon("images/자갈치.jpg"),
-			new ImageIcon("images/자갈치.jpg"),
-			new ImageIcon("images/자갈치.jpg")};
+			new ImageIcon("images/고래밥.jpg"),
+			new ImageIcon("images/콘칩.jpg")};
 
-	private DefaultListModel<String> model = new DefaultListModel<>();
 	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
 	
 	private String productName, count, pay, productname, category, payment;
@@ -128,10 +126,9 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private Vector<String> snackPrice = new Vector<>();
 	private Vector<String> id = new Vector<>();
 	private Vector<String> ID = new Vector<>();
-	private int pcNum, productID, Price, sequence, productid;
+	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
+	private int pcNum, Price, productid;
 	
-	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 2);
-	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
 
 	
 	
@@ -174,7 +171,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		    e.printStackTrace();
 		    System.out.println("DB에서 데이터를 받아오지 못함");
 		}
-		
 		
 		Color westPcolor = new Color(0xb4b4b4);
 		Color categorySPcolor = new Color(0xEEEEEE);
@@ -238,13 +234,10 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		tcmSchedule1.getColumn(i).setCellRenderer(tScheduleCellRenderer1);
 		}
 		southwestP.add(scrollpane, BorderLayout.CENTER);
-		
-		southwestP.add(scrollpane, BorderLayout.CENTER);
 		//southwestP 끝
 		
 		//southeastP 시작
 		southeastP = new JPanel();
-		
 		payP = new JPanel();
 		payP.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 0, new Color(0x767171)));
 		payP.setLayout(new BorderLayout());
@@ -448,13 +441,16 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 		if (obj == orderbtn) {
 			updateisOrderAtState(1);
-			for(int i = 0; i < table.getRowCount(); i++) {
-				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
-				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ", '" + requestJt.getText() + "')";
-				db.Update(sql2);
+			int j = 0;
+			String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
+					+ pcNum + ", " + ID.get(j) + ", " + table.getValueAt(j, 1) + ", '" + payment + "', " + table.getValueAt(j, 2) + ", '" + requestJt.getText() + "')";
+			db.Update(sql2);
+			for(int i = 1; i < table.getRowCount(); i++) {
+				String sql3 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
+				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+				db.Update(sql3);
 			}
 			dispose();
-			
 		}
 	}
 
@@ -462,7 +458,4 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		String sql1 = "UPDATE state " + "SET isOrder = " + isOrder + " " + "WHERE pcNum = " + pcNum;
 		db.Update(sql1);
 	}
-	
-	
-	
 }
