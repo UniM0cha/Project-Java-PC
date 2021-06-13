@@ -67,7 +67,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private ImageIcon[] babImgs = {
 			new ImageIcon("images/간장소고기덮밥.jpg"),
 			new ImageIcon("images/김치삼겹볶음덮밥.jpg"),
-			new ImageIcon("images/명란아보카도덥팝.jpg"),
+			new ImageIcon("images/명란아보카도덥밥.jpg"),
 			new ImageIcon("images/스테이크덮밥.jpg"),
 			new ImageIcon("images/스팸김치덮밥.jpg"),
 			new ImageIcon("images/양파덮밥.jpg"),
@@ -131,7 +131,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private Vector<String> ID = new Vector<>();
 	private int pcNum, productID, Price, sequence, productid;
 	
-	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
+	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 2);
 	private LineBorder borderThickness2 = new LineBorder(new Color(0x767171), 4);
 
 	
@@ -177,19 +177,20 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		}
 		
 		
-		Color westPcolor = new Color(0xA99C90);
+		Color westPcolor = new Color(0xb4b4b4);
 		Color categorySPcolor = new Color(0xEEEEEE);
 		Color centerPcolor = new Color(0xEEEEEE);
-		Color payPcolor = new Color(0xA99C90);
-		Color pricePcolor = new Color(0xA99C90);
-		Color orderPcolor = new Color(0xA99C90);
+		Color payPcolor = new Color(0xb4b4b4);
+		Color pricePcolor = new Color(0xb4b4b4);
+		Color orderPcolor = new Color(0xb4b4b4);
 		Color orderbtncolor = new Color(0xF3F1DF);
-		Color requestPcolor = new Color(0xA99C90);
+		Color requestPcolor = new Color(0xb4b4b4);
 		
 		//westP 시작
 		categorylbl = new JLabel("카테고리");
 		categorylbl.setBorder(BorderFactory.createMatteBorder(0, 0, 4, 0, new Color(0x767171)));
 		lstmenu = new JList<String>(menulst);
+		
 		lstmenu.setBackground(categorySPcolor);
 		lstmenu.addMouseListener(this);
 		
@@ -212,7 +213,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		//centerP 끝
 		
 		//southwestP 시작
-		pricelstlbl = new JLabel("상품 주문 목록");
+		pricelstlbl = new JLabel("상품 주문 목록", JLabel.CENTER);
 		
 		southwestP = new JPanel();
 		southwestP.setBackground(pricePcolor);
@@ -223,8 +224,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		table.getTableHeader().setReorderingAllowed(false); // 이동 불가
 		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table.getTableHeader().setBackground(new Color(0xF3F1DF));
-		table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		table.setFont(new Font("맑은 고딕", Font.BOLD, 12));
+		table.getTableHeader().setFont(new Font("나눔 고딕", Font.BOLD, 12));
+		table.setFont(new Font("나눔 고딕", Font.BOLD, 12));
 		table.setBackground(new Color(0xFFFFFF));
 		table.setRowHeight(22);
 		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
@@ -249,7 +250,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		payP.setBorder(BorderFactory.createMatteBorder(0, 4, 4, 0, new Color(0x767171)));
 		payP.setLayout(new BorderLayout());
 		payP.setBackground(payPcolor);
-		paylbl = new JLabel("결제 방법");
+		paylbl = new JLabel("결제 방법", JLabel.CENTER);
 		payP.add(paylbl, BorderLayout.NORTH);
 		bg = new ButtonGroup();
 		JLabel chickshow = new JLabel("                                                                               ");
@@ -274,7 +275,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		pricelbl = new JLabel("0원");
 		priceP.add(pricelbl, BorderLayout.CENTER);
 		
-		requestlbl = new JLabel("주문 요청 사항");
+		requestlbl = new JLabel("주문 요청 사항", JLabel.CENTER);
 		requestP = new JPanel();
 		requestP.setBorder(BorderFactory.createMatteBorder(0, 4, 0, 0, new Color(0x767171)));
 		requestP.setLayout(new BorderLayout());
@@ -354,16 +355,16 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jp[i].setBorder(borderThickness1);
 			jp[i].setLayout(new BorderLayout());
 			
-			lbl[i] = new JLabel(imgs[i]);
+			lbl[i] = new JLabel(imgs[i], JLabel.CENTER);
 			jp[i].add(lbl[i]);
 			
-			jl[i] = new JLabel(str.get(i));
+			jl[i] = new JLabel(str.get(i), JLabel.CENTER);
 			jp[i].add(jl[i], BorderLayout.NORTH);
 			
 			jp1[i] = new JPanel();
 			jp1[i].setLayout(new BorderLayout());
 			
-			jl1[i] = new JLabel(price.get(i));
+			jl1[i] = new JLabel(price.get(i), JLabel.CENTER);
 			jp1[i].add(jl1[i]);
 			
 			
