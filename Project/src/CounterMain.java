@@ -25,15 +25,12 @@ import javax.swing.border.LineBorder;
 public class CounterMain extends JFrame {
 
 	private static DB db = new DB();
-	private JPanel order, customer, customer1;
+	private JPanel order, customer, customer1, orderNorth;
 	private JLabel orderlbl;
 	private JPanel pcnum1, pcnum2, pcnum3;
-	private LineBorder borderThickness4 = new LineBorder(new Color(0x1B1B22), 5);
-	private LineBorder borderThickness2 = new LineBorder(new Color(0x1B1B22), 4);
+	
 	private DefaultListModel<String> orderedPC = new DefaultListModel<>();
-	private String[] pclist1 = { "2번 PC", "4번 PC", "6번 PC", "8번 PC", "10번 PC" };
 	private JList<String> pclist;
-	private JPanel orderNorth;
 	private JButton[] bt;
 	private JLabel[] lb;
 	private JLabel[] timerset;
@@ -41,12 +38,11 @@ public class CounterMain extends JFrame {
 	private TimerTask task;
 	private int[] times = new int[30];
 	private boolean[] isOrder = new boolean[30];
-	private String[] menus = {"후라이드 치킨", "소떡소떡", "너구리 라면", "참이슬"};
-	private Color nocuscolor;
-	private Color yescuscolor;
-	private Color clickcolor;
 	private SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy년 MM월dd일");
 	private JButton checkbutton;
+	private Color nocuscolor, yescuscolor, clickcolor;
+	private LineBorder borderThickness4 = new LineBorder(new Color(0x1B1B22), 5);
+	private LineBorder borderThickness2 = new LineBorder(new Color(0x1B1B22), 4);
 
 	public CounterMain(String title, int width, int height) {
 		setTitle(title);
@@ -54,14 +50,14 @@ public class CounterMain extends JFrame {
 		setLocationRelativeTo(this);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); // 전체화면
 
 		setLayout(new BorderLayout());
-		
+		// 색깔들
 		Color ordercolor = new Color(0xF2F2EF);
 		Color ordernorth = new Color(0xd0cece);
 		Color pclistcolor = new Color(0x7F7F7F);
-		Color customercolor = new Color(0x7f7f7f);//55627B
+		Color customercolor = new Color(0x7f7f7f);
 		Color customer1color = new Color(0x7f7f7f);
 		nocuscolor = new Color(0xd0cece);
 		yescuscolor = new Color(0x92d050);
