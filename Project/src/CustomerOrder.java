@@ -101,7 +101,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/고래밥.jpg"),
 			new ImageIcon("images/콘칩.jpg")};
 
-	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
+	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0, cnt = 0;
 	
 	private String productName, count, pay, productname, category, payment;
 	
@@ -408,6 +408,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		// 담기버튼 눌렀을 때 테이블에 추가
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
+				cnt++;
 				sumprice += Integer.parseInt(jl1[i].getText().substring(0, (jl1[i].getText().length() - 1)));
 				productName = jl[i].getText();
 				temp = counts[i] + 1;
@@ -439,17 +440,19 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		
 		// sql문으로 데이터 베이스에 값 추가
 		if (obj == orderbtn) {
-			updateisOrderAtState(1);
-			int j = 0;
-			String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
-					+ pcNum + ", " + ID.get(j) + ", " + table.getValueAt(j, 1) + ", '" + payment + "', " + table.getValueAt(j, 2) + ", '" + requestJt.getText() + "')";
-			db.Update(sql2);
-			for(int i = 1; i < table.getRowCount(); i++) {
+			if(cnt > 0) {
+				updateisOrderAtState(1);
+				int j = 0;
+				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
+						+ pcNum + ", " + ID.get(j) + ", " + table.getValueAt(j, 1) + ", '" + payment + "', " + table.getValueAt(j, 2) + ", '" + requestJt.getText() + "')";
+				db.Update(sql2);
+				for(int i = 1; i < table.getRowCount(); i++) {
 				String sql3 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
-				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+						+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
 				db.Update(sql3);
+				}
+				dispose();
 			}
-			dispose();
 		}
 	}
 
