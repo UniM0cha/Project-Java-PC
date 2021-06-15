@@ -38,7 +38,7 @@ public class CounterMain extends JFrame {
 	private TimerTask task;
 	private int[] times = new int[30];
 	private boolean[] isOrder = new boolean[30];
-	private SimpleDateFormat format2 = new SimpleDateFormat ( "yyyy년 MM월dd일");
+	private SimpleDateFormat format2 = new SimpleDateFormat ("yyyy년 MM월dd일");
 	private JButton checkbutton;
 	private Color nocuscolor, yescuscolor, clickcolor;
 	private LineBorder borderThickness4 = new LineBorder(new Color(0x1B1B22), 5);

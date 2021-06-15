@@ -221,7 +221,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table.getTableHeader().setBackground(new Color(0xF3F1DF));
 		table.getTableHeader().setFont(new Font("나눔 고딕", Font.BOLD, 12));
-		table.setFont(new Font("나눔 고딕", Font.BOLD, 12));
+		table.setFont(new Font("나눔 고딕", Font.BOLD, 20));
 		table.setBackground(new Color(0xFFFFFF));
 		table.setRowHeight(22);
 		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
@@ -346,6 +346,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jp[i].add(lbl[i]);
 			
 			jl[i] = new JLabel(str.get(i), JLabel.CENTER);
+			jl[i].setFont(new Font("",Font.BOLD,20));
 			jp[i].add(jl[i], BorderLayout.NORTH);
 			
 			jp1[i] = new JPanel();
