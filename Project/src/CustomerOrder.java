@@ -61,7 +61,8 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/안성탕면.jpg"),
 			new ImageIcon("images/진라면.jpg"),
 			new ImageIcon("images/육개장.jpg"),
-			new ImageIcon("images/짜파게티.jpg")};
+			new ImageIcon("images/짜파게티.jpg"),
+			new ImageIcon("images/비빔면.jpg")};
 	private ImageIcon[] babImgs = {
 			new ImageIcon("images/치킨카레볶음밥.jpg"),
 			new ImageIcon("images/잡채볶음밥.jpg"),
@@ -100,7 +101,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			new ImageIcon("images/고래밥.jpg"),
 			new ImageIcon("images/콘칩.jpg")};
 
-	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0;
+	private int len = 0, pricetemp = 0, temp = 0, sumprice = 0, cnt = 0;
 	
 	private String productName, count, pay, productname, category, payment;
 	
@@ -129,18 +130,18 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	private LineBorder borderThickness1 = new LineBorder(new Color(0x767171), 4);
 	private int pcNum, Price, productid;
 	
-
 	
 	
 	public CustomerOrder(int pcNum) {
 		setTitle("음식주문");
 		setSize(1200, 900);
 		setLocationRelativeTo(this);
-		setResizable(false);
+		setResizable(false);	//크기 조절 불가
 		setLayout(new BorderLayout());	
 		
 		this.pcNum = pcNum;
 		
+		// 데이터베이스에서 값 가져오고 벡터에 추가
 		String sql = "SELECT * FROM product";
 		ResultSet rs = db.Query(sql);
 		try {
@@ -220,7 +221,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		table.getTableHeader().setResizingAllowed(false); // 크기 조절 불가
 		table.getTableHeader().setBackground(new Color(0xF3F1DF));
 		table.getTableHeader().setFont(new Font("나눔 고딕", Font.BOLD, 12));
-		table.setFont(new Font("나눔 고딕", Font.BOLD, 12));
+		table.setFont(new Font("나눔 고딕", Font.BOLD, 20));
 		table.setBackground(new Color(0xFFFFFF));
 		table.setRowHeight(22);
 		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
@@ -300,7 +301,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		pricelstlbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		paylbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		requestlbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
-		//lstprice.setFont(new Font("나눔고딕", Font.BOLD, 10));
 		orderbtn.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		pricelbl.setFont(new Font("나눔고딕", Font.BOLD, 20));
 		categorylbl.setFont(new Font("나눔고딕", Font.BOLD, 50));
@@ -322,11 +322,6 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new CustomerOrder(5);
-
-	}
-
 	public void Menu(int len, ImageIcon[] imgs, Vector<String> str, Vector<String> price, Vector<String> id) {
 		centerP.removeAll();
 		this.len = len;
@@ -340,7 +335,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		jb = new JButton[len];
 		counts = new int[len];
 		
-		
+		// 주문카테고리에 따라 메뉴패널 추가
 		for(int i = 0; i < len; i++) {
 			
 			jp[i] = new JPanel();
@@ -351,12 +346,13 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			jp[i].add(lbl[i]);
 			
 			jl[i] = new JLabel(str.get(i), JLabel.CENTER);
+			jl[i].setFont(new Font("",Font.BOLD,20));
 			jp[i].add(jl[i], BorderLayout.NORTH);
 			
 			jp1[i] = new JPanel();
 			jp1[i].setLayout(new BorderLayout());
 			
-			jl1[i] = new JLabel(price.get(i), JLabel.CENTER);
+			jl1[i] = new JLabel(price.get(i) + "원", JLabel.CENTER);
 			jp1[i].add(jl1[i]);
 			
 			
@@ -372,6 +368,7 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 		}
 	}
 	
+	// 주문카테고리에 따라 맞는 값들 불러오기 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		switch(lstmenu.getSelectedIndex()) {
@@ -402,15 +399,18 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		
+		// 라디오 버튼에 따라 결제방법 변경
 		if (obj == rbcard) {
 			payment = "카드";
 		}else if (obj == rbcash) {
 			payment = "현금";
 		}
 		
+		// 담기버튼 눌렀을 때 테이블에 추가
 		for(int i = 0; i < len; i++) {
 			if(obj == jb[i]) {
-				sumprice += Integer.parseInt(jl1[i].getText());
+				cnt++;
+				sumprice += Integer.parseInt(jl1[i].getText().substring(0, (jl1[i].getText().length() - 1)));
 				productName = jl[i].getText();
 				temp = counts[i] + 1;
 				count = Integer.toString(temp);
@@ -439,21 +439,25 @@ public class CustomerOrder extends JFrame implements MouseListener, ActionListen
 			}
 		}
 		
+		// sql문으로 데이터 베이스에 값 추가
 		if (obj == orderbtn) {
-			updateisOrderAtState(1);
-			int j = 0;
-			String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
-					+ pcNum + ", " + ID.get(j) + ", " + table.getValueAt(j, 1) + ", '" + payment + "', " + table.getValueAt(j, 2) + ", '" + requestJt.getText() + "')";
-			db.Update(sql2);
-			for(int i = 1; i < table.getRowCount(); i++) {
+			if(cnt > 0) {
+				updateisOrderAtState(1);
+				int j = 0;
+				String sql2 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice, request) VALUE (" 
+						+ pcNum + ", " + ID.get(j) + ", " + table.getValueAt(j, 1) + ", '" + payment + "', " + table.getValueAt(j, 2) + ", '" + requestJt.getText() + "')";
+				db.Update(sql2);
+				for(int i = 1; i < table.getRowCount(); i++) {
 				String sql3 = "INSERT INTO orders(pcNum, productID, counts, payment, salePrice) VALUE (" 
-				+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
+						+ pcNum + ", " + ID.get(i) + ", " + table.getValueAt(i, 1) + ", '" + payment + "', " + table.getValueAt(i, 2) + ")";
 				db.Update(sql3);
+				}
+				dispose();
 			}
-			dispose();
 		}
 	}
 
+	// 주문
 	private void updateisOrderAtState(int isOrder) {
 		String sql1 = "UPDATE state " + "SET isOrder = " + isOrder + " " + "WHERE pcNum = " + pcNum;
 		db.Update(sql1);

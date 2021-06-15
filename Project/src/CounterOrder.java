@@ -25,7 +25,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-
 public class CounterOrder extends JFrame implements ActionListener {
 	
 	private static DB db = new DB();
@@ -88,6 +87,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		JPanel subCenter = new JPanel(new BorderLayout());
 		subCenter.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		subCenter.setBackground(centernorthcolor);
+		// 테이블 디자인
 		table.getColumnModel().getColumn(0).setPreferredWidth(300);
 		table.setRowHeight(25);
 		table.setFont(new Font(FONT, Font.BOLD, 18));
@@ -104,7 +104,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		TableColumnModel tcmSchedule1 = table.getColumnModel();
 		// 반복문을 이용하여 테이블을 가운데 정렬로 지정
 		for (int i = 0; i < tcmSchedule1.getColumnCount(); i++) {
-		tcmSchedule1.getColumn(i).setCellRenderer(tScheduleCellRenderer1);
+			tcmSchedule1.getColumn(i).setCellRenderer(tScheduleCellRenderer1);
 		}
 		JScrollPane scrollTable = new JScrollPane(table);
 		subCenter.add(scrollTable, BorderLayout.CENTER);
