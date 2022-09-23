@@ -3,8 +3,9 @@
 <div align="center">
   <h1>- PC방 음식 주문 시스템 -</h1>
   2학년 1학기 [Java 프로그래밍 응용] 과제 프로젝트 <br>
-  2021. 5. 5. ~ 2021. 6. 26. <br>
-  <img src="https://img.shields.io/badge/JDK-17-gray?logo=openjdk&logoColor=black&labelColor=FFFFFF&style=flat-square"/> <br>
+  2021. 5. 5. ~ 2021. 6. 26. <br> <br>
+  <img src="https://img.shields.io/badge/JDK-17-gray?logo=openjdk&logoColor=black&labelColor=FFFFFF&style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/mysql-8-gray?logo=mysql&logoColor=black&labelColor=4479A1&style=for-the-badge"/>
 
   <h2>Contributer</h2>
   
