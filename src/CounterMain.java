@@ -28,7 +28,7 @@ public class CounterMain extends JFrame {
 	private JPanel order, customer, customer1, orderNorth;
 	private JLabel orderlbl;
 	private JPanel pcnum1, pcnum2, pcnum3;
-	
+
 	private DefaultListModel<String> orderedPC = new DefaultListModel<>();
 	private JList<String> pclist;
 	private JButton[] bt;
@@ -38,7 +38,7 @@ public class CounterMain extends JFrame {
 	private TimerTask task;
 	private int[] times = new int[30];
 	private boolean[] isOrder = new boolean[30];
-	private SimpleDateFormat format2 = new SimpleDateFormat ("yyyy년 MM월dd일");
+	private SimpleDateFormat format2 = new SimpleDateFormat("yyyy년 MM월dd일");
 	private JButton checkbutton;
 	private Color nocuscolor, yescuscolor, clickcolor;
 	private LineBorder borderThickness4 = new LineBorder(new Color(0x1B1B22), 5);
@@ -64,7 +64,7 @@ public class CounterMain extends JFrame {
 		clickcolor = new Color(0xF56257);
 		Date time = new Date();
 		String time2 = format2.format(time); // 시간
-		
+
 		// 주문목록
 
 		order = new JPanel();
@@ -90,7 +90,7 @@ public class CounterMain extends JFrame {
 		pclist.setBackground(ordernorth);
 		pclist.setForeground(new Color(0x262626));
 		order.add(pclist, BorderLayout.CENTER);
-		
+
 		checkbutton = new JButton("재고 관리 및 매출");
 		checkbutton.setFont(new Font("나눔고딕", Font.BOLD, 30));
 		checkbutton.setBackground(pclistcolor);
@@ -98,7 +98,7 @@ public class CounterMain extends JFrame {
 		checkbutton.addActionListener(new MyListener());
 		checkbutton.setBorder(BorderFactory.createMatteBorder(5, 0, 0, 0, new Color(0x1B1B22)));
 		order.add(checkbutton, BorderLayout.SOUTH);
-		
+
 		// 손님 이용하는거 보는 틀
 
 		customer = new JPanel();
@@ -112,7 +112,7 @@ public class CounterMain extends JFrame {
 		customer1.setBackground(customer1color);
 
 		// 컴퓨터 자리 세팅
-		
+
 		pcnum1 = new JPanel();
 		pcnum1.setLayout(new GridLayout(2, 5, 5, 5));
 		pcnum1.setBackground(customer1color);
@@ -128,37 +128,34 @@ public class CounterMain extends JFrame {
 		bt = new JButton[30];
 		lb = new JLabel[30];
 		timerset = new JLabel[30];
-		
+
 		for (int i = 0; i < bt.length; i++) {
 			bt[i] = new JButton();
 			bt[i].setLayout(new BorderLayout());
 			bt[i].setBorder(borderThickness2);
 			bt[i].addActionListener(new MyListener());
-			
+
 			lb[i] = new JLabel((i + 1) + "번 PC");
 			lb[i].setFont(new Font("맑은 고딕", Font.BOLD, 20));
 			lb[i].setHorizontalAlignment(JLabel.CENTER);
 			bt[i].add(lb[i], BorderLayout.NORTH);
-			
+
 			timerset[i] = new JLabel();
 			timerset[i].setHorizontalAlignment(JLabel.CENTER);
 			timerset[i].setFont(new Font("맑은 고딕", Font.BOLD, 20));
 			bt[i].add(timerset[i], BorderLayout.CENTER);
-			
+
 			// 초기값은 오프라인으로 설정
 			Offline(i);
-			
+
 			if (i < 10) {
 				pcnum1.add(bt[i]);
-			}
-			else if (i < 20) {
+			} else if (i < 20) {
 				pcnum2.add(bt[i]);
-			}
-			else if (i < 30) {
+			} else if (i < 30) {
 				pcnum3.add(bt[i]);
 			}
 		}
-		
 
 		customer1.add(pcnum1, BorderLayout.NORTH);
 		customer1.add(pcnum2, BorderLayout.CENTER);
@@ -176,7 +173,7 @@ public class CounterMain extends JFrame {
 				for (int i = 0; i < 30; i++) {
 					if (isOrder[i]) {
 						times[i]++;
-						timerset[i].setText(times[i] + "초");	
+						timerset[i].setText(times[i] + "초");
 					}
 				}
 			}
@@ -185,16 +182,16 @@ public class CounterMain extends JFrame {
 
 		setVisible(true);
 	}
-	
+
 	private void stateUpdateFromDB() {
 		String sql = "SELECT * FROM state";
 		ResultSet rs = db.Query(sql);
 		try {
-			while(rs.next()) {
+			while (rs.next()) {
 				int pcNum = rs.getInt("pcNum");
 				boolean state = rs.getBoolean("statement");
 				boolean isorder = rs.getBoolean("isOrder");
-				stateUpdate(pcNum-1, state, isorder);
+				stateUpdate(pcNum - 1, state, isorder);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -204,28 +201,26 @@ public class CounterMain extends JFrame {
 
 	boolean[] isOnline = new boolean[30];
 	boolean[] isOnlineorder = new boolean[30];
-	
+
 	private void stateUpdate(int i, boolean state, boolean isorder) {
-		if(state) {								// 온라인
-			if(isorder) {						// 주문 내역 존재
-				if(isOnlineorder[i] == false) {
+		if (state) { // 온라인
+			if (isorder) { // 주문 내역 존재
+				if (isOnlineorder[i] == false) {
 					isOnlineorder[i] = true;
 					OnlineOrder(i);
 				}
-			}
-			else {								// 온라인
-				if(isOnlineorder[i] == true) {
+			} else { // 온라인
+				if (isOnlineorder[i] == true) {
 					isOnlineorder[i] = false;
 					OfflineOrder(i);
 				}
-				if(isOnline[i] == false) {
+				if (isOnline[i] == false) {
 					isOnline[i] = true;
 					Online(i);
 				}
 			}
-		}
-		else {									//오프라인
-			if(isOnline[i] == true) {
+		} else { // 오프라인
+			if (isOnline[i] == true) {
 				isOnline[i] = false;
 				Offline(i);
 			}
@@ -237,16 +232,19 @@ public class CounterMain extends JFrame {
 		bt[i].setEnabled(false);
 		timerset[i].setText("온라인");
 	}
+
 	private void Offline(int i) {
 		bt[i].setBackground(nocuscolor);
 		bt[i].setEnabled(false);
 		timerset[i].setText("오프라인");
-		
+
 	}
+
 	private void OfflineOrder(int i) {
 		Online(i);
 		orderedPC.removeElement(lb[i].getText());
 	}
+
 	private void OnlineOrder(int i) {
 		bt[i].setBackground(clickcolor);
 		bt[i].setEnabled(true);
@@ -261,12 +259,12 @@ public class CounterMain extends JFrame {
 			Object obj = e.getSource();
 			for (int i = 0; i < 30; i++) {
 				if (obj == bt[i]) {
-					new CounterOrder(i+1, bt[i]);
+					new CounterOrder(i + 1, bt[i]);
 				}
 			}
-			if(obj == checkbutton) {
+			if (obj == checkbutton) {
 				new Stock("재고 관리", 1500, 1000);
-				
+
 			}
 		}
 	}

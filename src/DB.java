@@ -7,15 +7,15 @@ import java.sql.Statement;
 public class DB {
 
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-	//MySQL 포트 : 3306
-	//DB 이름 : PCbangDB
+	// MySQL 포트 : 3306
+	// DB 이름 : PCbangDB
 	static final String DB_URL = "jdbc:mysql://114.71.137.174:61083/optl";
-	
+
 	static final String USERNAME = "optl";
 	static final String PASSWORD = "oneparktwolee";
-	
+
 	Connection conn;
-	
+
 	public DB() {
 		try {
 			Class.forName(JDBC_DRIVER);
@@ -33,7 +33,7 @@ public class DB {
 			System.exit(1);
 		}
 	}
-	
+
 	public int Update(String sql) {
 		try {
 			Statement stmt = conn.createStatement();
@@ -44,7 +44,7 @@ public class DB {
 			return 0;
 		}
 	}
-	
+
 	public ResultSet Query(String sql) {
 		try {
 			Statement stmt = conn.createStatement();

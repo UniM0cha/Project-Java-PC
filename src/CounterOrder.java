@@ -26,14 +26,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 public class CounterOrder extends JFrame implements ActionListener {
-	
+
 	private static DB db = new DB();
 	private final String FONT = "나눔고딕";
 	private JButton btnConfirm, btnClose;
-	private Vector<String> header = new Vector<>(Arrays.asList("상품명","개수"));
+	private Vector<String> header = new Vector<>(Arrays.asList("상품명", "개수"));
 	private Vector<Vector<String>> contents = new Vector<>();
 	private DefaultTableModel tableModel = new DefaultTableModel(contents, header) {
-		//내용 수정 못하게 설정
+		// 내용 수정 못하게 설정
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		};
@@ -53,34 +53,34 @@ public class CounterOrder extends JFrame implements ActionListener {
 		this.setUndecorated(true);
 		this.getRootPane().setBorder(BorderFactory.createLineBorder(new Color(0x25262B), 5));
 		this.setResizable(false);
-		
+
 		Color westcolor = new Color(0x595959);
 		Color btncolor = new Color(0xF3F1DF);
 		Color centersouthcolor = new Color(0x84878a);
 		Color centernorthcolor = new Color(0xFFF7F1);
-		
+
 		this.pcNum = pcNum;
 		getDataFromOrders();
-		
+
 		// 왼쪽
 		JPanel west = new JPanel();
 		west.setBackground(westcolor);
 		west.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 5, new Color(0x25262B)));
-		
+
 		// PC번호 (00번)
 		JLabel lblPcNum = new JLabel(Integer.toString(pcNum));
 		lblPcNum.setFont(new Font(FONT, Font.BOLD, 40));
 		lblPcNum.setForeground(Color.white);
 		west.add(lblPcNum);
-		
+
 		JLabel lblBun = new JLabel("번");
 		lblBun.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		lblBun.setForeground(Color.white);
 		west.add(lblBun);
-		
+
 		this.add(west, BorderLayout.WEST);
 
-		//오른쪽
+		// 오른쪽
 		JPanel center = new JPanel(new BorderLayout());
 
 		// 주문내역 테이블
@@ -108,7 +108,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 		}
 		JScrollPane scrollTable = new JScrollPane(table);
 		subCenter.add(scrollTable, BorderLayout.CENTER);
-		
+
 		// 요청사항
 		JPanel panRequest = new JPanel(new BorderLayout());
 		JLabel lblRequest = new JLabel("요청사항");
@@ -117,28 +117,28 @@ public class CounterOrder extends JFrame implements ActionListener {
 		textAreaRequest.setText(request);
 		panRequest.add(textAreaRequest, BorderLayout.CENTER);
 		subCenter.add(panRequest, BorderLayout.SOUTH);
-		
+
 		center.add(subCenter, BorderLayout.CENTER);
-		
+
 		// 가격, 결제수단, 버튼들
 		JPanel subSouth = new JPanel(new BorderLayout());
 		subSouth.setBorder(BorderFactory.createMatteBorder(5, 0, 0, 0, new Color(0x25262B)));
-		
+
 		// 가격, 결제수단
 		JPanel subSouthLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		subSouthLeft.setBackground(centersouthcolor);
 		subSouthLeft.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
-		
+
 		String priceString = NumberFormat.getInstance().format(sumPrice);
 		JLabel lblPrice = new JLabel(priceString + "원 (" + pay + ")");
 		lblPrice.setFont(new Font(FONT, Font.BOLD, 17));
 		lblPrice.setForeground(Color.white);
 		subSouthLeft.add(lblPrice);
-		
+
 		// 버튼
 		JPanel subSouthRight = new JPanel();
 		subSouthRight.setBackground(centersouthcolor);
-		
+
 		btnClose = new JButton("닫기");
 		btnClose.setFont(new Font(FONT, Font.BOLD, 13));
 		btnClose.addActionListener(this);
@@ -154,41 +154,41 @@ public class CounterOrder extends JFrame implements ActionListener {
 		subSouth.add(subSouthLeft, BorderLayout.CENTER);
 		subSouth.add(subSouthRight, BorderLayout.EAST);
 		center.add(subSouth, BorderLayout.SOUTH);
-		
+
 		this.add(center);
-		
+
 		this.setVisible(true);
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		if (obj == btnConfirm) {
-			if (JOptionPane.showConfirmDialog(this, "상품을 제공하셨습니까?", "확인", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, "상품을 제공하셨습니까?", "확인",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				updateStockAtProduct();
 				insertDataAtSales();
 				deleteDataAtOrders();
 				falseIsOrderAtState();
 				this.dispose();
 			}
-		}
-		else if (obj == btnClose) {
+		} else if (obj == btnClose) {
 			this.dispose();
 		}
 	}
-	
+
 	// 주문한 만큼 product 테이블의 stock을 줄임
 	private void updateStockAtProduct() {
 		String sqlSelect = "SELECT pcNum, productID, SUM(counts) counts "
 				+ "FROM orders o "
 				+ "WHERE pcNum = " + pcNum + " "
 				+ "GROUP BY productID";
-		ResultSet rs = db.Query(sqlSelect); 
+		ResultSet rs = db.Query(sqlSelect);
 		try {
-			while(rs.next()) {
+			while (rs.next()) {
 				int productID = rs.getInt("productID");
 				int sumCounts = rs.getInt("counts");
-				String sqlUpdate =  "UPDATE product "
+				String sqlUpdate = "UPDATE product "
 						+ "SET stock = stock - " + sumCounts + " "
 						+ "WHERE productID = " + productID;
 				db.Update(sqlUpdate);
@@ -205,14 +205,14 @@ public class CounterOrder extends JFrame implements ActionListener {
 				+ "JOIN product p "
 				+ "WHERE o.productID = p.productID "
 				+ "AND pcNum = " + pcNum;
-		ResultSet rs = db.Query(sql); 
+		ResultSet rs = db.Query(sql);
 		try {
-			while(rs.next()) {
+			while (rs.next()) {
 				sumPrice += rs.getInt("salePrice");
 				pay = rs.getString("payment");
 				String reqTemp = rs.getString("request");
 				if (reqTemp != null)
-					request += reqTemp + "\n"; 
+					request += reqTemp + "\n";
 				productName = rs.getString("productName");
 				count = Integer.toString(rs.getInt("counts"));
 				contents.add(new Vector<String>(Arrays.asList(productName, count)));
@@ -221,7 +221,7 @@ public class CounterOrder extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// sales에 매출내역 추가
 	private void insertDataAtSales() {
 		String sql = "INSERT INTO sales(productID, counts, salePrice) "
@@ -230,14 +230,14 @@ public class CounterOrder extends JFrame implements ActionListener {
 				+ "WHERE pcNum =" + pcNum;
 		db.Update(sql);
 	}
-	
+
 	// orders의 주문내역을 삭제
 	private void deleteDataAtOrders() {
 		String sql = "DELETE FROM orders "
 				+ "WHERE pcNum = " + pcNum;
 		db.Update(sql);
 	}
-	
+
 	// state의 isOrder false
 	private void falseIsOrderAtState() {
 		String sql = "UPDATE state "
