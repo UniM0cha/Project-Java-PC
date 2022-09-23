@@ -8,36 +8,54 @@
 
   <h2>Contributer</h2>
   
-  <table>
-    <tr>
-      <td align="center">
-        <a href="https://www.github.com/UniM0cha">
-          <img src="https://github.com/UniM0cha.png" width="100px;"/>
-          <br/><b>@UniM0cha</b>
-        </a>
-      </td>
-      <td>
-        <ul>
-          <li>데이터베이스 연결 총괄</li>
-          <li>서버 구축</li>
-        </ul>
-      </td>
-    </tr>
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://www.github.com/UniM0cha">
+        <img src="https://github.com/UniM0cha.png" width="100px;"/>
+        <br/><b>@UniM0cha</b>
+      </a>
+    </td>
+    <td>
+      <ul>
+        <li>데이터베이스 설계 및 연결</li>
+        <li>데이터베이스 서버 구축</li>
+      </ul>
+    </td>
+  </tr>
 
-    <tr>
-      <td align="center">
-        <a href="https://www.github.com/Hanav52">
-          <img src="https://github.com/Hanav52.png" width="100px;"/>
-          <br/><b>@Hanav52</b>
-        </a>
-      </td>
-      <td>
-        <ul>
-          <li>손님 화면 디자인</li>
-        </ul>
-      </td>
-    </tr>
-  </table>
+  <tr>
+    <td align="center">
+      <a href="https://www.github.com/Hanav52">
+        <img src="https://github.com/Hanav52.png" width="100px;"/>
+        <br/><b>@Hanav52</b>
+      </a>
+    </td>
+    <td>
+      <ul>
+        <li>손님용 화면 디자인</li>
+        <li>결제 로직 구현</li>
+      </ul>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      <a href="https://www.github.com/qsc0415">
+        <img src="https://github.com/qsc0415.png" width="100px;"/>
+        <br/><b>@qsc0415</b>
+      </a>
+    </td>
+    <td>
+      <ul>
+        <li>카운터용 화면 디자인</li>
+        <li>실제 판매 상품 조사, 이미지 검색</li>
+      </ul>
+    </td>
+  </tr>
+
+</table>
+
   
   <h2>Presentation</h2>
   <img width="960" alt="슬라이드1" src="https://user-images.githubusercontent.com/77760474/191898981-ce517214-d622-4207-b5ea-68ae4d2318c4.png">
